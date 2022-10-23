@@ -1,0 +1,17 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.dashboard-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.dashboard-container {
+  margin: 0px !important;
+}
+
+.no-underline {
+  text-decoration: none;
+}
