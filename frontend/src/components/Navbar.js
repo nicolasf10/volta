@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from './../images/logo1.svg';
 import styled from 'styled-components';
 import { Nav, Navbar, Button } from "react-bootstrap";
-import './Navbar.css'
+import './Navbar.css';
 
 function NavbarComponent(props)
 {
