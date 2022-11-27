@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import TripShareContainer from './TripShareContainer';
+import TripShareContainer from './Trip/TripShareContainer';
 import { Link } from 'react-router-dom'
 
 
@@ -23,8 +23,8 @@ const BannerTitle = styled.h1`
     font-weight: 700;
     font-size: 5rem;
     text-align: center;
-    font-family: "Sen", "sans-serif";
-    text-transform: uppercase;
+    font-family: 'Lora', serif;
+    /* text-transform: uppercase; */
 `
 
 const BannerText = styled.div`

@@ -5,8 +5,8 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 const SliderContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  /* display: block; */
   border-radius: 15px 0px 0px 15px;
 `
 
@@ -17,7 +17,7 @@ const SliderImage = styled.img`
 function ImageSlider(props) {
   return (
       <SliderContainer>
-        <Carousel fade>
+        <Carousel fade style={{width: "100%", display: "block"}} interval={null}>
             {props.images.map((image) => (
                 <Carousel.Item>
                     <img src={image} class="d-block w-100 carousel-img" alt="..."/>

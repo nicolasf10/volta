@@ -16,7 +16,7 @@ function BucketListDashboard()
     `
 
     const MyTripsHeading = styled.h1`
-        font-family: 'Sen', sans-serif;
+        font-family: 'Lora', serif;
         font-weight: 700;
         opacity: 1;
         margin-bottom: 30px;

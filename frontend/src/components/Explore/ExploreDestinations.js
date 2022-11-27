@@ -25,8 +25,9 @@ const ExploreDestinationsBox = styled.div`
 `
 
 const ResultsText = styled.h6`
-    margin-left: 10px;
-    margin-top: 10px;
+    /* margin-left: 10px;
+    margin-top: 10px; */
+    margin: 10px 0px 20px 10px;
 `
 
 function ExploreDestinations(props) {

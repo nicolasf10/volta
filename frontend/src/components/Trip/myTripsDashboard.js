@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import logo from './../images/logo1.svg';
+import logo from './../../images/logo1.svg';
 import styled from 'styled-components';
 
 function MyTripsDashboard()
@@ -11,7 +11,7 @@ function MyTripsDashboard()
         {
             id: "italy",
             title: "Italy",
-            emoji: "&#128512;",
+            emoji: "🇮🇹",
             date: "9th of Oct. to 15th of Oct. 2022",
             image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=766&q=80",
             members: [
@@ -126,7 +126,7 @@ function MyTripsDashboard()
     `
 
     const MyTripsHeading = styled.h1`
-        font-family: 'Sen', sans-serif;
+        font-family: 'Lora', serif;
         font-weight: 700;
         opacity: 1;
         margin-bottom: 30px;
@@ -250,6 +250,8 @@ function MyTripsDashboard()
         font-size: 1.1rem;
         border-radius: 7px;
         padding: 7.5px 15px;
+        height: 40px;
+        font-family: "Sen", sans-serif;
         color: #fff;
         border: none;
         background-color: #1746A2;

@@ -62,7 +62,7 @@ function TripShareContainer(props) {
                 )}
                 placement="bottom">
                 <Button variant="dark">Share</Button>
-            </OverlayTrigger>,
+            </OverlayTrigger>
         </ShareContainer>
     );
 }
