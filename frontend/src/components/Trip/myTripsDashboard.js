@@ -7,7 +7,7 @@ import styled from 'styled-components';
 function MyTripsDashboard()
 {
  
-    let trips = [
+    const [trips, setTrips] = useState([
         {
             id: "italy",
             title: "Italy",
@@ -27,6 +27,19 @@ function MyTripsDashboard()
                     username: "José",
                     img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                 }
+            ],
+            hey: "whassp",
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
             ]
         },
         {
@@ -40,7 +53,20 @@ function MyTripsDashboard()
                     username: "Ju",
                     img: "https://images.unsplash.com/photo-1534184241306-2d7eb0ddbbde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
                 }
-            ]},
+            ],
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
+            ]
+        },
         {
             id: "brazil",
             title: "Brazil",
@@ -60,7 +86,20 @@ function MyTripsDashboard()
                     username: "José",
                     img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                 }
-            ]},
+            ],
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
+            ]
+        },
         {
             id: "japan",
             title: "Japan",
@@ -80,7 +119,20 @@ function MyTripsDashboard()
                     username: "José",
                     img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                 }
-            ]},
+            ],
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
+            ]
+        },
         {
             id: "australia",
             title: "Australia",
@@ -96,7 +148,20 @@ function MyTripsDashboard()
                     username: "Nick",
                     img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
                 }
-            ]},
+            ],
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
+            ]
+        },
         {
             id: "canada",
             title: "Canada",
@@ -116,10 +181,21 @@ function MyTripsDashboard()
                     username: "José",
                     img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                 }
-            ]},
-    ]
-
-    // trips = []
+            ],
+            checklist: [
+                {
+                    title: "Buy plane tickets",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Make restaurant reservations",
+                    notes: "",
+                    status: "to-do"
+                }
+            ]
+        },
+    ])
 
     const MyTripsDashboardContainer = styled.div`
         padding: 30px;

@@ -39,7 +39,6 @@ const ShareContainer = styled.div`
 
 function TripShareContainer(props) {
     const [members, setMembers] = useState(props.members);
-    console.log(props);
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     // const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))

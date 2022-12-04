@@ -63,9 +63,6 @@ const BannerDate = styled.h3`
 
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
-    console.log("********")
-    console.log(trip)
-    console.log("********")
 
     return (
         <Banner background={trip.image}>

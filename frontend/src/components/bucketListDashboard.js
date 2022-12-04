@@ -8,7 +8,7 @@ function BucketListDashboard()
 {
  
     let trips = [
-    
+        
     ]
 
     const MyTripsDashboardContainer = styled.div`
@@ -69,7 +69,7 @@ function BucketListDashboard()
                         trips.map((trip) => (
                             <h1>bucket</h1>
                         )) :
-                            <NoTrips><HeadingSpan>Oh no! You better add something to your bucket list <ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></HeadingSpan></NoTrips>
+                            <NoTrips><HeadingSpan>Oh no! You better add something to your bucket list <Link style={{textDecoration:'none'}} to="/explore"><ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
                         }
                 </div>
             </div>

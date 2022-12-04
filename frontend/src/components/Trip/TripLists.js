@@ -8,13 +8,13 @@ const PageContainer = styled.div`
 `
 
 
-function TripPlans(props) {
+function TripLists(props) {
 
     return (
         <PageContainer>
-            plans
+            lists
         </PageContainer>
     );
 }
 
-export default TripPlans;
+export default TripLists;

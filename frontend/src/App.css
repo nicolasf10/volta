@@ -107,3 +107,22 @@ body {
 .active-underline {
   border-bottom: 2px rgba(0, 0, 0) solid;
 }
+
+/* checklist */
+.checklist-column {
+  padding-top: 25px;
+  text-align: center;
+
+}
+
+.checklist-column:nth-child(1) {
+  /* border-right: 1px gray solid; */
+}
+
+.checklist-container {
+  margin: 0px;
+}
+
+.checklist-container .row {
+  width: 100vw;
+}
