@@ -48,11 +48,12 @@ function Trip(props) {
         } else {
             setTrip(location.state.trip);
         }
+
+        console.log(location.state.trip)
         
     }, []);
 
     
-
     function pageClick(e) {
         let pages = ['overview', 'lists', 'checklist']
         for (let i = 0; i < pages.length; i++) {

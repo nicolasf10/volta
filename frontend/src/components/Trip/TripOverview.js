@@ -5,18 +5,24 @@ import Map from './Map.js';
 
 
 const PageContainer = styled.div`
-    /* background-color: red; */
+
 `
 
 
 function TripOverview(props) {
+    const [trip, setTrip] = useState({...props.trip})
 
-    
+    useEffect(() => {
+        console.log(trip);
+        setTrip(props.trip);
+        
+    }, [props.trip])
 
     return (
         <PageContainer>
             overview
             <Map
+                trip={trip}
                 onLoad={map => {
                     const bounds = new window.google.maps.LatLngBounds();
                     map.fitBounds(bounds);

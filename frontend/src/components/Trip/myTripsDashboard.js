@@ -28,7 +28,6 @@ function MyTripsDashboard()
                     img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
                 }
             ],
-            hey: "whassp",
             checklist: [
                 {
                     title: "Buy plane tickets",
@@ -39,6 +38,19 @@ function MyTripsDashboard()
                     title: "Make restaurant reservations",
                     notes: "",
                     status: "to-do"
+                }
+            ],
+            lists: [
+                {
+                    title: "Restaurants",
+                    img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+                    items: [
+                        {
+                            title: "Marco Martini Restaurant",
+                            description: "Marco Martini defines cuisine in three words: eyes, stomach, head – it is memories of flavours from bygone days that provide the impetus for his own creations.",
+                            position: {lat: 41.880549484164426, lng: 12.48471773530235}
+                        }
+                    ]
                 }
             ]
         },
@@ -92,6 +104,16 @@ function MyTripsDashboard()
                     title: "Buy plane tickets",
                     notes: "google flights option",
                     status: "completed"
+                },
+                {
+                    title: "Talk to family about hotel and also arrange visa appointment",
+                    notes: "google flights option",
+                    status: "completed"
+                },
+                {
+                    title: "Pick out second hotel for the third and sixthh nightPick out second hotel for the third and sixthh nightPick out second hotel for the third and sixthh nightPick out second hotel for the third and sixthh night",
+                    notes: "google flights option",
+                    status: "to-do"
                 },
                 {
                     title: "Make restaurant reservations",
