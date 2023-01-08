@@ -82,10 +82,10 @@ const InfoTag = styled.p`
 `
 
 const SliderContainer = styled.div`
-  min-width: 300px;
-  min-height: 300px;
-  max-width: 300px;
-  max-height: 300px;
+min-width: 300px;
+min-height: 300px;
+max-width: 300px;
+max-height: 300px;
 `
 
 
