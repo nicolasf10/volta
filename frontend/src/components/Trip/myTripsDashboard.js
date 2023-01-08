@@ -49,6 +49,16 @@ function MyTripsDashboard()
                             title: "Marco Martini Restaurant",
                             description: "Marco Martini defines cuisine in three words: eyes, stomach, head – it is memories of flavours from bygone days that provide the impetus for his own creations.",
                             position: {lat: 41.880549484164426, lng: 12.48471773530235}
+                        },
+                        {
+                            title: "Trattoria Pennestri",
+                            description: "You'll feel immediately at ease in this restaurant, which has the warm, simple atmosphere of a typical trattoria.",
+                            position: {lat: 41.873364, lng: 12.479696}
+                        },
+                        {
+                            title: "Green T.",
+                            description: "Not far from the Pantheon, this original restaurant arranged over four floors serves the type of fine Chinese cuisine which has graced official banquets in China ever since the time of Chairman Mao.",
+                            position: {lat: 41.897558631883264, lng: 12.479295860690605}
                         }
                     ]
                 }

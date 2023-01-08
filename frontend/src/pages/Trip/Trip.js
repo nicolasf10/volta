@@ -37,9 +37,10 @@ const NavItem = styled.li`
 function Trip(props) {
     const location = useLocation();
     const navigate = useNavigate();
+    const [ status, setStatus ] = useState("loading")
     const [trip, setTrip] = useState(null);
     const [page, setPage] = useState("overview");
-    const [currentPage, setCurrentPage] = useState(<TripOverview trip={trip}/>)
+    const [currentPage, setCurrentPage] = useState(<>not updated</>)
 
     useEffect(() => {
         if (!location.state) {
@@ -49,9 +50,17 @@ function Trip(props) {
             setTrip(location.state.trip);
         }
 
-        console.log(location.state.trip)
+        if (page === "overview") {
+            setCurrentPage(<TripOverview key={status} trip={location.state.trip}/>);
+        } else if (page === "lists") {
+            setCurrentPage(<TripLists key={status} trip={trip}/>);
+        } else {
+            setCurrentPage(<TripChecklist key={status} trip={trip}/>);
+        }
+
+        // console.log(location.state.trip)
         
-    }, []);
+    }, [page]);
 
     
     function pageClick(e) {
@@ -64,12 +73,17 @@ function Trip(props) {
         setPage(e.target.id);
 
         if (e.target.id === 'overview') {
-            setCurrentPage(<TripOverview trip={trip}/>);
+            setPage("overview");
+            // setCurrentPage(<TripOverview key={status} trip={trip}/>);
         } else if (e.target.id === 'lists') {
-            setCurrentPage(<TripLists trip={trip}/>);
+            setPage("lists");
+            // setCurrentPage(<TripLists trip={trip}/>);
         } else if (e.target.id === 'checklist') {
-            setCurrentPage(<TripChecklist trip={trip}/>)
+            setPage("checklist");
+            // setCurrentPage(<TripChecklist trip={trip}/>)
         }
+
+        setStatus("loaded")
     }
 
     return (

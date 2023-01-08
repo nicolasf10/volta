@@ -10,10 +10,10 @@ const PageContainer = styled.div`
 
 
 function TripOverview(props) {
-    const [trip, setTrip] = useState({...props.trip})
+    const [trip, setTrip] = useState(props.trip)
 
     useEffect(() => {
-        console.log(trip);
+        console.log(props);
         setTrip(props.trip);
         
     }, [props.trip])
