@@ -333,6 +333,9 @@ function MyTripsDashboard()
         padding: 0px 20px;
         -webkit-box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.36); 
         box-shadow: 5px 5px 11px 3px rgba(0,0,0,0.36);
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
 
         background-color: lightblue;
         background-image: url(${props => props.image ? props.image : "none"};);
@@ -369,25 +372,29 @@ function MyTripsDashboard()
     `
 
     const TripDetails = styled.div`
-        height: inherit;
-        vertical-align: bottom;
-        margin: 0;
-        display: table-cell;
+        /* height: inherit; */
+        align-self: end;
+        justify-self: end;
+        margin: 0px 0px 15px 0px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 10px;
     `
 
     const TripTitle = styled.h3`
-        color: #fff;
-        font-family: 'Sen', sans-serif;
+        color: #000;
+        display: inline;
+        font-family: 'Lora', serif;
         text-transform: uppercase;
         font-weight: 700;
-        -webkit-text-stroke: 0.3px #000;
-    `
+`
 
     const TripDate = styled.p`
-        color: #EDEDED;
-        -webkit-text-stroke: 0.3px #000;
+        color: #333333;
         font-weight: 600;
-        font-size: 1.2rem;
+        font-size: 1rem;
+        font-family: "Sen", sans-serif;
+        margin: 0px;
     `
 
     const IconsContainer = styled.div`

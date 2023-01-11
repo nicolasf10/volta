@@ -7,11 +7,12 @@ const CategoryContainer = styled.div`
     background-color: #fff;
     -webkit-box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75); 
     box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75);
-
-    margin: 15px 10px;
+    position: relative;
+    margin: 15px 15px;
     padding: 0;
     border-radius: 10px;
-    grid-row-end: span 26;
+    width: 300px;
+    height: 400px;
 
     transition: transform 0.2s ease;
 
@@ -23,16 +24,28 @@ const CategoryContainer = styled.div`
 
 const Background = styled.img`
     width: 100%;
-    height: 80%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px 10px 0px 0px;
-    scale: 1.01;
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
 `
 
 const CategoryTitle = styled.h1`
+    position: absolute;
+    left: 15px;
+    bottom: 7.5px;
+    color: #000;
+    background-color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 10px;
+    /* -webkit-text-stroke: 0.3px #fff; */
     font-size: 1.3em;
     font-family: "Sen", sans-serif;
     font-weight: 600;
+    /* margin: 10px 0px 0px 10px; */
 `
 
 

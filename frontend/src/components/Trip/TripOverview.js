@@ -5,9 +5,15 @@ import Map from './Map.js';
 
 
 const PageContainer = styled.div`
-
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: end;
 `
 
+const mapStyle = {
+    justifySelf: 'start'
+}
 
 function TripOverview(props) {
     const [trip, setTrip] = useState(props.trip)
@@ -20,8 +26,8 @@ function TripOverview(props) {
 
     return (
         <PageContainer>
-            overview
             <Map
+                style={mapStyle}
                 trip={trip}
                 onLoad={map => {
                     const bounds = new window.google.maps.LatLngBounds();

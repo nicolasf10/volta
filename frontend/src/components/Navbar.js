@@ -41,7 +41,9 @@ function NavbarComponent(props)
     return (
         <Navbar collapseOnSelect expand="lg" bg="transparent" variant="light">
             <Navbar.Brand href="">
-                <LogoImg src={logo}/>
+                <Link to="/">
+                    <LogoImg src={logo}/>
+                </Link>
             </Navbar.Brand>
             <Navbar.Toggle className='nav-toggle' aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
