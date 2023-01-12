@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import DetailsContent from './DetailsContent';
 
+
+const ListContainer = styled.div`
+
+`
 
 const CategoryContainer = styled.div`
     background-color: #fff;
@@ -17,12 +22,12 @@ const CategoryContainer = styled.div`
     transition: transform 0.2s ease;
 
     &:hover {
-        /* cursor: pointer;
-        transform: scale(1.03); */
+        cursor: pointer;
+        transform: scale(1.03);
 
-        .card-inner {
+        /* .card-inner {
             transform: rotateY(180deg);
-          }
+          } */
     }
 `
 
@@ -81,26 +86,43 @@ const CardBack = styled.div`
     transform: rotateY(180deg);
 `
 
+const CategoryDetails = styled.div`
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(200, 200, 200, .3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+`
+
+
 function ListCategory(props) {
     const [ list, setList ] = useState(props.list);
+    const [ show, setShow ] = useState('none');
 
     useEffect(() => {
         console.log(props);
         setList(props.list);
     }, [])
 
+    const wrapperSetShow = useCallback(val => {
+        setShow(val);
+    }, [setShow]);
+
     return (
-        <CategoryContainer background={list.img}>
-            <CardInner className='card-inner'>
-                <CardFront>
-                    <Background src={list.img} alt={list.title} />
-                    <CategoryTitle>{list.title}</CategoryTitle>
-                </CardFront>
-                <CardBack>
-                    
-                </CardBack>
-            </CardInner>
-        </CategoryContainer>
+        <ListContainer>
+            <CategoryContainer onClick={() => setShow('flex')} background={list.img}>
+                <Background src={list.img} alt={list.title} />
+                <CategoryTitle>{list.title}</CategoryTitle>
+            </CategoryContainer>
+            <CategoryDetails style={{display: show}}>
+                <DetailsContent list={list} parentStateSetter={wrapperSetShow} />
+            </CategoryDetails>
+        </ListContainer>
     );
 }
 

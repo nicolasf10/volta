@@ -53,7 +53,7 @@ const BackIcon = styled.i`
 `
 
 const BannerDate = styled.h3`
-    font-family : "Sen", "sans-serif";
+    font-family : "Sen", sans-serif;
     font-weight: 400;
     font-size: 1.4rem;
     color: #fff;
