@@ -5,8 +5,6 @@ import styled from 'styled-components';
 
 const CategoryContainer = styled.div`
     background-color: #fff;
-    -webkit-box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75); 
-    box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75);
     position: relative;
     margin: 15px 15px;
     padding: 0;
@@ -14,11 +12,17 @@ const CategoryContainer = styled.div`
     width: 300px;
     height: 400px;
 
+    perspective: 1000px;
+
     transition: transform 0.2s ease;
 
     &:hover {
-        cursor: pointer;
-        transform: scale(1.03);
+        /* cursor: pointer;
+        transform: scale(1.03); */
+
+        .card-inner {
+            transform: rotateY(180deg);
+          }
     }
 `
 
@@ -41,13 +45,41 @@ const CategoryTitle = styled.h1`
     text-transform: uppercase;
     padding: 10px;
     border-radius: 10px;
-    /* -webkit-text-stroke: 0.3px #fff; */
     font-size: 1.3em;
     font-family: "Sen", sans-serif;
     font-weight: 600;
-    /* margin: 10px 0px 0px 10px; */
 `
 
+const CardInner = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    -webkit-box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75); 
+    box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75);
+    border-radius: inherit;
+`
+
+const CardFront = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: inherit;
+`
+
+const CardBack = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    transform: rotateY(180deg);
+`
 
 function ListCategory(props) {
     const [ list, setList ] = useState(props.list);
@@ -59,8 +91,15 @@ function ListCategory(props) {
 
     return (
         <CategoryContainer background={list.img}>
-            <Background src={list.img} alt={list.title} />
-            <CategoryTitle>{list.title}</CategoryTitle>
+            <CardInner className='card-inner'>
+                <CardFront>
+                    <Background src={list.img} alt={list.title} />
+                    <CategoryTitle>{list.title}</CategoryTitle>
+                </CardFront>
+                <CardBack>
+                    
+                </CardBack>
+            </CardInner>
         </CategoryContainer>
     );
 }
