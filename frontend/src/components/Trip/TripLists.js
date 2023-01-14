@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import ListCategory from './ListCategory';
+import NewList from './NewList';
 
 
 const ListsContainer = styled.div`
@@ -31,6 +32,7 @@ function TripLists(props) {
                     <ListCategory list={item} />
                 ))
             }
+            <NewList trip={trip} />
         </ListsContainer>
     );
 }

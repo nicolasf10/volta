@@ -82,8 +82,8 @@ function ChecklistItem(props) {
                         <ItemTitle>{thisItem.title}</ItemTitle>
                     </TitleContainer>
                     <IconsContainer>
-                        <i class="fa fa-solid fa-trash"></i>
                         <i class="fa fa-solid fa-pencil"></i>
+                        <i class="fa fa-solid fa-trash"></i>
                     </IconsContainer>
                 </TodoItem>
             </ItemContainer>
