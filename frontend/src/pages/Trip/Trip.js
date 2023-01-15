@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom'
-import TripBanner from '../../components/TripBanner';
+import TripBanner from '../../components/Trip/TripBanner';
 import TripOverview from '../../components/Trip/TripOverview';
 import TripLists from '../../components/Trip/TripLists';
 import TripChecklist from '../../components/Trip/TripChecklist';

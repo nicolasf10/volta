@@ -18,14 +18,6 @@ const ToggleOption = styled.button`
     font-size: 20px;
     border: none;
     background: none;
-    color: ${props => {
-        const active = props.active
-        if (active) {
-            return "#000";
-        } else {
-            return "#7d7d7d";
-        }
-    }}
 `
 
 const Toggles = styled.div`
@@ -54,6 +46,7 @@ const convertMarkers = (trip) => {
                 markersList.push(
                     {
                         label: marker.title,
+                        icon: item.icon,
                         position: marker.position
                     }
                 )
@@ -87,10 +80,6 @@ function Map(props) {
         transit: false
     });
 
-    const onLoadMarker = marker => {
-        console.log("marker: ", marker)
-    }
-
     useEffect(() => {
         setTrip(props.trip);
         let convert = convertMarkers(trip);
@@ -100,15 +89,6 @@ function Map(props) {
 
     }, [props.trip])
 
-    // const onLoad = React.useCallback(function callback(map) {
-    //     // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    //     const bounds = new window.google.maps.LatLngBounds(center);
-    //     map.fitBounds(bounds);
-    
-    //     setMap(map)
-    // }, [])
-    
-
     return (
         <MapContainer>
             <LoadScript
@@ -117,14 +97,13 @@ function Map(props) {
                 <GoogleMap
                     id="map"
                     mapContainerStyle={containerStyle} 
-                    // onLoad={onLoad}
                     center={center}
                     zoom={13}
 
                 >
                     <Toggles>
-                        <ToggleOption active={layers.bicycling} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>
-                        <ToggleOption active={layers.transit} onClick={() => (setLayers({...layers, transit: !(layers.transit)}))}><i className="fa fa-solid fa-train"></i></ToggleOption>
+                        <ToggleOption style={{color: layers.bicycling ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>
+                        <ToggleOption style={{color: layers.transit ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, transit: !(layers.transit)}))}><i className="fa fa-solid fa-train"></i></ToggleOption>
                     </Toggles>
                     { layers.bicycling ? <BicyclingLayer/> : <></> }
                     { layers.transit ? <TransitLayer/> : <></> }
@@ -135,7 +114,12 @@ function Map(props) {
                             key={index}
                             position={item.position}
                             label={item.label}
-                            // onLoad={onLoadMarker}
+                            icon={{
+                                // path: google.maps.SymbolPath.CIRCLE,
+                                url: (require(`./MarkerIcons/${item.icon}.png`)),
+                                fillColor: '#EB00FF',
+                                scale: 0.1,
+                            }}
                         />
                     )) }
                 </GoogleMap>
