@@ -41,7 +41,7 @@ const InfoWindowContainer = styled.div`
 
 const InfoWindowCategory = styled.h6`
     font-family: "Sen", sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.73rem;
     font-weight: 600;
     color: #6A6A6A;
     text-transform: uppercase;
