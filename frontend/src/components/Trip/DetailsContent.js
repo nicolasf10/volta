@@ -34,6 +34,7 @@ function DetailsContent(props) {
         setList(props.list);
     }, [])
 
+    //test
     return (
         <ContentContainer>
             <BackContainer onClick={() => props.parentStateSetter('none')}>
