@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import logo from './../../images/logo1.svg';
 import styled from 'styled-components';
-import { TripsData } from './TripsData';
 import { emojiCountryCode } from 'country-code-emoji';
 
 
@@ -173,19 +172,17 @@ const TripEmojiImg = styled.img`
     margin-left: 15px;
 `
 
-function MyTripsDashboard()
+function MyTripsDashboard(props)
 {
  
-    const [trips, setTrips] = useState(TripsData);
+    const [trips, setTrips] = useState(props.trips);
 
     const [ emojiImg, setEmojiImg ] = useState(["Windows", "Win16", "Win32", "WinCE"].includes(window.navigator.userAgentData.platform));
 
-    // const 
 
     useEffect(() => {
-        console.log(emojiCountryCode(TripsData[0].emoji))
-        console.log("https://flagcdn.com/48x36/" + emojiCountryCode(TripsData[0].emoji) + ".png");
-    }, [])
+        setTrips(props.trips);
+    }, [props.trips])
 
     return (
         <MyTripsDashboardContainer>

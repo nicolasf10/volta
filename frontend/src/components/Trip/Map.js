@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { GoogleMap, LoadScript, useJsApiLoader, MarkerF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, useJsApiLoader, MarkerF, InfoWindowF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
 import LocationPin from './LocationPin';
 
 
@@ -33,6 +33,36 @@ const Toggles = styled.div`
     border-radius: 0px 10px 10px 0px;
 `
 
+const InfoWindowContainer = styled.div`
+    background: white;
+    /* border: 1px solid #ccc; */
+    padding: 15px;
+`
+
+const InfoWindowCategory = styled.h6`
+    font-family: "Sen", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6A6A6A;
+    text-transform: uppercase;
+`
+
+const InfoWindowLabel = styled.h6`
+    font-family: "Sen", sans-serif;
+`
+
+const InfoWindowDescription = styled.p`
+
+`
+
+const InfoWindowLink = styled.a`
+    font-family: "Sen", sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+`
+
 const convertMarkers = (trip) => {
     var markersList = [];
     
@@ -43,10 +73,14 @@ const convertMarkers = (trip) => {
         trip.lists.forEach(function(item) {
             console.log(item)
             item.items.forEach(function(marker) {
+                console.log(marker)
                 markersList.push(
                     {
+                        list: item.title,
                         label: marker.title,
                         icon: item.icon,
+                        description: marker.description,
+                        link: marker.link,
                         position: marker.position
                     }
                 )
@@ -70,6 +104,7 @@ const convertMarkers = (trip) => {
     return convert;
 }
 
+
 function Map(props) {
     const [ trip, setTrip ] = useState(props.trip);
     const [ markers, setMarkers ] = useState([]);
@@ -79,6 +114,11 @@ function Map(props) {
         bicycling: false,
         transit: false
     });
+
+    const [ infoWindow, setInfoWindow ] = useState({
+        showInfoWindow: true,
+        selectedMarker: null,
+    })
 
     useEffect(() => {
         setTrip(props.trip);
@@ -93,13 +133,13 @@ function Map(props) {
         <MapContainer>
             <LoadScript
                 googleMapsApiKey="AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
+                language='en'
             >
                 <GoogleMap
                     id="map"
                     mapContainerStyle={containerStyle} 
                     center={center}
                     zoom={13}
-
                 >
                     <Toggles>
                         <ToggleOption style={{color: layers.bicycling ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>
@@ -113,7 +153,9 @@ function Map(props) {
                         <MarkerF
                             key={index}
                             position={item.position}
-                            label={item.label}
+                            onClick={() => {
+                                setInfoWindow({...infoWindow, selectedMarker: item})
+                            }}
                             icon={{
                                 // path: google.maps.SymbolPath.CIRCLE,
                                 url: (require(`./MarkerIcons/${item.icon}.png`)),
@@ -122,6 +164,26 @@ function Map(props) {
                             }}
                         />
                     )) }
+                    { infoWindow.selectedMarker ? 
+                        <InfoWindowF
+                            // onLoad={onLoad}
+                            position={infoWindow.selectedMarker.position}
+                            onCloseClick={
+                                () => {
+                                    setInfoWindow({...infoWindow, selectedMarker: null})
+                                }
+                            }
+                            marker={infoWindow.selectedMarker}
+                        >
+                            <InfoWindowContainer>
+                                <InfoWindowCategory>{infoWindow.selectedMarker.list}</InfoWindowCategory>
+                                <InfoWindowLabel>{infoWindow.selectedMarker.label}</InfoWindowLabel>
+                                <InfoWindowDescription>{infoWindow.selectedMarker.description}</InfoWindowDescription>
+                                <InfoWindowLink onClick={() => (window.open(infoWindow.selectedMarker.link))}>Open in Google Maps</InfoWindowLink>
+                            </InfoWindowContainer>
+                        </InfoWindowF>
+                        : null
+                    }
                 </GoogleMap>
             </LoadScript>
         </MapContainer>
