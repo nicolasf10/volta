@@ -119,14 +119,14 @@ margin: 0px;
 `
 
 const IconsContainer = styled.div`
-font-size: 1.4rem;
-display: none;
-color: #fff;
-position: absolute;
-opacity: 0;
-transition: all 0.3s ease;
-top: 15px;
-right: 20px;
+    font-size: 1.4rem;
+    display: none;
+    color: #fff;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.3s ease;
+    top: 15px;
+    right: 20px;
 `
 
 const NewTripButton = styled.button`

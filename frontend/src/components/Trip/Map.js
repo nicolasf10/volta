@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { GoogleMap, LoadScript, useJsApiLoader, MarkerF, InfoWindowF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
 import LocationPin from './LocationPin';
+import WorldLoader from '../WorldLoader';
 
 
 const containerStyle = {
@@ -11,7 +12,7 @@ const containerStyle = {
 };
 
 const MapContainer = styled.div`
-
+    background-color: #e6e6e6;
 `
 
 const ToggleOption = styled.button`
@@ -125,15 +126,16 @@ function Map(props) {
         let convert = convertMarkers(trip);
         setMarkers(convert.markers);
         setCenter(convert.center);
-        console.log(process.env.GOOGLEKEY)
+        console.log("MAP LOADED")
 
     }, [props.trip])
 
     return (
-        <MapContainer>
+        <MapContainer style={containerStyle}>
             <LoadScript
                 googleMapsApiKey="AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
                 language='en'
+                loadingElement={WorldLoader}
             >
                 <GoogleMap
                     id="map"

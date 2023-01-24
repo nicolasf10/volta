@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import ListBanner from './ListBanner';
 
 
 const ContentContainer = styled.div`
+    position: relative;
     border-radius: 10px;
     background-color: #fff;
     width: 80vw;
@@ -17,8 +19,12 @@ const ContentContainer = styled.div`
 
 const BackContainer = styled.div`
     margin: 15px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
     cursor: pointer;
     font-family : "Sen", "sans-serif";
+    -webkit-text-stroke: 0.2px #fff;
 `
 
 const BackIcon = styled.i`
@@ -40,6 +46,7 @@ function DetailsContent(props) {
             <BackContainer onClick={() => props.parentStateSetter('none')}>
                 <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> Back
             </BackContainer>
+            <ListBanner list={list}/>
         </ContentContainer>
     );
 }

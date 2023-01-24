@@ -24,10 +24,12 @@ const CategoryContainer = styled.div`
     &:hover {
         cursor: pointer;
         transform: scale(1.03);
+    }
 
-        /* .card-inner {
-            transform: rotateY(180deg);
-          } */
+    &:hover .icons-container {
+        display: inline;
+        transition: all 0.3s ease;
+        opacity: 1;
     }
 `
 
@@ -99,6 +101,17 @@ const CategoryDetails = styled.div`
     align-items: center;
 `
 
+const IconsContainer = styled.div`
+    font-size: 1.4rem;
+    display: none;
+    color: #fff;
+    position: absolute;
+    opacity: 0;
+    transition: all 0.3s ease;
+    top: 15px;
+    right: 20px;
+`
+
 
 function ListCategory(props) {
     const [ list, setList ] = useState(props.list);
@@ -117,6 +130,9 @@ function ListCategory(props) {
         <ListContainer>
             <CategoryContainer onClick={() => setShow('flex')} background={list.img}>
                 <Background src={list.img} alt={list.title} />
+                <IconsContainer className='icons-container'>
+                    <i class="fa fa-solid fa-trash"></i>
+                </IconsContainer>
                 <CategoryTitle>{list.title}</CategoryTitle>
             </CategoryContainer>
             <CategoryDetails style={{display: show}}>
