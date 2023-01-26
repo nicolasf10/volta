@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import TripShareContainer from './TripShareContainer';
 import { Link } from 'react-router-dom'
-import { emojiCountryCode } from 'country-code-emoji';
 
 
 const Banner = styled.div`
@@ -68,7 +67,6 @@ const TripEmojiImg = styled.img`
 
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
-    const [ emojiImg, setEmojiImg ] = useState(["Windows", "Win16", "Win32", "WinCE"].includes(window.navigator.userAgentData.platform));
 
     return (
         <Banner background={trip.image}>
@@ -78,7 +76,7 @@ function TripBanner(props) {
                 </Link>
             </BackDiv>
             <BannerText>
-                <BannerTitle>{trip.title} {emojiImg ? <TripEmojiImg src={"https://flagcdn.com/96x72/" + emojiCountryCode(trip.emoji).toLowerCase() + ".png"}/> : trip.emoji}</BannerTitle>
+                <BannerTitle>{trip.title} {<TripEmojiImg src={"https://flagcdn.com/96x72/" + trip.emoji.toLowerCase() + ".png"}/>}</BannerTitle>
                 <BannerDate>{trip.date}</BannerDate>
             </BannerText>
             <TripShareContainer members={trip.members} />

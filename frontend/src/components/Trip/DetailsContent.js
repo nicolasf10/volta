@@ -20,8 +20,9 @@ const ContentContainer = styled.div`
 const BackContainer = styled.div`
     margin: 15px;
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 5px;
+    background: red;
+    left: 0px;
     cursor: pointer;
     font-family : "Sen", "sans-serif";
     -webkit-text-stroke: 0.2px #fff;

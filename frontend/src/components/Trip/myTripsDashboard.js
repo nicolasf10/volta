@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import logo from './../../images/logo1.svg';
 import styled from 'styled-components';
-import { emojiCountryCode } from 'country-code-emoji';
 
 
 const MyTripsDashboardContainer = styled.div`
@@ -177,9 +176,6 @@ function MyTripsDashboard(props)
  
     const [trips, setTrips] = useState(props.trips);
 
-    const [ emojiImg, setEmojiImg ] = useState(["Windows", "Win16", "Win32", "WinCE"].includes(window.navigator.userAgentData.platform));
-
-
     useEffect(() => {
         setTrips(props.trips);
     }, [props.trips])
@@ -198,7 +194,7 @@ function MyTripsDashboard(props)
                                             <i class="fa fa-solid fa-trash"></i>
                                         </IconsContainer>
                                         <TripDetails>
-                                            <TripTitle>{trip.title} {emojiImg ? <TripEmojiImg src={"https://flagcdn.com/64x48/" + emojiCountryCode(trip.emoji).toLowerCase() + ".png"}/> : trip.emoji}</TripTitle>
+                                            <TripTitle>{trip.title} {<TripEmojiImg src={"https://flagcdn.com/64x48/" + trip.emoji.toLowerCase() + ".png"}/>}</TripTitle>
                                             <TripDate>{ trip.date}</TripDate>
                                         </TripDetails>
                                     </Trip>
