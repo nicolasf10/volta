@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import TripShareContainer from './TripShareContainer';
 import { Link } from 'react-router-dom'
+import EmojiImg from '../EmojiImg';
 
 
 const Banner = styled.div`
@@ -36,19 +37,25 @@ const BackDiv = styled.button`
     position: absolute;
     top: 10px;
     left: 10px;
-    color: #fff;
-    font-size: 1.5rem;
+    color: #000;
+    font-size: 1.1rem;
     background: none;
     border: none;
     font-family: "Sen", "sans-serif";
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 100px;
+    padding: 5px 10px;
+    transition: 0.15s ease;
+
+    &:hover {
+        background-color: #fff;
+    }
 `
 
 const BackText = styled.span`
-    -webkit-text-stroke: 0.2px #000;
 `
 
 const BackIcon = styled.i`
-    -webkit-text-stroke: 0.2px #000;
 `
 
 const BannerDate = styled.h3`
@@ -60,10 +67,27 @@ const BannerDate = styled.h3`
     text-align: center;
 `
 
-const TripEmojiImg = styled.img`
-    height: 100%;
-    margin-left: 15px;
+const EmojiContainer = styled.div`
+    display: inline-flex;
+    height: 70px;
+    width: 70px;
+    transition: 0.15s ease;
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
 `
+
+const IconsContainer = styled.div`
+
+`
+
+const IconI = styled.i`
+    
+`
+
 
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
@@ -71,14 +95,17 @@ function TripBanner(props) {
     return (
         <Banner background={trip.image}>
             <BackDiv>
-                <Link style={{color: "#fff", textDecoration: "none"}} to="/">
+                <Link style={{color: "#000", textDecoration: "none"}} to="/">
                     <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> <BackText>My trips</BackText>
                 </Link>
             </BackDiv>
             <BannerText>
-                <BannerTitle>{trip.title} {<TripEmojiImg src={"https://flagcdn.com/96x72/" + trip.emoji.toLowerCase() + ".png"}/>}</BannerTitle>
+                <BannerTitle>{trip.title} <EmojiContainer><EmojiImg size="60px" emoji={trip.emoji} /></EmojiContainer></BannerTitle>
                 <BannerDate>{trip.date}</BannerDate>
             </BannerText>
+            <IconsContainer>
+                <IconI className="fa "/>
+            </IconsContainer>
             <TripShareContainer members={trip.members} />
         </Banner>
     );

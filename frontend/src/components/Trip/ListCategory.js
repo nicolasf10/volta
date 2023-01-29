@@ -27,7 +27,9 @@ const CategoryContainer = styled.div`
     }
 
     &:hover .icons-container {
-        display: inline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         transition: all 0.3s ease;
         opacity: 1;
     }
@@ -57,37 +59,6 @@ const CategoryTitle = styled.h1`
     font-weight: 600;
 `
 
-const CardInner = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    -webkit-box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75); 
-    box-shadow: 5px 5px 15px -6px rgba(0,0,0,0.75);
-    border-radius: inherit;
-`
-
-const CardFront = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: inherit;
-`
-
-const CardBack = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-    transform: rotateY(180deg);
-`
-
 const CategoryDetails = styled.div`
     box-sizing: border-box;
     width: 100vw;
@@ -102,14 +73,19 @@ const CategoryDetails = styled.div`
 `
 
 const IconsContainer = styled.div`
-    font-size: 1.4rem;
+    font-size: 1.4em;
     display: none;
-    color: #fff;
+    color: #000;
     position: absolute;
     opacity: 0;
     transition: all 0.3s ease;
     top: 15px;
     right: 20px;
+    background-color: #fff;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
 `
 
 

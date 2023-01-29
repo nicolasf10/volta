@@ -4,35 +4,61 @@ import styled from 'styled-components';
 
 
 const BannerContainer = styled.div`
-    background: lightblue;
+    position: relative;
     border-radius: inherit;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    height: 100px;
-
-    background-color: lightblue;
-    background-image: url(${props => props.background ? props.background : "none"};);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 150px;
+    border-bottom: 2.5px solid #000;
+    box-sizing: border-box;
 `
 
-const BannerHeader = styled.p`
-    border: 3px dotted green;
+const BannerHeader = styled.div`
+    color: #000;
+    background-color: #fff;
+    z-index: 3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    border-radius: 10px;
 `
 
 const BannerTitle = styled.p`
-    color: #000;
-    background-color: #fff;
-    border: 3px red solid;
-    display: inline-block;
-    font-family: 'Lora', serif;
-    text-transform: uppercase;
     font-weight: 700;
     font-size: 1.7em;
+    font-family: 'Lora', serif;
+    text-transform: uppercase;
+    margin: 0px;
+`
+
+const BackgroundImg = styled.img`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-radius: inherit;
+    z-index: 1;
+`
+
+const IconsContainer = styled.div`
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 10px;
     display: flex;
-    justify-content: start;
-    align-items: center;
+    flex-direction: row;
+    z-index: 5;
+    font-size: 1.1em;
+`
+
+const IconI = styled.i`
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
 `
 
 
@@ -47,9 +73,14 @@ function ListBanner(props) {
     
     return (
         <BannerContainer background={list.img}>
+            <BackgroundImg src={list.img}/>
             <BannerHeader>
                 <BannerTitle>{list.title}</BannerTitle>
             </BannerHeader>
+            <IconsContainer>
+                <IconI className="fa fa-solid fa-image"></IconI>
+                <IconI className="fa fa-solid fa-pencil"></IconI>
+            </IconsContainer>
         </BannerContainer>
     );
 }

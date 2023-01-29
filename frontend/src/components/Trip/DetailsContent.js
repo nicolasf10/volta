@@ -18,14 +18,21 @@ const ContentContainer = styled.div`
 `
 
 const BackContainer = styled.div`
-    margin: 15px;
+    margin: 10px;
     position: absolute;
-    top: 5px;
-    background: red;
+    top: 0px;
     left: 0px;
     cursor: pointer;
     font-family : "Sen", "sans-serif";
-    -webkit-text-stroke: 0.2px #fff;
+    z-index: 4;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 100px;
+    padding: 5px 10px;
+    transition: 0.15s ease;
+
+    &:hover {
+        background-color: #fff;
+    }
 `
 
 const BackIcon = styled.i`

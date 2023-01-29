@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import logo from './../images/logo1.svg';
 import styled from 'styled-components';
+import EmojiImg from './EmojiImg';
 
 function BucketListDashboard()
 {
@@ -62,14 +63,14 @@ function BucketListDashboard()
 
     return (
         <MyTripsDashboardContainer>
-            <MyTripsHeading>Bucket List 🪣</MyTripsHeading>
+                <MyTripsHeading>Bucket List {<EmojiImg size="45px" emoji="🪣"/>}</MyTripsHeading>
             <div className="container">
                 <div className="dashboard-row row">
                         {trips.length > 0 ?
                         trips.map((trip) => (
                             <h1>bucket</h1>
                         )) :
-                            <NoTrips><HeadingSpan>Oh no! You better add something to your bucket list. <Link style={{textDecoration:'none'}} to="/explore"><ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
+                            <NoTrips><HeadingSpan>Oh no! You better add something to your bucket list. <Link style={{textDecoration:'none'}} to="/explore"><ExploreLink>Explore<EmojiSpan><EmojiImg emoji="🌎" size="60px"/></EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
                         }
                 </div>
             </div>
