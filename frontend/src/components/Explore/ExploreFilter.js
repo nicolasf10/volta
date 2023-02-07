@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import EmojiImg from '../EmojiImg';
 
 
 const ExploreFilterContainer = styled.div`
@@ -58,69 +59,85 @@ function ExploreFilter() {
     [
       "Destination type",
       {
-        title: "🏖 Beach vacation",
+        title: "Beach vacation",
+        emoji: "🏖️",
         value: "type-beach"
       },
       {
-        title: "🏙 City trip",
+        title: "City trip",
+        emoji: "🏙️",
         value: "type-city"
       },
       {
-        title: "🏔 Nature adventure",
+        title: "Nature adventure",
+        emoji: "⛰️",
         value: "type-nature"
       },
       {
-        title: "❄️ Winter vacation",
+        title: "Winter vacation",
+        emoji: "❄️",
         value: "type-winter"
       },
       "Society",
       {
-        title: "🏛 Architecture",
+        title: "Architecture",
+        emoji: "🏛️",
         value: "society-architecture"
       },
       {
-        title: "🗽 Sightseeing",
+        title: "Sightseeing",
+        emoji: "🗽",
         value: "society-sightseeing"
       },
       {
-        title: "🏺 Museums",
+        title: "Museums",
+        emoji: "🏺",
         value: "society-museums"
       },
       {
-        title: "🍔 Culinary",
+        title: "Culinary",
+        emoji: "🍔",
         value: "society-culinary"
       },
       {
-        title: "⚽️ Sports",
+        title: "Sports",
+        emoji: "⚽️",
         value: "society-sports"
       },
       {
-        title: "🍺 Night life",
+        title: "Night life",
+        emoji: "🍺",
         value: "society-night"
       },
       {
-        title: "👶 Kid friendly",
+        title: "Kid friendly",
+        emoji: "👶",
         value: "society-kid"
       },
       "Location",
       {
-        title: "🌍 Europe",
+        title: "Europe",
+        emoji: "🌍",
         value: "location-europe"
       },
       {
-        title: "🌍 Africa",
+        title: "Africa",
+        emoji: "🌍",
         value: "location-africa"
       },
       {
-        title: "🌎 North/South America",
+        title: "North/South America",
+        emoji: "🌎",
         value: "location-america"
       },
       {
-        title: "🌏 Asia/Oceania",
+        title: "Asia/Oceania",
+        emoji: "🌏",
         value: "location-asiaoceania"
       },
       {
-        title: "🌕 Other",
+        title: "Other",
+        emoji: "🌕",
         value: "location-other"
       },
     ]
@@ -133,7 +150,7 @@ function ExploreFilter() {
             typeof filter == "string" ? <SectionLabel>{filter}</SectionLabel> :
             <CheckboxContainer>
               <ExploreCheckbox type="checkbox" value={filter.value}/>
-              <CheckboxLabel>{filter.title}</CheckboxLabel>
+              <CheckboxLabel><EmojiImg emoji={filter.emoji}/> {filter.title}</CheckboxLabel>
             </CheckboxContainer>
           ))}
         </ExploreForm>

@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import EmojiImg from '../EmojiImg';
 import ImageSlider from './ImageSlider';
 
 
 const filterDictionary = {
-  "type-beach" : "🏖 Beach vacation",
-  "type-city" : "🏙 City trip",
-  "type-nature" : "🏔 Nature adventure",
-  "type-winter" : "❄️ Winter vacation",
-  "society-architecture" : "🏛 Architecture",
-  "society-sightseeing" : "🗽 Sightseeing",
-  "society-museums" : "🏺 Museums",
-  "society-culinary" : "🍔 Culinary",
-  "society-sports" : "⚽️ Sports",
-  "society-night" : "🍺 Night life",
-  "society-kid" : "👶 Kid friendly",
-  "location-europe" : "🌍 Europe",
-  "location-africa" : "🌍 Africa",
-  "location-america" : "🌎 North/South America",
-  "location-asiaoceania" : "🌏 Asia/Oceania",
-  "location-other" : "🌕 Other"
+  "type-beach" : ["🏖️", "Beach vacation"],
+  "type-city" : ["🏙️", "City trip"],
+  "type-nature" : ["⛰️", "Nature adventure"],
+  "type-winter" : ["❄️", "Winter vacation"],
+  "society-architecture" : ["🏛️", "Architecture"],
+  "society-sightseeing" : ["🗽", "Sightseeing"],
+  "society-museums" : ["🏺", "Museums"],
+  "society-culinary" : ["🍔", "Culinary"],
+  "society-sports" : ["⚽️", "Sports"],
+  "society-night" : ["🍺", "Night life"],
+  "society-kid" : ["👶", "Kid friendly"],
+  "location-europe" : ["🌍", "Europe"],
+  "location-africa" : ["🌍", "Africa"],
+  "location-america" : ["🌎", "North/South America"],
+  "location-asiaoceania" : ["🌏", "Asia/Oceania"],
+  "location-other" : ["🌕", "Other"]
 }
 
 const ExploreDashboardDestinationContainer = styled.div`
   background-color: white;
   border-radius: 15px;
-  height: 300px;
+  min-height: 300px;
   display: flex;
   flex-direction: row;
   -webkit-box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.28); 
@@ -35,7 +36,7 @@ const ExploreDashboardDestinationContainer = styled.div`
 `
 
 const DestinationInfo = styled.div`
-  padding: 0px 20px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +104,7 @@ function ExploreDashboardDestination(props) {
             <TagsTitle>Perfect if you like...</TagsTitle>
               <TagsList>
                 {props.destination.tags.map((tag) => (
-                    <InfoTag>{filterDictionary[tag]}</InfoTag>
+                    <InfoTag><EmojiImg emoji={filterDictionary[tag][0]}/>{filterDictionary[tag][1]}</InfoTag>
                 ))}
               </TagsList>
           </TagsContainer>
