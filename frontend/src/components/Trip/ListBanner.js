@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import EmojiImg from '../EmojiImg';
 
 
 const BannerContainer = styled.div`
@@ -23,6 +24,9 @@ const BannerHeader = styled.div`
     transform: translate(-50%, -50%);
     padding: 15px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const BannerTitle = styled.p`
@@ -31,6 +35,7 @@ const BannerTitle = styled.p`
     font-family: 'Lora', serif;
     text-transform: uppercase;
     margin: 0px;
+    display: inline;
 `
 
 const BackgroundImg = styled.img`
@@ -61,6 +66,22 @@ const IconI = styled.i`
     margin-right: 10px;
 `
 
+const EmojiContainer = styled.div`
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    transition: 0.15s ease;
+    border-radius: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(100, 100, 100, 0.5);
+    }
+`
+
 
 function ListBanner(props) {
     const [ list, setList ] = useState(props.list);
@@ -75,7 +96,7 @@ function ListBanner(props) {
         <BannerContainer background={list.img}>
             <BackgroundImg src={list.img}/>
             <BannerHeader>
-                <BannerTitle>{list.title}</BannerTitle>
+                <BannerTitle>{list.title}</BannerTitle><EmojiContainer><EmojiImg size="32px" emoji={list.emoji} /></EmojiContainer>
             </BannerHeader>
             <IconsContainer>
                 <IconI className="fa fa-solid fa-image"></IconI>

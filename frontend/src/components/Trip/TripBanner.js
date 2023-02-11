@@ -69,6 +69,8 @@ const BannerDate = styled.h3`
 
 const EmojiContainer = styled.div`
     display: inline-flex;
+    justify-content: center;
+    align-items: center;
     height: 70px;
     width: 70px;
     transition: 0.15s ease;

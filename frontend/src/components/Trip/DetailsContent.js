@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import ExistingPlaces from './ExistingPlaces';
 import ListBanner from './ListBanner';
+import NewPlaces from './NewPlaces';
 
+const google = window.google;
 
 const ContentContainer = styled.div`
     position: relative;
@@ -39,22 +42,39 @@ const BackIcon = styled.i`
 
 `
 
+const PlacesCategories = styled.div``
+
 
 function DetailsContent(props) {
     const [ list, setList ] = useState(props.list);
+    const [ recommendations, setRecommendations] = useState([]);
 
     useEffect(() => {
         console.log(props.list);
         setList(props.list);
+
+        let input = "restuarants"
+        const searchBox = new google.maps.places.SearchBox(input).getPlaces("restaurant");
+        console.log(searchBox)
+
     }, [])
 
-    //test
     return (
         <ContentContainer>
             <BackContainer onClick={() => props.parentStateSetter('none')}>
                 <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> Back
             </BackContainer>
             <ListBanner list={list}/>
+            <PlacesCategories className="container">
+                <div className="row">
+                    <div className="col-lg-6 col-md-12 col-sm-12">
+                        <ExistingPlaces list={list}/>
+                    </div>
+                    <div className="col-lg-6 col-md-12 col-sm-12">
+                        <NewPlaces list={list}/>
+                    </div>
+                </div>
+            </PlacesCategories>
         </ContentContainer>
     );
 }

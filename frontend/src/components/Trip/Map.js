@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { GoogleMap, LoadScript, useJsApiLoader, MarkerF, InfoWindowF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
 import LocationPin from './LocationPin';
 import WorldLoader from '../WorldLoader';
+import EmojiImg from '../EmojiImg';
 
 
 const containerStyle = {
@@ -79,7 +80,8 @@ const convertMarkers = (trip) => {
                     {
                         list: item.title,
                         label: marker.title,
-                        icon: item.icon,
+                        emoji: item.emoji,
+                        address: item.address,
                         description: marker.description,
                         link: marker.link,
                         position: marker.position
@@ -130,13 +132,18 @@ function Map(props) {
 
     }, [props.trip])
 
-    return (
-        <MapContainer style={containerStyle}>
-            <LoadScript
-                googleMapsApiKey="AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
-                language='en'
-                loadingElement={WorldLoader}
-            >
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: "AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
+      })
+
+    return ( isLoaded ? (
+        // <MapContainer style={containerStyle}>
+        //     <LoadScript
+        //         googleMapsApiKey="AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
+        //         language='en'
+        //         loadingElement={WorldLoader}
+        //     >
                 <GoogleMap
                     id="map"
                     mapContainerStyle={containerStyle} 
@@ -158,12 +165,15 @@ function Map(props) {
                             onClick={() => {
                                 setInfoWindow({...infoWindow, selectedMarker: item})
                             }}
-                            icon={{
-                                // path: google.maps.SymbolPath.CIRCLE,
-                                url: (require(`./MarkerIcons/${item.icon}.png`)),
-                                fillColor: '#EB00FF',
-                                scale: 0.1,
-                            }}
+                            icon={
+                                new window.google.maps.MarkerImage(
+                                    `https://emojicdn.elk.sh/${item.emoji}`,
+                                    null, /* size is determined at runtime */
+                                    null, /* origin is 0,0 */
+                                    null, /* anchor is bottom center of the scaled image */
+                                    new window.google.maps.Size(35, 35)
+                                )
+                            }
                         />
                     )) }
                     { infoWindow.selectedMarker ? 
@@ -187,8 +197,9 @@ function Map(props) {
                         : null
                     }
                 </GoogleMap>
-            </LoadScript>
-        </MapContainer>
+        //     </LoadScript>
+        // </MapContainer>
+    ) : <></>
     )
 }
 

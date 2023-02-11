@@ -16,7 +16,8 @@ const CategoryContainer = styled.div`
     border-radius: 10px;
     width: 300px;
     height: 400px;
-
+    -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.21); 
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.21);
     perspective: 1000px;
 
     transition: transform 0.2s ease;
