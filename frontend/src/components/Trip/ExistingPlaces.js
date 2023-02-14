@@ -8,8 +8,14 @@ const PlacesContainer = styled.div`
     padding: 10px;
     overflow-y: scroll;
     position: relative;
-    max-height: calc(100% - 160px);
-    border: 3px red solid;
+    height: calc(100%);
+    box-sizing: border-box;
+`
+
+const PlacesHeading = styled.h3`
+    margin: 15px;
+    font-family: "Lora", sans-serif;
+    font-weight: 550;
 `
 
 
@@ -24,9 +30,9 @@ function ExistingPlaces(props) {
 
     }, [])
 
-    //test
     return (
         <PlacesContainer>
+            <PlacesHeading>Saved Places</PlacesHeading>
             {list.items.map((item, index) => (
                 <Place item={item} new={false} />
             ))}

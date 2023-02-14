@@ -42,22 +42,70 @@ const BackIcon = styled.i`
 
 `
 
-const PlacesCategories = styled.div``
+const PlacesCategories = styled.div`
+    height: calc(100% - 150px);
+    box-sizing: border-box;
+
+    @media (max-width: 991px) {
+        display: none;
+    }
+`
+
+const Row = styled.div`
+    height: 100%;
+`
+
+const Column = styled.div`
+    height: 100%;
+`
+
+// Mobile Version
+const MobileVersion = styled.div`
+    display: none;
+    height: calc(100% - 150px);
+
+    @media (max-width: 991px) {
+        display: block;
+    }
+`
+
+const ToggleButton = styled.div`
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    background-color: #1746A2;
+    padding: 15px;
+    color: #fff;
+    border-radius: 100px;
+    font-family: "Sen", sans-serif;
+
+    & i {
+        margin-right: 7.5px;
+    }
+`
 
 
 function DetailsContent(props) {
     const [ list, setList ] = useState(props.list);
     const [ recommendations, setRecommendations] = useState([]);
+    const [ toggle, setToggle ] = useState("existing");
 
     useEffect(() => {
         console.log(props.list);
         setList(props.list);
-
-        let input = "restuarants"
-        const searchBox = new google.maps.places.SearchBox(input).getPlaces("restaurant");
-        console.log(searchBox)
-
     }, [])
+
+    const handleToggle = (event) => {
+        if (toggle === "existing") {
+            setToggle("new")
+        } else {
+            setToggle("existing")
+        }
+    }
+
+    // const newPlaces = <NewPlaces list={list}/>;
 
     return (
         <ContentContainer>
@@ -66,15 +114,27 @@ function DetailsContent(props) {
             </BackContainer>
             <ListBanner list={list}/>
             <PlacesCategories className="container">
-                <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12">
+                <Row className="row">
+                    <Column className="col-lg-6 col-md-12 col-sm-12">
                         <ExistingPlaces list={list}/>
-                    </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12">
-                        <NewPlaces list={list}/>
-                    </div>
-                </div>
+                    </Column>
+                    <Column className="col-lg-6 col-md-12 col-sm-12">
+                        <NewPlaces id='desktop' list={list}/>
+                    </Column>
+                </Row>
             </PlacesCategories>
+            <MobileVersion>
+                {
+                    toggle === "existing"
+                    ?
+                    <ExistingPlaces list={list}/>
+                    :
+                    <NewPlaces id='mobile' list={list}/>
+                }
+                <ToggleButton onClick={handleToggle}>
+                    {toggle === "existing" ? <><i class="fa fa-solid fa-binoculars"></i> Explore</> : <><i class="fa fa-solid fa-bookmark"></i> View saved</>}
+                </ToggleButton>
+            </MobileVersion>
         </ContentContainer>
     );
 }

@@ -17,6 +17,7 @@ const ItemContainer = styled.div`
         position: relative;
         margin-bottom: 20px;
         position: relative;
+        font-family: "Sen", sans-serif;
     }
 `
 

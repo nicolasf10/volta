@@ -10,8 +10,8 @@ const PageContainer = styled.div`
 `
 
 const ColumnTitle = styled.h4`
-    font-weight: 600;
-    font-family: "Sen", sans-serif;
+    font-weight: 550;
+    font-family: "Lora", sans-serif;
     margin-bottom: 15px;
 ` 
 

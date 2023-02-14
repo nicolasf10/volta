@@ -53,6 +53,12 @@ const InfoWindowLabel = styled.h6`
     font-family: "Sen", sans-serif;
 `
 
+const InfoWindowAddress = styled.p`
+    font-family: "Sen", sans-serif;
+    font-style: italic;
+    font-weight: 500;
+`
+
 const InfoWindowDescription = styled.p`
 
 `
@@ -82,7 +88,6 @@ const convertMarkers = (trip) => {
                         label: marker.title,
                         emoji: item.emoji,
                         address: item.address,
-                        description: marker.description,
                         link: marker.link,
                         position: marker.position
                     }
@@ -190,7 +195,7 @@ function Map(props) {
                             <InfoWindowContainer>
                                 <InfoWindowCategory>{infoWindow.selectedMarker.list}</InfoWindowCategory>
                                 <InfoWindowLabel>{infoWindow.selectedMarker.label}</InfoWindowLabel>
-                                <InfoWindowDescription>{infoWindow.selectedMarker.description}</InfoWindowDescription>
+                                <InfoWindowAddress>{infoWindow.selectedMarker.address}</InfoWindowAddress>
                                 <InfoWindowLink onClick={() => (window.open(infoWindow.selectedMarker.link))}>Open in Google Maps</InfoWindowLink>
                             </InfoWindowContainer>
                         </InfoWindowF>

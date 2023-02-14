@@ -16,11 +16,15 @@ const InnerStyle = {
 }
 
 
-const WorldLoader = <div style={LoaderStyle}>
-    <div style={InnerStyle}>
-        <div className='lower-loader'><i class="fa fa-solid fa-globe"></i></div>
-        <div className='higher-loader'><i className="fa fa-solid fa-plane"></i></div>
-    </div>
-</div>
+function WorldLoader (){
+    return (
+        <div style={LoaderStyle}>
+            <div style={InnerStyle}>
+                <div className='lower-loader'><i class="fa fa-solid fa-globe"></i></div>
+                <div className='higher-loader'><i className="fa fa-solid fa-plane"></i></div>
+            </div>
+        </div>
+    );
+}
 
 export default WorldLoader;

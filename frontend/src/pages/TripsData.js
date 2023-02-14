@@ -37,6 +37,7 @@ export let TripsData = [
         lists: [
             {
                 title: "Restaurants",
+                id: "1",
                 icon: "restaurant",
                 emoji: "🍔",
                 img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
@@ -66,6 +67,7 @@ export let TripsData = [
             },
             {
                 title: "Museums",
+                id: "2",
                 emoji: "🖼️",
                 icon: "museum_archeological",
                 address: "Boulevard 123",
@@ -89,6 +91,7 @@ export let TripsData = [
             },
             {
                 title: "Hotels",
+                id: "3",
                 emoji: "🏨",
                 icon: "hotel_0star",
                 img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1925&q=80",
@@ -111,6 +114,7 @@ export let TripsData = [
             },
             {
                 title: "Coffee Shops",
+                id: "4",
                 emoji: "☕",
                 icon: "coffee",
                 img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
