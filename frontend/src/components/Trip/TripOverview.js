@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import Itinerary from './Itinerary.js';
 import Map from './Map.js';
 
 
@@ -26,6 +27,7 @@ function TripOverview(props) {
 
     return (
         <PageContainer>
+            <Itinerary trip={trip} />
             <Map
                 style={mapStyle}
                 trip={trip}

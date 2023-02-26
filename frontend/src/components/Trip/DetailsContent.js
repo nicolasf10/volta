@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ExistingPlaces from './ExistingPlaces';
 import ListBanner from './ListBanner';
 import NewPlaces from './NewPlaces';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 const google = window.google;
 
@@ -132,7 +134,7 @@ function DetailsContent(props) {
                     <NewPlaces id='mobile' list={list}/>
                 }
                 <ToggleButton onClick={handleToggle}>
-                    {toggle === "existing" ? <><i class="fa fa-solid fa-binoculars"></i> Explore</> : <><i class="fa fa-solid fa-bookmark"></i> View saved</>}
+                    {toggle === "existing" ? <><FontAwesomeIcon icon={faMagnifyingGlass}/> Explore</> : <><i class="fa fa-solid fa-bookmark"></i> View saved</>}
                 </ToggleButton>
             </MobileVersion>
         </ContentContainer>

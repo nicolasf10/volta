@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Place from './Place';
 import WorldLoader from '../WorldLoader';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 const PlacesContainer = styled.div`
     padding: 10px;
@@ -158,7 +159,7 @@ function NewPlaces(props) {
                 <InputField onChange={() => setSearched(false)} id={`pac-input-${list.id}-${props.id}`} type="text"
                     placeholder="Search for location" />
                 { loaded ?  
-                <SubmitButton onClick={handleSubmit}><i class="fa fa-solid fa-binoculars"></i></SubmitButton>
+                <SubmitButton onClick={handleSubmit}><FontAwesomeIcon icon={faMagnifyingGlass}/></SubmitButton>
                 :
                 <SubmitButton style={{background: "#a8a8a8"}} disabled onClick={handleSubmit}><i class="fa fa-solid fa-binoculars"></i></SubmitButton>
                 }

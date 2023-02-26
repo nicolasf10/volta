@@ -36,7 +36,7 @@ const BannerText = styled.div`
 const BackDiv = styled.button`
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 20px;
     color: #000;
     font-size: 1.1rem;
     background: none;

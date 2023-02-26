@@ -175,3 +175,10 @@ body {
   -moz-animation: spin 4s linear infinite;
   animation: spin 4s linear infinite;
 }
+
+@media screen and (max-width: 991px) {
+  #map {
+    width: 100vw !important;
+    border-radius: 50px;
+  }
+}
