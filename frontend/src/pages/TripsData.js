@@ -135,6 +135,57 @@ export let TripsData = [
                     }
                 ]
             }
+        ],
+        itinerary: [
+            {
+                date: "21/1",
+                activities: [
+                    {
+                        title: "Bowling",
+                        description: "i love bowl"
+                    },
+                    {
+                        title: "tenis",
+                        description: "i love tenis"
+                    }
+                ]
+            },
+            {
+                date: "22/1",
+                activities: [
+                    {
+                        title: "fish",
+                        description: "i love fish"
+                    }
+                ]
+            },
+            {
+                date: "23/1",
+                activities: [
+                ]
+            }
+        ],
+        budget: [
+            {
+                label: "Kempinski Hotel",
+                amount: 400
+            },
+            {
+                label: "Restaurants",
+                amount: 180
+            },
+            {
+                label: "Flights",
+                amount: 350
+            },
+            {
+                label: "Local transport",
+                amount: 90
+            },
+            {
+                label: "Rental car",
+                amount: 210
+            },
         ]
     },
     {

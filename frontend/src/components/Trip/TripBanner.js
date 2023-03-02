@@ -83,11 +83,19 @@ const EmojiContainer = styled.div`
 `
 
 const IconsContainer = styled.div`
+    position: absolute;
+    top: 17.5px;
+    right: 90px;
 
+    & * {
+        color: #fff;
+    }
 `
 
 const IconI = styled.i`
-    
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
 `
 
 
@@ -106,7 +114,8 @@ function TripBanner(props) {
                 <BannerDate>{trip.date}</BannerDate>
             </BannerText>
             <IconsContainer>
-                <IconI className="fa "/>
+                <IconI className="fa fa-solid fa-image"></IconI>
+                <IconI className="fa fa-solid fa-pencil"></IconI>
             </IconsContainer>
             <TripShareContainer members={trip.members} />
         </Banner>

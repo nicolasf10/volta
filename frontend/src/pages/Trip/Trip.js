@@ -6,6 +6,7 @@ import TripBanner from '../../components/Trip/TripBanner';
 import TripOverview from '../../components/Trip/TripOverview';
 import TripLists from '../../components/Trip/TripLists';
 import TripChecklist from '../../components/Trip/TripChecklist';
+import TripBudget from '../../components/Trip/TripBudget';
 
 
 const TripPage = styled.div`
@@ -54,6 +55,8 @@ function Trip(props) {
             setCurrentPage(<TripOverview key={status} trip={location.state.trip}/>);
         } else if (page === "lists") {
             setCurrentPage(<TripLists key={status} trip={trip}/>);
+        } else if (page === "budget") {
+            setCurrentPage(<TripBudget key={status} trip={trip}/>);
         } else {
             setCurrentPage(<TripChecklist key={status} trip={trip}/>);
         }
@@ -64,7 +67,7 @@ function Trip(props) {
 
     
     function pageClick(e) {
-        let pages = ['overview', 'lists', 'checklist']
+        let pages = ['overview', 'lists', 'checklist', 'budget']
         for (let i = 0; i < pages.length; i++) {
             document.getElementById(pages[i]).classList.remove("active-underline")
         }
@@ -78,6 +81,9 @@ function Trip(props) {
         } else if (e.target.id === 'lists') {
             setPage("lists");
             // setCurrentPage(<TripLists trip={trip}/>);
+        } else if (e.target.id === 'budget') {
+            setPage("budget");
+            // setCurrentPage(<TripChecklist trip={trip}/>)
         } else if (e.target.id === 'checklist') {
             setPage("checklist");
             // setCurrentPage(<TripChecklist trip={trip}/>)
@@ -94,6 +100,7 @@ function Trip(props) {
                 <NavItem onClick={pageClick} className='active-underline' id="overview">Overview</NavItem>
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
                 <NavItem onClick={pageClick} id="checklist">Checklist</NavItem>
+                <NavItem onClick={pageClick} id="budget">Budget</NavItem>
             </NavList>
             {currentPage}
         </TripPage>

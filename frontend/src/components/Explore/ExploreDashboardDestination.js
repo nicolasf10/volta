@@ -27,12 +27,13 @@ const filterDictionary = {
 const ExploreDashboardDestinationContainer = styled.div`
   background-color: white;
   border-radius: 15px;
-  min-height: 300px;
+  height: 300px;
   display: flex;
   flex-direction: row;
   -webkit-box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.28); 
   box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.28);
   margin-bottom: 35px;
+  font-family: "Roboto", sans-serif;
 `
 
 const DestinationInfo = styled.div`

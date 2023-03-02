@@ -8,12 +8,15 @@ import EmojiImg from '../EmojiImg';
 
 
 const containerStyle = {
-    width: '50vw',
-    height: '50vh',
+    width: '100vh',
+    height: '100vh',
+    borderRadius: '0px'
 };
 
 const MapContainer = styled.div`
     background-color: #e6e6e6;
+    width: '50vw';
+    height: '50vh';
 `
 
 const ToggleOption = styled.button`
@@ -143,12 +146,7 @@ function Map(props) {
       })
 
     return ( isLoaded ? (
-        // <MapContainer style={containerStyle}>
-        //     <LoadScript
-        //         googleMapsApiKey="AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
-        //         language='en'
-        //         loadingElement={WorldLoader}
-        //     >
+        <MapContainer>
                 <GoogleMap
                     id="map"
                     mapContainerStyle={containerStyle} 
@@ -202,8 +200,7 @@ function Map(props) {
                         : null
                     }
                 </GoogleMap>
-        //     </LoadScript>
-        // </MapContainer>
+        </MapContainer>
     ) : <></>
     )
 }

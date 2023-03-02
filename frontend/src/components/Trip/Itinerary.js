@@ -2,27 +2,47 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import EmojiImg from '../EmojiImg';
+import Day from './Day';
 
 
-const ItineraryContainer = styled.div`
-
-`
+const StyledItinerary = styled.div`
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px;
+`;
 
 
 function Itinerary(props) {
-    const [ list, setList ] = useState(props.list);
+    const [ trip, setTrip ] = useState(props.trip);
 
     useEffect(() => {
-        console.log(props.list);
-        setList(props.list);
-    }, [props.list])
+        setTrip(props.trip);
+    }, [props.trip])
 
     
+    const [activeIndex, setActiveIndex] = useState(null);
+
+    const onTitleClick = (index) => {
+        if (activeIndex == index) {
+            setActiveIndex(null);
+        } else {
+            setActiveIndex(index);
+        }
+    };
+
     return (
-        <ItineraryContainer>
-            iti
-        </ItineraryContainer>
-    );
+        <StyledItinerary>
+        {trip.itinerary.map((day, index) => (
+            <Day
+                key={index}
+                day={day}
+                index={index}
+                activeIndex={activeIndex}
+                onTitleClick={onTitleClick}
+            />
+        ))}
+        </StyledItinerary>
+    )
 }
 
 export default Itinerary;
