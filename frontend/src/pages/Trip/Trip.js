@@ -7,6 +7,7 @@ import TripOverview from '../../components/Trip/TripOverview';
 import TripLists from '../../components/Trip/TripLists';
 import TripChecklist from '../../components/Trip/TripChecklist';
 import TripBudget from '../../components/Trip/TripBudget';
+import TripFlights from '../../components/Trip/TripFlights';
 
 
 const TripPage = styled.div`
@@ -57,6 +58,8 @@ function Trip(props) {
             setCurrentPage(<TripLists key={status} trip={trip}/>);
         } else if (page === "budget") {
             setCurrentPage(<TripBudget key={status} trip={trip}/>);
+        } else if (page === "flights") {
+            setCurrentPage(<TripFlights key={status} trip={trip}/>);
         } else {
             setCurrentPage(<TripChecklist key={status} trip={trip}/>);
         }
@@ -67,7 +70,7 @@ function Trip(props) {
 
     
     function pageClick(e) {
-        let pages = ['overview', 'lists', 'checklist', 'budget']
+        let pages = ['overview', 'lists', 'checklist', 'budget', 'flights']
         for (let i = 0; i < pages.length; i++) {
             document.getElementById(pages[i]).classList.remove("active-underline")
         }
@@ -88,6 +91,10 @@ function Trip(props) {
             setPage("checklist");
             // setCurrentPage(<TripChecklist trip={trip}/>)
         }
+        else if (e.target.id === 'flights') {
+            setPage("flights");
+            // setCurrentPage(<TripChecklist trip={trip}/>)
+        }
 
         setStatus("loaded")
     }
@@ -101,6 +108,7 @@ function Trip(props) {
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
                 <NavItem onClick={pageClick} id="checklist">Checklist</NavItem>
                 <NavItem onClick={pageClick} id="budget">Budget</NavItem>
+                <NavItem onClick={pageClick} id="flights">Flights and Hotels</NavItem>
             </NavList>
             {currentPage}
         </TripPage>

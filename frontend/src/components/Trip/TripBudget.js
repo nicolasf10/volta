@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tab } from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import BudgetComponent from './BudgetComponent';
+//import BudgetComponent from './BudgetComponent';
 import BudgetGraphComponent from './BudgetGraphComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
@@ -124,18 +124,18 @@ function TripBudget(props) {
                             <AddRow>
                                 <TableData>
                                     <BudgetInput
-                                    type="text"
-                                    placeholder="Item name"
-                                    value={budgetName}
-                                    onChange={(e) => setBudgetName(e.target.value)}
+                                        type="text"
+                                        placeholder="Item name"
+                                        value={budgetName}
+                                        onChange={(e) => setBudgetName(e.target.value)}
                                     />
                                 </TableData>
                                 <TableData>
                                     <BudgetInput
-                                    type="number"
-                                    placeholder="Amount"
-                                    value={budgetAmount}
-                                    onChange={(e) => setBudgetAmount(e.target.value)}
+                                        type="number"
+                                        placeholder="Amount"
+                                        value={budgetAmount}
+                                        onChange={(e) => setBudgetAmount(e.target.value)}
                                     />
                                 </TableData>
                             </AddRow>

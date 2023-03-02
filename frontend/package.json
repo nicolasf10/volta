@@ -17,6 +17,7 @@
     "country-code-emoji": "^2.3.0",
     "font-awesome": "^4.7.0",
     "google-map-react": "^2.2.0",
+    "load-script": "^2.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-chartjs-2": "^5.2.0",
