@@ -126,7 +126,7 @@ function ExploreFilter() {
         value: "location-africa"
       },
       {
-        title: "North/South America",
+        title: "America",
         emoji: "🌎",
         value: "location-america"
       },

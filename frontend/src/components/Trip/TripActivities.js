@@ -6,12 +6,7 @@ import Flights from './Flights';
 
 const PageContainer = styled.div``
 
-const Title = styled.h2`
-    font-family: "Lora", serif;
-    text-align: center;
-`
-
-function TripFlights(props) {
+function TripActivities(props) {
     const [trip, setTrip] = useState(props.trip)
 
     useEffect(() => {
@@ -22,9 +17,9 @@ function TripFlights(props) {
 
     return (
         <PageContainer>
-            <Flights trip={trip}/>
+            ac
         </PageContainer>
     );
 }
 
-export default TripFlights;
+export default TripActivities;

@@ -8,6 +8,7 @@ import TripLists from '../../components/Trip/TripLists';
 import TripChecklist from '../../components/Trip/TripChecklist';
 import TripBudget from '../../components/Trip/TripBudget';
 import TripFlights from '../../components/Trip/TripFlights';
+import TripActivities from '../../components/Trip/TripActivities';
 
 
 const TripPage = styled.div`
@@ -58,8 +59,8 @@ function Trip(props) {
             setCurrentPage(<TripLists key={status} trip={trip}/>);
         } else if (page === "budget") {
             setCurrentPage(<TripBudget key={status} trip={trip}/>);
-        } else if (page === "flights") {
-            setCurrentPage(<TripFlights key={status} trip={trip}/>);
+        } else if (page === "activities") {
+            setCurrentPage(<TripActivities key={status} trip={trip}/>);
         } else {
             setCurrentPage(<TripChecklist key={status} trip={trip}/>);
         }
@@ -70,7 +71,7 @@ function Trip(props) {
 
     
     function pageClick(e) {
-        let pages = ['overview', 'lists', 'checklist', 'budget', 'flights']
+        let pages = ['overview', 'lists', 'checklist', 'budget', 'activities']
         for (let i = 0; i < pages.length; i++) {
             document.getElementById(pages[i]).classList.remove("active-underline")
         }
@@ -91,8 +92,8 @@ function Trip(props) {
             setPage("checklist");
             // setCurrentPage(<TripChecklist trip={trip}/>)
         }
-        else if (e.target.id === 'flights') {
-            setPage("flights");
+        else if (e.target.id === 'activities') {
+            setPage("activities");
             // setCurrentPage(<TripChecklist trip={trip}/>)
         }
 
@@ -108,7 +109,7 @@ function Trip(props) {
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
                 <NavItem onClick={pageClick} id="checklist">Checklist</NavItem>
                 <NavItem onClick={pageClick} id="budget">Budget</NavItem>
-                <NavItem onClick={pageClick} id="flights">Flights and Hotels</NavItem>
+                <NavItem onClick={pageClick} id="activities">Activities</NavItem>
             </NavList>
             {currentPage}
         </TripPage>

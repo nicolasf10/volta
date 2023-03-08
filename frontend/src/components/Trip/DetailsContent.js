@@ -5,7 +5,7 @@ import ExistingPlaces from './ExistingPlaces';
 import ListBanner from './ListBanner';
 import NewPlaces from './NewPlaces';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const google = window.google;
 

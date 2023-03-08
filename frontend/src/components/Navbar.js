@@ -48,7 +48,7 @@ function NavbarComponent(props)
             <Navbar.Toggle className='nav-toggle' aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto nav-items">
-                    <Nav.Link className={props.active == "my-trips" ? "nav-link active nav-item" : "nav-link nav-item"}><Link className='nav-link-style no-underline' to="/">My Trips</Link></Nav.Link>
+                    <Nav.Link className={props.active == "my-trips" ? "nav-link active nav-item" : "nav-link nav-item"}><Link className='nav-link-style no-underline' to="/trips">My Trips</Link></Nav.Link>
                     <Nav.Link className={props.active == "bucket-list" ? "nav-link active nav-item" : "nav-link nav-item"}><Link className='nav-link-style no-underline' to="/bucketlist">Bucket List</Link></Nav.Link>
                     <Nav.Link className={props.active == "explore" ? "nav-link active nav-item" : "nav-link nav-item"}><Link className='nav-link-style no-underline' to="/explore">Explore</Link></Nav.Link>
                     <div className='log-button-container'>

@@ -24,7 +24,12 @@ const BannerTitle = styled.h1`
     font-weight: 700;
     font-size: 5rem;
     text-align: center;
+    width: 100vw;
     font-family: 'Lora', serif;
+
+    @media (max-width: 600px) {
+        font-size: 3.5rem;
+    }
 `
 
 const BannerText = styled.div`
@@ -105,7 +110,7 @@ function TripBanner(props) {
     return (
         <Banner background={trip.image}>
             <BackDiv>
-                <Link style={{color: "#000", textDecoration: "none"}} to="/">
+                <Link style={{color: "#000", textDecoration: "none"}} to="/trips">
                     <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> <BackText>My trips</BackText>
                 </Link>
             </BackDiv>

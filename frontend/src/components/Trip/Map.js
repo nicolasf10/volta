@@ -142,7 +142,7 @@ function Map(props) {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyCGPs81uXNmtO-twbZR9oIKqzG8JzEjtzs"
+        googleMapsApiKey: "AIzaSyAAqWy0DmJhNoklNmZgyVRiZY9daxfswrY"
       })
 
     return ( isLoaded ? (
@@ -152,6 +152,7 @@ function Map(props) {
                     mapContainerStyle={containerStyle} 
                     center={center}
                     zoom={13}
+                    language="ko-KR"
                 >
                     <Toggles>
                         <ToggleOption style={{color: layers.bicycling ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>

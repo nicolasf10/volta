@@ -66,7 +66,7 @@ const Trip = styled.div`
     flex-direction: column;
     justify-content: end;
 
-    background-color: lightblue;
+    background-color: #081736;
     background-image: url(${props => props.image ? props.image : "none"};);
     background-position: center;
     background-repeat: no-repeat;
