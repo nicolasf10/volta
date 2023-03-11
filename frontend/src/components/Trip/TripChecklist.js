@@ -50,7 +50,7 @@ function TripChecklist(props) {
                                 {trip.checklist.map((item) => {
                                     return(
                                         item.status === "to-do" ?
-                                            <ChecklistItem item={item}/>
+                                            <ChecklistItem members={trip.members} item={item}/>
                                         :
                                             <></>
                                     )
@@ -64,7 +64,7 @@ function TripChecklist(props) {
                             {trip.checklist.map((item) => {
                                     return(
                                         item.status === "completed" ?
-                                            <ChecklistItem item={item} />
+                                            <ChecklistItem members={trip.members} item={item} />
                                         :
                                             <></>
                                     )

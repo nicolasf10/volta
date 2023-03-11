@@ -26,12 +26,20 @@ export let TripsData = [
             {
                 title: "Buy plane tickets",
                 notes: "google flights option",
-                status: "completed"
+                status: "completed",
+                assigned: {
+                    username: "Nick",
+                    img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                }
             },
             {
                 title: "Make restaurant reservations",
                 notes: "",
-                status: "to-do"
+                status: "to-do",
+                assigned: {
+                    username: "José",
+                    img: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                }
             }
         ],
         lists: [
@@ -426,12 +434,17 @@ export let TripsData = [
             {
                 title: "Buy plane tickets",
                 notes: "google flights option",
-                status: "completed"
+                status: "completed",
+                assigned: {
+                    username: "Nick",
+                    img: "https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                }
             },
             {
                 title: "Make restaurant reservations",
                 notes: "",
-                status: "to-do"
+                status: "to-do",
+                assigned: null
             }
         ]
     },

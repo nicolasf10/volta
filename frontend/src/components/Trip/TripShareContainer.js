@@ -17,13 +17,13 @@ const ShareContainer = styled.div`
 
 const Modal = styled.div`
     width: 600px;
-    height: 500px;
+    min-height: 500px;
     background-color: #F1F1F1;
     border-radius: 10px;
     padding: 20px;
     position: relative;
 
-    @media (max-width: 550px) {
+    @media (max-width: 650px) {
         width: 85vw;
     }
 `
@@ -172,10 +172,17 @@ const MemberEmail = styled.p`
 const Quote = styled.p`
     font-family: "Sen", sans-serif;
     font-size: 1.05em;
-    position: absolute;
-    bottom: 0px;
+    /* position: absolute;
+    bottom: 0px; */
+    padding-top: 40px;
     text-align: center;
     font-style: italic;
+    margin-bottom: 0px;
+    margin-top: auto;
+
+    @media (max-width: 650px) {
+        padding-top: 20px;
+    }
 `
 
 const DeleteContainer = styled.div`
@@ -187,6 +194,16 @@ const DeleteContainer = styled.div`
     top: 0px;
     height: 100%;
     display: none;
+`
+
+const ShareButton = styled(Button)`
+    background: #081736;
+    font-family: "Sen", sans-serif;
+
+    &:hover {
+        background: #F1F1F1;
+        color: #081736;
+    }
 `
 
 
@@ -209,7 +226,7 @@ function TripShareContainer(props) {
                 </Tooltip>
                 )}
                 placement="bottom">
-                <Button onClick={() => setShow('flex')} variant="dark">Share</Button>
+                <ShareButton onClick={() => setShow('flex')} variant="dark">Share</ShareButton>
             </OverlayTrigger>
             <WindowBox style={{display: show}}>
                 <Modal>

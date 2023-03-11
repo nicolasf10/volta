@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import TripShareContainer from './TripShareContainer';
 import { Link } from 'react-router-dom'
 import EmojiImg from '../EmojiImg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import Popup from 'reactjs-popup';
+import UnsplashPicker from '../UnsplashPicker';
 
 
 const Banner = styled.div`
@@ -95,17 +99,28 @@ const IconsContainer = styled.div`
     & * {
         color: #fff;
     }
+
+    .icon-banner {
+        color: #fff;
+        cursor: pointer;
+        margin-right: 15px;
+        font-size: 1.5em;
+    }
 `
 
 const IconI = styled.i`
-    color: #fff;
-    cursor: pointer;
-    margin-right: 10px;
 `
+
+const contentStyle = {borderRadius:'10px'};
 
 
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
+
+    // const changeBanner = useCallback(val => {
+    //     console.log(val)
+    // }, []);
+
 
     return (
         <Banner background={trip.image}>
@@ -119,8 +134,12 @@ function TripBanner(props) {
                 <BannerDate>{trip.date}</BannerDate>
             </BannerText>
             <IconsContainer>
-                <IconI className="fa fa-solid fa-image"></IconI>
-                <IconI className="fa fa-solid fa-pencil"></IconI>
+                <Popup contentStyle={contentStyle} className='popup' trigger={<FontAwesomeIcon className='icon-banner' icon={faImage}/>} modal>
+                    {close => (
+                        <UnsplashPicker close={close} />
+                    )}
+                </Popup>
+                <FontAwesomeIcon className='icon-banner' icon={faPenToSquare}/>
             </IconsContainer>
             <TripShareContainer members={trip.members} />
         </Banner>

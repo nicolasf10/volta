@@ -6,6 +6,7 @@ import Spline from '@splinetool/react-spline';
 import { Link } from 'react-router-dom';
 import EmojiImg from '../components/EmojiImg';
 import SecondHero from '../components/SecondHero';
+import ThirdHero from '../components/ThirdHero';
 
 
 const HomePage = styled.div`
@@ -55,7 +56,7 @@ const ContentButton = styled.button`
     width: 150px;
     text-transform: uppercase;
     font-family: "Sen", sans-serif;
-    transition: 0.3s all ease-in;
+    transition: 0.15s all ease-in;
 
     .button-link {
         color: #fff;
@@ -120,6 +121,7 @@ function Home() {
                 </div>
             </MainHero>
             <SecondHero id="second"/>
+            <ThirdHero id="third"/>
         </HomeContainer>
     </HomePage>
   );
