@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Popup from 'reactjs-popup';
 import UnsplashPicker from '../UnsplashPicker';
+import CalendarDatesPicker from '../CalendarDatesPicker';
 
 
 const Banner = styled.div`
@@ -74,6 +75,10 @@ const BannerDate = styled.h3`
     color: #fff;
     -webkit-text-stroke: 0.3px #000;
     text-align: center;
+    
+    &:hover {
+        cursor: pointer;
+    }
 `
 
 const EmojiContainer = styled.div`
@@ -131,7 +136,17 @@ function TripBanner(props) {
             </BackDiv>
             <BannerText>
                 <BannerTitle>{trip.title} <EmojiContainer><EmojiImg size="60px" emoji={trip.emoji} /></EmojiContainer></BannerTitle>
-                <BannerDate>{trip.date}</BannerDate>
+                <BannerDate>
+                    <Popup
+                        trigger={open => (
+                            <span>{trip.date}</span>
+                        )}
+                        position="bottom center"
+                        closeOnDocumentClick
+                    >
+                        <CalendarDatesPicker trip={trip} />
+                    </Popup>
+                </BannerDate>
             </BannerText>
             <IconsContainer>
                 <Popup contentStyle={contentStyle} className='popup' trigger={<FontAwesomeIcon className='icon-banner' icon={faImage}/>} modal>

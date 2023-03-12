@@ -28,15 +28,6 @@ function TripChecklist(props) {
         setTrip(props.trip);
         
     }, [props.trip])
-
-    // const [{ isOver }, dropRef] = useDrop({
-    //     accept: 'item',
-    //     // drop: (item) => setBasket((basket) => 
-    //     //                     !basket.includes(item) ? [...basket, item] : basket),
-    //     // collect: (monitor) => ({
-    //     //     isOver: monitor.isOver()
-    //     // })
-    // })
     
     console.log(trip)
     return (

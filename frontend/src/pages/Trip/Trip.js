@@ -113,7 +113,7 @@ function Trip(props) {
             </NavList>
             {currentPage}
         </TripPage>
-        : 
+        :
         <></>
     );
 }

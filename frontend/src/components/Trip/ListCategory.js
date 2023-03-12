@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import DetailsContent from './DetailsContent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import DeleteConfirm from '../DeleteConfirm';
 
 
 const ListContainer = styled.div`
@@ -74,7 +77,7 @@ const CategoryDetails = styled.div`
 `
 
 const IconsContainer = styled.div`
-    font-size: 1.4em;
+    font-size: 1.3em;
     display: none;
     color: #000;
     position: absolute;
@@ -82,39 +85,62 @@ const IconsContainer = styled.div`
     transition: all 0.3s ease;
     top: 15px;
     right: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 100px;
     width: 40px;
     height: 40px;
     padding: 5px;
+
+    &:hover {
+        background-color: #fff;
+    }
 `
 
 
 function ListCategory(props) {
     const [ list, setList ] = useState(props.list);
     const [ show, setShow ] = useState('none');
+    const [ showDelete, setShowDelete ] = useState(false);
+
 
     useEffect(() => {
         console.log(props);
         setList(props.list);
     }, [])
+    
+    const handleChildElementClick = (e) => {
+        console.log("clik")
+        e.stopPropagation()
+        setShowDelete(!showDelete);
+    }
 
     const wrapperSetShow = useCallback(val => {
         setShow(val);
     }, [setShow]);
 
+    const toggleDeleteShow = useCallback(() => {
+        console.log(" toggle")
+        setShowDelete(false);
+    }, [setShowDelete]);
+
     return (
         <ListContainer>
             <CategoryContainer onClick={() => setShow('flex')} background={list.img}>
                 <Background src={list.img} alt={list.title} />
-                <IconsContainer className='icons-container'>
-                    <i class="fa fa-solid fa-trash"></i>
+                <IconsContainer onClick={(e) => handleChildElementClick(e)} style={{zIndex: 10}} className='icons-container'>
+                    <FontAwesomeIcon icon={faTrash} className='trash-icon'/>
                 </IconsContainer>
                 <CategoryTitle>{list.title}</CategoryTitle>
             </CategoryContainer>
             <CategoryDetails style={{display: show}}>
                 <DetailsContent list={list} parentStateSetter={wrapperSetShow} />
             </CategoryDetails>
+            {
+                showDelete ?
+                    <DeleteConfirm parentCallback={toggleDeleteShow} list={list} />
+                :
+                    <></>
+            }
         </ListContainer>
     );
 }
