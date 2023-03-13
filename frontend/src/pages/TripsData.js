@@ -5,8 +5,12 @@ export let TripsData = [
     {
         id: "germany",
         title: "Germany",
+        place_code: "DE",
         emoji: "🇩🇪",
-        date: "3th of Apr. to 13th of Apr. 2023",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
         members: [
             {
@@ -200,7 +204,10 @@ export let TripsData = [
         id: "italy",
         title: "Italy",
         emoji: "🇮🇹",
-        date: "9th of Oct. to 15th of Oct. 2022",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=766&q=80",
         members: [
             {
@@ -317,7 +324,10 @@ export let TripsData = [
         id: "spain",
         title: "Spain",
         emoji: "🇪🇸",
-        date: "3th of Nov. to 8th of Nov. 2022",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1593368858664-a7fe556ab936?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80",
         members: [
             {
@@ -342,7 +352,10 @@ export let TripsData = [
         id: "brazil",
         title: "Brazil",
         emoji: "🇧🇷",
-        date: "3th of Jan. to 13th of Jan. 2023",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1551312183-66bca7944e4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2662&q=80",
         members: [
             {
@@ -385,7 +398,10 @@ export let TripsData = [
         id: "japan",
         title: "Japan",
         emoji: "🇯🇵",
-        date: "1th of Jul. to 7th of July. 2023",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1613967193490-1d17b930c1a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
         members: [
             {
@@ -418,7 +434,10 @@ export let TripsData = [
         id: "australia",
         title: "Australia",
         emoji: "🇦🇺",
-        date: "2th of Sep. to 10th of Sep. 2023",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1739&q=80",
         members: [
             {
@@ -452,7 +471,10 @@ export let TripsData = [
         id: "canada",
         title: "Canada",
         emoji: "🇨🇦",
-        date: "21th of Sep. to 29th of Sep. 2023",
+        date: {
+            start: new Date("July 3, 2023"),
+            end: new Date("July 21, 2023")
+        },
         image: "https://images.unsplash.com/photo-1501114676295-bbbcc7a12466?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
         members: [
             {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import EmojiImg from '../components/EmojiImg';
 import ExploreDestinations from '../components/Explore/ExploreDestinations';
 import ExploreFilter from '../components/Explore/ExploreFilter';
 import ExploreSearch from '../components/Explore/ExploreSearch';
@@ -166,7 +167,7 @@ function Explore() {
         <NavbarComponent active='explore' />
         <ExplorePageContainer>
           <HeadingContainer>
-            <ExploreHeading>Explore 🧭</ExploreHeading>
+            <ExploreHeading>Explore <EmojiImg size="45px" emoji="🧭"/></ExploreHeading>
             <NewTripButton>New Template</NewTripButton>
           </HeadingContainer>
           <ExploreFilter/>

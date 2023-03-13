@@ -6,6 +6,7 @@ import EmojiImg from '../EmojiImg';
 import DeleteConfirm from '../DeleteConfirm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import DateRange from '../DateRange';
 
 
 
@@ -55,8 +56,9 @@ const Trip = styled.div`
 `
 
 const TripDetails = styled.div`
-    align-self: end;
+    align-self: start;
     justify-self: end;
+    width: 100%;
     margin: 0px 0px 15px 0px;
     background-color: #fff;
     padding: 10px;
@@ -136,8 +138,8 @@ function TripItemDashboard(props)
                     <IconsContainer onClick={(e) => handleChildElementClick(e)} style={{zIndex: 10}} className='icons-container'>
                         <FontAwesomeIcon icon={faTrash} className='trash-icon'/>
                     </IconsContainer>
-                    <TripTitle>{trip.title} {<EmojiImg size="33px" emoji={trip.emoji}/>}</TripTitle>
-                    <TripDate>{ trip.date}</TripDate>
+                    <TripTitle>{trip.title}{<EmojiImg size="33px" emoji={trip.emoji}/>}</TripTitle>
+                    <TripDate><DateRange date={trip.date}/></TripDate>
                 </TripDetails>
             </Trip>
             {

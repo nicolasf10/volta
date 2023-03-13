@@ -34,6 +34,16 @@ const NavItem = styled.li`
     font-family: "Sen", sans-serif;
     font-weight: 700;
     cursor: pointer;
+
+    @media (max-width: 480px) {
+        font-size: 0.9em;
+        font-weight: 600;
+        padding: 0px 7.5px;
+    }
+
+    @media (max-width: 350px) {
+        font-size: 0.8em;
+    }
 `
 
 
@@ -59,8 +69,8 @@ function Trip(props) {
             setCurrentPage(<TripLists key={status} trip={trip}/>);
         } else if (page === "budget") {
             setCurrentPage(<TripBudget key={status} trip={trip}/>);
-        } else if (page === "activities") {
-            setCurrentPage(<TripActivities key={status} trip={trip}/>);
+        } else if (page === "flights") {
+            setCurrentPage(<TripFlights key={status} trip={trip}/>);
         } else {
             setCurrentPage(<TripChecklist key={status} trip={trip}/>);
         }
@@ -71,7 +81,7 @@ function Trip(props) {
 
     
     function pageClick(e) {
-        let pages = ['overview', 'lists', 'checklist', 'budget', 'activities']
+        let pages = ['overview', 'lists', 'checklist', 'budget', 'flights']
         for (let i = 0; i < pages.length; i++) {
             document.getElementById(pages[i]).classList.remove("active-underline")
         }
@@ -92,8 +102,8 @@ function Trip(props) {
             setPage("checklist");
             // setCurrentPage(<TripChecklist trip={trip}/>)
         }
-        else if (e.target.id === 'activities') {
-            setPage("activities");
+        else if (e.target.id === 'flights') {
+            setPage("flights");
             // setCurrentPage(<TripChecklist trip={trip}/>)
         }
 
@@ -109,7 +119,7 @@ function Trip(props) {
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
                 <NavItem onClick={pageClick} id="checklist">Checklist</NavItem>
                 <NavItem onClick={pageClick} id="budget">Budget</NavItem>
-                <NavItem onClick={pageClick} id="activities">Activities</NavItem>
+                <NavItem onClick={pageClick} id="flights">Flights</NavItem>
             </NavList>
             {currentPage}
         </TripPage>

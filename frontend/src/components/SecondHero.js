@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShare, faCalendar, faCheck, faHeart, faDollarSign, faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
+import { faShare, faCalendar, faHeart, faDollarSign, faEarthAmericas, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons'
 
 const HeroContainer = styled.div`
     /* min-height: 50vh; */
@@ -47,8 +47,8 @@ function SecondHero() {
                     <BoxTitle>Plan itinerary</BoxTitle>
                 </Box>
                 <Box className="col-lg-4 col-md-6 col-sm-6">
-                    <FontAwesomeIcon className='icon' icon={faCheck}/>
-                    <BoxTitle>Prepare checklist</BoxTitle>
+                    <FontAwesomeIcon className='icon' icon={faPlaneDeparture}/>
+                    <BoxTitle>Book flights</BoxTitle>
                 </Box>
                 <Box className="col-lg-4 col-md-6 col-sm-6">
                     <FontAwesomeIcon className='icon' icon={faHeart}/>

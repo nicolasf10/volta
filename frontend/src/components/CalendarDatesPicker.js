@@ -11,13 +11,26 @@ const CalendarContainer = styled.div`
 `
 function CalendarDatesPicker(props) {
     const [ trip, setTrip ] = useState(props.trip);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(props.trip.date.start);
+    const [endDate, setEndDate] = useState(props.trip.date.end);
+
+    const [ newStart, setNewStart ] = useState(null);
+    const [ newEnd, setNewEnd ] = useState(null);
+
     const onChange = (dates) => {
       const [start, end] = dates;
       setStartDate(start);
       setEndDate(end);
     };
+
+    const onSelect = (date) => {
+        if (!newStart) {
+            setNewStart(date);
+        } else {
+            setNewEnd(date);
+        }
+        console.log(date);
+    }
 
     useEffect(() => {
         setTrip(props.trip)
@@ -32,6 +45,7 @@ function CalendarDatesPicker(props) {
                 endDate={endDate}
                 selectsRange
                 inline
+                onSelect={onSelect}
             />
         </CalendarContainer>
     );

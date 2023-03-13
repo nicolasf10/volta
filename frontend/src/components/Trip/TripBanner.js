@@ -9,6 +9,7 @@ import { faImage, faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import Popup from 'reactjs-popup';
 import UnsplashPicker from '../UnsplashPicker';
 import CalendarDatesPicker from '../CalendarDatesPicker';
+import DateRange from '../DateRange';
 
 
 const Banner = styled.div`
@@ -68,12 +69,18 @@ const BackText = styled.span`
 const BackIcon = styled.i`
 `
 
-const BannerDate = styled.h3`
+const BannerDate = styled.p`
+    & div span {
+        background-color: #fff;
+        padding: 5px 7px;
+        border-radius: 5px;
+    }
+`
+
+const DateTextBox = styled.div`
     font-family : "Sen", sans-serif;
     font-weight: 400;
     font-size: 1.4rem;
-    color: #fff;
-    -webkit-text-stroke: 0.3px #000;
     text-align: center;
     
     &:hover {
@@ -116,8 +123,11 @@ const IconsContainer = styled.div`
 const IconI = styled.i`
 `
 
+const CalendarModal = styled.div``
+
 const contentStyle = {borderRadius:'10px'};
 
+const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "286px"};
 
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
@@ -139,12 +149,15 @@ function TripBanner(props) {
                 <BannerDate>
                     <Popup
                         trigger={open => (
-                            <span>{trip.date}</span>
+                            <DateTextBox>
+                                <DateRange date={trip.date}/>
+                            </DateTextBox>
                         )}
+                        contentStyle={contentStyleCalendar} 
                         position="bottom center"
                         closeOnDocumentClick
                     >
-                        <CalendarDatesPicker trip={trip} />
+                        <CalendarModal><CalendarDatesPicker trip={trip} /></CalendarModal>
                     </Popup>
                 </BannerDate>
             </BannerText>
@@ -154,7 +167,7 @@ function TripBanner(props) {
                         <UnsplashPicker close={close} />
                     )}
                 </Popup>
-                <FontAwesomeIcon className='icon-banner' icon={faPenToSquare}/>
+                {/* <FontAwesomeIcon className='icon-banner' icon={faPenToSquare}/> */}
             </IconsContainer>
             <TripShareContainer members={trip.members} />
         </Banner>

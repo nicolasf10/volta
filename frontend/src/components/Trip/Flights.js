@@ -5,6 +5,8 @@ import styled from 'styled-components';
 const FlightsContainer = styled.div`
     width: 100vw;
     height: calc(100vh - 350px);
+    background: rgb(245, 247, 249);
+    padding: 10px;
     margin: 0px;
 `
 
@@ -13,58 +15,68 @@ const SearchWidget = styled.div`
     height: 100%;
 `
 
+const FlightsTitle = styled.h2`
+    font-family: "Lora", sans-serif;
+    font-weight: 600;
+    margin-top: 15px;
+    text-align: center;
+`
+
+const FlightsLinkHeader = styled.h4`
+    font-family: "Sen", sans-serif;
+    text-align: center;
+    margin-bottom: 15px;
+`
+
+const FlightsLink = styled.a`
+    text-decoration: none;
+    font-style: italic;
+    font-size: 0.8em;
+    color: #081736;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s ease-in-out;
+
+    &:hover {
+        color: #1746A2;
+        border-bottom: 30px solid #1746A2;
+        border-bottom: 2px solid #1746A2;
+    }
+`
+
 function Flights(props) {
-    const [trip, setTrip] = useState(props.trip)
+    const [trip, setTrip] = useState(props.trip);
+    const [ afterOffestStart, setAfterOffesetStart ] = useState(new Date(trip.date.start - trip.date.start.getTimezoneOffset() * 60000));
+    const [ afterOffestEnd, setAfterOffesetEnd ] = useState(new Date(trip.date.end - trip.date.end.getTimezoneOffset() * 60000));
+
+    const [ kiwiLink, setKiwiLink ] = useState(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`);
+
 
     useEffect(() => {
-        console.log(props);
-        setTrip(props.trip);
-        console.log(window)
-        const head = document.querySelector("head");
-        const script = document.createElement("script");
-
-        script.setAttribute("src", "https://widgets.skyscanner.net/widget-server/js/loader.js");
-        head.appendChild(script);
-        // window.skyscanner.widgets.load();
-    }, [props.trip])
+        const script = document.createElement('script');
+        console.log(kiwiLink)
+      
+        script.src = "https://widgets.kiwi.com/scripts/widget-search-iframe.js";
+        script.setAttribute('data-lang','en');
+        script.setAttribute('data-affilid','nicolasfuchsvoltaflights');
+        script.setAttribute('data-to', trip.place_code);
+        script.setAttribute('data-primary-color','1746a2');
+        script.setAttribute('data-results-only','true');
+        script.setAttribute('data-departure',  afterOffestStart.toISOString().split('T')[0])
+        script.setAttribute('data-return', afterOffestEnd.toISOString().split('T')[0])
+        script.async = true;
+      
+        document.body.appendChild(script);
+      
+        return () => {
+          document.body.removeChild(script);
+        }
+      }, []);
 
     return (
         <FlightsContainer>
-            {/* <SearchWidget id="searchWidget"><iframe id="widgetIframe" src="https://www.expedia.co.uk/marketing/widgets/searchform/widget?wtt=6&tp1=1&tp2=&lob=H,FH,F&des=&wbi=1&olc=&whf=7&hfc=&wif=7&ifc=FFFFFF&wbc=FFFFFF&wbf=4&bfc=1746A2&wws=2&sfs=H600FW300F&langid=2057" width="100%" height="100%" scrolling="no" frameborder="0"></iframe></SearchWidget> */}
-            {/* <section>
-                <h1>Hotels</h1>
-
-                <form action="http://www.kayak.com/s/search/air" method="GET">
-                    <fieldset>
-                        <legend>Origin</legend>
-
-                        <label>From
-                            <input type="search" name="l1" data-smarty-s="1" size="50" autocomplete="off"/></label>
-        
-                        <label>Depart
-                            <input type="date" name="t1"/></label>
-                    </fieldset>
-        
-                    <fieldset>
-                        <legend>Destination</legend>
-            
-                        <label>To
-                            <input type="search" name="l2" data-smarty-s="1" size="50" autocomplete="off" required/></label>
-            
-                        <label>Return
-                            <input type="date" name="t2"/></label>
-                    </fieldset>
-        
-                    <button type="submit">Search</button>
-            
-                </form>
-            </section> */}
-            {/* <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async></script> */}
-            <div
-                data-skyscanner-widget="FlightSearchWidget"
-                data-locale="en-GB"
-            />
-            {/* <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async></script> */}
+            <FlightsTitle>Flights</FlightsTitle>
+            <FlightsLinkHeader><FlightsLink target="_blank" href={kiwiLink}>Open kiwi.com</FlightsLink></FlightsLinkHeader>
+            <div id="widget-holder"></div>
         </FlightsContainer>
     );
 }
