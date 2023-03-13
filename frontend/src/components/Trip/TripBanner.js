@@ -70,9 +70,11 @@ const BackIcon = styled.i`
 `
 
 const BannerDate = styled.p`
+    margin-top: 15px;
+
     & div span {
         background-color: #fff;
-        padding: 5px 7px;
+        padding: 5px 15px;
         border-radius: 5px;
     }
 `
