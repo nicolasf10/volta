@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { getImages } from '../../services/GetUnsplashImages';
+import WorldLoader from '../WorldLoader';
 
 
 const ImageSearchBox = styled.div`
@@ -43,6 +44,24 @@ const SearchImageButton = styled.button`
     height: 35px;
 `
 
+const ImagesResults = styled.div``
+
+const ImagesBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`
+
+const Image = styled.img`
+    width: 200px;
+    height: 140px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin: 10px;
+`
+
+const NoResults = styled.p``
+
 
 var emojis = [
     '🌎', '🛩️', '🗽', '🧳', '🏛️'
@@ -51,25 +70,59 @@ var emojis = [
 
 function ListImageSearch(props) {
     const [ imageQuery, setImageQuery ] = useState('');
+    const [ hasClicked, setHasClicked ] = useState(false);
+    const  [ isLoading, setIsLoading ] = useState(false);
+    const [ results, setResults ] = useState([]); 
 
     useEffect(() => {
 
     }, [])
 
     const onClick = (e) => {
-        getImages("qeu").then(response => {
+        e.preventDefault();
+        setIsLoading(true);
+        getImages(imageQuery).then(response => {
             console.log(response)
+            
+            setIsLoading(false);
+            setHasClicked(true);
+            setResults(response.results);
+            console.log(results)
         });
     }
 
+    const handleChange = e => {
+        setImageQuery(e.target.value)
+    }
 
 
     return (
         <ImageSearchBox>
-            <SearchInput onChange={(e) => (setImageQuery(e.value))} placeholder='Choose banner image' type="text" />
+            <SearchInput onChange={handleChange} name='image-query' value={imageQuery} placeholder='Choose banner image' type="text" />
             <SearchImageButton onClick={onClick}>
                 <FontAwesomeIcon icon={faSearch} />
             </SearchImageButton>
+            <ImagesResults>
+                {
+                    isLoading ? <WorldLoader /> : <></>
+                }
+                {
+                    hasClicked ? 
+                        <ImagesBox>
+                            { results.length == 0 ? <NoResults>No results found</NoResults>
+                                : 
+                                <div>
+                                    {results.slice(0, 10).map((item, index) => {
+                                        return (
+                                            <Image key={index} src={item.links.download} alt={item.alt_description} />
+                                        )
+                                    })}
+                                </div>
+                            }
+                        </ImagesBox>
+                    : <></>
+                }
+            </ImagesResults>
         </ImageSearchBox>
 
     );

@@ -42,7 +42,7 @@ const NewIcon = styled.i`
 const ListForm = styled.form`
     padding: 10px;
     width: 100%;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 `
 
 const FormTitle = styled.h3`
