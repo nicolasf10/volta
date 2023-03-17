@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Itinerary from './Itinerary.js';
 import Map from './Map.js';
+import OverviewContent from './OverviewContent.js';
 
 
 const PageContainer = styled.div`
@@ -27,7 +28,8 @@ function TripOverview(props) {
 
     return (
         <PageContainer>
-            <Itinerary trip={trip} />
+            {/* <Itinerary trip={trip} /> */}
+            <OverviewContent trip={trip} />
             <Map
                 style={mapStyle}
                 trip={trip}

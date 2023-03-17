@@ -10,6 +10,8 @@ import Popup from 'reactjs-popup';
 import UnsplashPicker from '../UnsplashPicker';
 import CalendarDatesPicker from '../CalendarDatesPicker';
 import DateRange from '../DateRange';
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
 
 
 const Banner = styled.div`
@@ -98,6 +100,7 @@ const EmojiContainer = styled.div`
     width: 70px;
     transition: 0.15s ease;
     border-radius: 10px;
+    margin-left: 15px;
     cursor: pointer;
 
     &:hover {
@@ -127,12 +130,16 @@ const IconI = styled.i`
 
 const CalendarModal = styled.div``
 
-const contentStyle = {borderRadius:'10px'};
+const contentStyle = {borderRadius:'10px', width: '700px', height: '330px', maxWidth: '90%'};
 
 const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "286px"};
 
+const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
+
+
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
+    const [ emoji, setEmoji ] = useState(props.trip.emoji)
 
     // const changeBanner = useCallback(val => {
     //     console.log(val)
@@ -147,7 +154,23 @@ function TripBanner(props) {
                 </Link>
             </BackDiv>
             <BannerText>
-                <BannerTitle>{trip.title} <EmojiContainer><EmojiImg size="60px" emoji={trip.emoji} /></EmojiContainer></BannerTitle>
+                <BannerTitle>{trip.title}
+                    <Popup
+                            trigger={open => (
+                                <EmojiContainer>
+                                    <EmojiImg size="60px" emoji={emoji} />
+                                </EmojiContainer>
+                            )}
+                            position="bottom center"
+                            nested
+                            contentStyle={contentStyleEmoji} 
+                        >
+                            <div>
+                                <Picker data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
+                                {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
+                            </div>
+                    </Popup>
+                </BannerTitle>
                 <BannerDate>
                     <Popup
                         trigger={open => (

@@ -38,10 +38,10 @@ function TripChecklist(props) {
                         <div className="col-lg-6 col-md-12 col-sm-12 checklist-column">
                             <ColumnTitle>To-do</ColumnTitle>
                             <ItemsContainer>
-                                {trip.checklist.map((item) => {
+                                {trip.checklist.map((item, index) => {
                                     return(
                                         item.status === "to-do" ?
-                                            <ChecklistItem members={trip.members} item={item}/>
+                                            <ChecklistItem key={index*Math.random()} members={trip.members} item={item}/>
                                         :
                                             <></>
                                     )
@@ -52,10 +52,10 @@ function TripChecklist(props) {
                         <div className="col-lg-6 col-md-12 col-sm-12 checklist-column">
                             <ColumnTitle>Completed</ColumnTitle>
                             <ItemsContainer>
-                            {trip.checklist.map((item) => {
+                            {trip.checklist.map((item, index) => {
                                     return(
                                         item.status === "completed" ?
-                                            <ChecklistItem members={trip.members} item={item} />
+                                            <ChecklistItem key={index*Math.random()} members={trip.members} item={item} />
                                         :
                                             <></>
                                     )

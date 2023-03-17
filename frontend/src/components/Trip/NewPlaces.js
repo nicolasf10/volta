@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 const PlacesContainer = styled.div`
-    padding: 10px;
+    /* padding: 10px; */
     overflow-y: scroll;
     position: relative;
     height: calc(100%);
@@ -98,23 +98,27 @@ function NewPlaces(props) {
                     console.log("Returned place contains no geometry");
                     return;
                 } else {
-                    console.log(place)
+                    let imgUrl = null;
+                    if (place.photos.length > 0) {
+                        imgUrl = place.photos[0].getUrl({ 'maxWidth': 550, 'maxHeight': 550 })
+                    }
                     setSearchList([...newItemsPrev,
                         {
                             title: place.name,
                             address: place.formatted_address,
                             position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
-                            link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`
+                            link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
+                            img: imgUrl
                         }
                     ])
                     newItemsPrev.push({
                         title: place.name,
                         address: place.formatted_address,
                         position: {lat: place.geometry.location.lat, lng: place.geometry.location.lng},
-                        link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`
+                        link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
+                        img: imgUrl
                     })
                     console.log(place)
-                    console.log(place.url)
                 
 
                 // setSearchList([...newItemsPrev,

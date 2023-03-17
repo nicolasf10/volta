@@ -112,7 +112,7 @@ function TripBudget(props) {
                                 <TableData>Amount</TableData>
                             </TableHead> */}
                             {trip.budget.map((item, index) => (
-                                <TableRow>
+                                <TableRow key={index}>
                                     <TableData><ItemLabel>{item.label}</ItemLabel></TableData>
                                     <TableData><ItemAmount>${item.amount}</ItemAmount></TableData>
                                 </TableRow>

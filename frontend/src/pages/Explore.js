@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import EmojiImg from '../components/EmojiImg';
@@ -162,6 +162,11 @@ const destinations = [
 ]
 
 function Explore() {
+
+  useEffect(() => {
+    document.title = `Explore`
+  })
+
   return (
       <ExplorePage>
         <NavbarComponent active='explore' />

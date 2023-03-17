@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { GoogleMap, LoadScript, useJsApiLoader, MarkerF, InfoWindowF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
+import { GoogleMap, useGoogleMap , LoadScript, useJsApiLoader, MarkerF, InfoWindowF, BicyclingLayer, TransitLayer, TrafficLayer } from '@react-google-maps/api';
+import mapIcon from './../../images/google-map-icon.png';
 import LocationPin from './LocationPin';
 import WorldLoader from '../WorldLoader';
 import EmojiImg from '../EmojiImg';
@@ -74,6 +75,29 @@ const InfoWindowLink = styled.a`
     cursor: pointer;
 `
 
+const SaveMapBox = styled.div`
+    border-radius: 100px;
+    background: #fff;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    height: 50px;
+    cursor: pointer;
+`
+
+const SaveMapText = styled.p`
+    color: #081736;
+    padding: 10px;
+    font-family: "Sen", sans-serif;
+    font-weight: 600;
+`
+
+const MapIcon = styled.img`
+    width: 30px;
+    height: 30px;
+`
+
+
 const convertMarkers = (trip) => {
     var markersList = [];
     
@@ -115,6 +139,56 @@ const convertMarkers = (trip) => {
     return convert;
 }
 
+function SaveToGoogleMapsButton(props) {
+    // Get the Google Maps object using the useGoogleMap hook
+    const map = useGoogleMap();
+    let markersProps = props.markers;
+    console.log(markersProps)
+  
+    function saveToGoogleMaps() {
+      // Get the current map center and zoom level
+      const center = map.getCenter();
+      const zoom = map.getZoom();
+  
+      // Create an array to hold the marker data
+      const markers = [];
+  
+      // Loop through each marker on the map and add its data to the array
+      markersProps.forEach(function(marker) {
+        markers.push({
+          position: marker.position,
+          title: marker.label,
+          // Add any other marker data you want to include here
+        });
+      });
+  
+      let url = "https://www.google.com/maps/place/";
+  
+        if (markers.length === 0) {
+        // If there are no markers, just link to the map center
+        url += center.lat() + "," + center.lng();
+        } else if (markers.length === 1) {
+        // If there is only one marker, link directly to it
+        url += markers[0].getPosition() + "," + markers[0].getPosition();
+        } else {
+        // If there are multiple markers, create a URL-encoded string of their positions
+        const markerPositions = markers.map(m => m.position.lat + "," + m.position.lng).join("|");
+        url += "@(" + markerPositions + ")";
+        }
+    
+        url += "/@" + center.lat() + "," + center.lng() + "," + zoom + "z";
+  
+      // Open the Google Maps API in a new window
+      window.open(url);
+    }
+  
+    return (
+        <SaveMapBox onClick={saveToGoogleMaps}>
+            <SaveMapText><MapIcon src={mapIcon} /> Export map</SaveMapText>
+        </SaveMapBox>
+    );
+}
+
 
 function Map(props) {
     const [ trip, setTrip ] = useState(props.trip);
@@ -154,6 +228,7 @@ function Map(props) {
                     zoom={13}
                     language="ko-KR"
                 >
+                    {/* <SaveToGoogleMapsButton markers={markers} /> */}
                     <Toggles>
                         <ToggleOption style={{color: layers.bicycling ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>
                         <ToggleOption style={{color: layers.transit ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, transit: !(layers.transit)}))}><i className="fa fa-solid fa-train"></i></ToggleOption>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import EmojiImg from '../EmojiImg';
+import NewTrip from './NewTrip';
 import TripItemDashboard from './TripItemDashboard';
 
 
@@ -55,31 +56,6 @@ const ExploreLink = styled.a`
     }
 `
 
-const NewTripButton = styled.button`
-    float: right;
-    font-size: 1.1rem;
-    border-radius: 7px;
-    padding: 7.5px 15px;
-    height: 40px;
-    font-family: "Sen", sans-serif;
-    color: #fff;
-    border: none;
-    background-color: #1746A2;
-    transition: all 0.2s ease;
-    outline: 1px solid var(--darkBlue);
-
-    &:hover {
-        background-color: transparent;
-        color: var(--darkBlue);
-    }
-
-    &:focus {
-        background-color: transparent ;
-        color: var(--darkBlue);
-        border: 1px solid var(--darkBlue);
-    }
-`
-
 
 function MyTripsDashboard(props)
 {
@@ -87,17 +63,18 @@ function MyTripsDashboard(props)
     // const [ showDelete 
 
     useEffect(() => {
+        document.title = `My Trips`
         setTrips(props.trips);
     }, [props.trips])
 
     return (
         <MyTripsDashboardContainer>
-            <MyTripsHeading>My Trips <EmojiImg size="45px" emoji="✈️"/> <NewTripButton>New Trip</NewTripButton></MyTripsHeading>
+            <MyTripsHeading>My Trips <EmojiImg size="45px" emoji="✈️"/> <NewTrip /></MyTripsHeading>
             <div className="container">
                 <div className="dashboard-row row">
                         {trips.length > 0 ?
-                        trips.map((trip) => (
-                            <div className="col-lg-4 col-md-6 col-sm-12">
+                        trips.map((trip, index) => (
+                            <div key={index} className="col-lg-4 col-md-6 col-sm-12">
                                 <TripItemDashboard trip={trip}/>
                             </div>
                         )) :

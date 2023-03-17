@@ -11,7 +11,7 @@ export let TripsData = [
             start: new Date("July 3, 2023"),
             end: new Date("July 21, 2023")
         },
-        image: "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+        image: "https://images.unsplash.com/photo-1551290470-554bf3a4fa80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
         members: [
             {
                 username: "Ju",
@@ -59,21 +59,27 @@ export let TripsData = [
                         address: "Boulevard 123",
                         description: "Marco Martini defines cuisine in three words: eyes, stomach, head – it is memories of flavours from bygone days that provide the impetus for his own creations.",
                         position: {lat: 41.880549484164426, lng: 12.48471773530235},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: "https://lh3.googleusercontent.com/p/AF1QipODZpJ5HQL0y_nnDbuY_-v4AVUX1IcIcYOucNJq=s1360-w1360-h1020",
+                        notes: ""
                     },
                     {
                         title: "Trattoria Pennestri",
                         address: "Boulevard 123",
                         description: "You'll feel immediately at ease in this restaurant, which has the warm, simple atmosphere of a typical trattoria.",
                         position: {lat: 41.873364, lng: 12.479696},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sAfLeUgNu0HLY_YvGvo_JbAZ7YPIdf0qFaPNk4W8Nqd2_GtWB9pxFbwlPSLF-lbGW7Ug6jqhlXNAJwDuocSlADkIruUB046XzUKrmRWsBTwiygokDykAuH-UpywQv7sDjdrUAnHILLefs0En7REH3ne-WwMEKFXNePZX1AMl_qsX3ISDKchdl&3u550&4u550&5m1&2e1&callback=none&key=AIzaSyAAqWy0DmJhNoklNmZgyVRiZY9daxfswrY&token=48463",
+                        notes: ""
                     },
                     {
                         title: "Green T.",
                         address: "Boulevard 123",
                         description: "Not far from the Pantheon, this original restaurant arranged over four floors serves the type of fine Chinese cuisine which has graced official banquets in China ever since the time of Chairman Mao.",
                         position: {lat: 41.897558631883264, lng: 12.479295860690605},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: "https://zero-media.s3.amazonaws.com/uploads/2015/06/green-t..jpg",
+                        notes: ""
                     }
                 ]
             },
@@ -90,14 +96,18 @@ export let TripsData = [
                         address: "Boulevard 123",
                         description: "Classical Roman, Greek & Egyptian sculptures & Renaissance art in 15th-century-designed palaces.",
                         position: {lat: 41.892954758938224, lng: 12.482579155508137},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     },
                     {
                         title: "Vatican Museums",
                         address: "Boulevard 123",
                         description: "Multiple galleries of classical & Renaissance art masterpieces, plus the Sistine Chapel frescoes.",
                         position: {lat: 41.906467817254324, lng: 12.453641297837967},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     }
                 ]
             },
@@ -113,14 +123,18 @@ export let TripsData = [
                         address: "Boulevard 123",
                         description: "Classical Roman, Greek & Egyptian sculptures & Renaissance art in 15th-century-designed palaces.",
                         position: {lat: 41.89397674585364, lng: 12.46309920130514},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     },
                     {
                         title: "Villa Agrippina Gran Meliá",
                         address: "Boulevard 123",
                         description: "Villa Agrippina Gran Meliá - The Leading Hotels of the World is a 5-star hotel located in the center of Rome, and includes an elegant interior and well-designed guest rooms overlooking the views of the Vatican, Castel Sant'Angelo , Vicolo di Sant'Onofrio or to the hotel's garden.",
                         position: {lat: 41.8989585987013, lng: 12.461110453197874},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     }
                 ]
             },
@@ -136,14 +150,18 @@ export let TripsData = [
                         address: "Boulevard 123",
                         description: "Coffee shop famed for its home-roast beans, blended with water from an ancient aqueduct.",
                         position: {lat: 41.898289172808006, lng: 12.475423902406682},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     },
                     {
                         title: "Antigua Tazza d'Oro",
                         address: "Boulevard 123",
                         description: "Villa Agrippina Gran Meliá - The Leading Hotels of the World is a 5-star hotel located in the center of Rome, and includes an elegant interior and well-designed guest rooms overlooking the views of the Vatican, Castel Sant'Angelo , Vicolo di Sant'Onofrio or to the hotel's garden.",
                         position: {lat: 41.89943532771305, lng: 12.477399974671577},
-                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5"
+                        link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
+                        img: null,
+                        notes: "",
                     }
                 ]
             }

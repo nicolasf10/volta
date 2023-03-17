@@ -27,6 +27,14 @@ const BannerHeader = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: 600px) {
+        padding: 10px;
+    }
+
+    @media screen and (max-width: 500px) {
+        padding: 0px 10px;
+    }
 `
 
 const BannerTitle = styled.p`
@@ -36,6 +44,14 @@ const BannerTitle = styled.p`
     text-transform: uppercase;
     margin: 0px;
     display: inline;
+
+    @media screen and (max-width: 600px) {
+        font-size: 1.5em;
+    }
+
+    @media screen and (max-width: 500px) {
+        font-size: 1.3em;
+    }
 `
 
 const BackgroundImg = styled.img`

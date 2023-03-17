@@ -5,7 +5,6 @@ import Place from './Place';
 
 
 const PlacesContainer = styled.div`
-    padding: 10px;
     overflow-y: scroll;
     position: relative;
     height: calc(100%);

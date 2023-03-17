@@ -7,10 +7,36 @@ import EmojiPicker from 'emoji-picker-react';
 import EmojiImg from '../EmojiImg';
 import ListImageSearch from './ListImageSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from "react-datepicker";
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 
+
+const NewTripButton = styled.button`
+    float: right;
+    font-size: 1.1rem;
+    border-radius: 7px;
+    padding: 7.5px 15px;
+    height: 40px;
+    font-family: "Sen", sans-serif;
+    color: #fff;
+    border: none;
+    background-color: #1746A2;
+    transition: all 0.2s ease;
+    outline: 1px solid var(--darkBlue);
+
+    &:hover {
+        background-color: transparent;
+        color: var(--darkBlue);
+    }
+
+    &:focus {
+        background-color: transparent ;
+        color: var(--darkBlue);
+        border: 1px solid var(--darkBlue);
+    }
+`
 
 const NewListContainer = styled.div`
     width: 300px;
@@ -43,7 +69,7 @@ const NewIcon = styled.i`
     margin-bottom: 20px;
 `
 
-const ListForm = styled.form`
+const TripForm = styled.form`
     padding: 10px;
     width: 100%;
     height: 100%;
@@ -63,10 +89,10 @@ const FormMainInputs = styled.div`
     align-items: center;
 `
 
-const ListName = styled.input`
+const TripName = styled.input`
     margin-right: 20px;
-    border: none;
     margin-left: 10px;
+    border: none;
     height: 35px;
     width: 300px;
     color: #242424;
@@ -159,13 +185,20 @@ const BackContainer = styled.div`
     }
 `
 
+const CalendarContainer = styled.div`
+    font-size: 1.4em;
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+`
+
 
 var emojis = [
-    '🌎', '🛩️', '🗽', '🧳', '🏛️'
+    '🗺️', '🇧🇧', '🇦🇺', '🇿🇼', '🇵🇭', '🇯🇵', '🇧🇷', '🇳🇴', '🇩🇪', '🇵🇹', '🇬🇧', '🇺🇸'
 ];
 
 
-function NewList(props) {
+function NewTrip(props) {
     const [ list, setTrip ] = useState(props.trip);
     const [ show, setShow ] = useState('none');
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
@@ -179,26 +212,53 @@ function NewList(props) {
         closing()
     }
 
+    const handleFreeze = (e) => {
+        console.log('forze')
+    }
+
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
+
+    const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "255px"};
 
     const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
 
 
     return (
         <Popup contentStyle={contentStyle} className='popup form-modal' nested trigger={
-            <NewListContainer>
-                <NewIcon className="fa fa-solid fa-plus"></NewIcon>
-                <NewTitle>New List</NewTitle>
-            </NewListContainer>
+            <NewTripButton>
+                New Trip
+            </NewTripButton>
         } modal>
             {close => (
-                <ListForm onSubmit={(event) => event.preventDefault()}>
+                <TripForm onSubmit={(event) => event.preventDefault()}>
+                    <FormTitle>New trip</FormTitle>
                     <BackContainer onClick={close}>
                         <FontAwesomeIcon icon={faXmark} />
                     </BackContainer>
-                    <FormTitle>New list</FormTitle>
                     <FormMainInputs>
-                        <ListName placeholder="List name" type='text'/>
+                        <TripName placeholder="Trip place (country or city)" type='text'/>
+                        <Popup
+                            trigger={open => (
+                                <CalendarContainer>
+                                    <FontAwesomeIcon icon={faCalendar} />
+                                </CalendarContainer>
+                            )}
+                            nested
+                            position="bottom center"
+                            contentStyle={contentStyleCalendar} 
+                            closeOnDocumentClick
+                        >
+                            <DatePicker
+                                // selected={startDate}
+                                // onChange={onChange}
+                                // startDate={startDate}
+                                // endDate={endDate}
+                                selectsRange
+                                inline
+                                // onSelect={onSelect}
+                            />
+                        </Popup>
+                        
                         <Popup
                             trigger={open => (
                                 <EmojiContainer><EmojiImg size="40px" emoji={emoji}/></EmojiContainer>
@@ -206,6 +266,7 @@ function NewList(props) {
                             )}
                             position="bottom center"
                             nested
+                            onOpen={handleFreeze}
                             contentStyle={contentStyleEmoji} 
                         >
                             <div>
@@ -216,10 +277,10 @@ function NewList(props) {
                     </FormMainInputs>
                     <ListImageSearch />
                     <FormSubmit onClick={() => onSubmit(close)}>Save</FormSubmit>
-                </ListForm>
+                </TripForm>
             )}
         </Popup>
     );
 }
 
-export default NewList;
+export default NewTrip;

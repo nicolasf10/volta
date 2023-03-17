@@ -14,7 +14,9 @@ const ImageSearchBox = styled.div`
 const SearchInput = styled.input`
     margin-right: 20px;
     border: none;
+    margin-left: 10px;
     height: 35px;
+    width: 300px;
     color: #242424;
     font-family: "Sen", sans-serif;
     font-size: 1.3em;
@@ -32,6 +34,10 @@ const SearchInput = styled.input`
         outline: none;
         border-bottom: 2px solid #1746A2;
     }
+
+    @media (max-width: 450px) {
+        width: 190px;
+    }
 `
 
 const SearchImageButton = styled.button`
@@ -44,23 +50,73 @@ const SearchImageButton = styled.button`
     height: 35px;
 `
 
-const ImagesResults = styled.div``
+const ImagesResults = styled.div`
+    width: 100%;
+    height: 260px;
+    margin-top: 10px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+`
 
 const ImagesBox = styled.div`
+`
+
+const ImagesFlex = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: space-between;
+    justify-content: space-evenly;
+`
+
+const ImageContainer = styled.div`
+    width: 33.3%;
+    padding: 10px;
+
+    .active-img {
+        border: 5px solid #081736;
+        border-radius: 5px;
+    }
+
+    @media (max-width: 650px) {
+        width: 50%;
+    }
+
+    @media (max-width: 500px) {
+        width: 100%;
+    }
 `
 
 const Image = styled.img`
-    width: 200px;
+    width: 100%;
     height: 140px;
     border-radius: 5px;
     object-fit: cover;
-    margin: 10px;
+    /* margin: 10px; */
+    cursor: pointer;
+
+
 `
 
-const NoResults = styled.p``
+const NoResults = styled.p`
+    font-family: "Sen";
+
+`
+
+const SearchBox = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const LoaderBox = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
 
 var emojis = [
@@ -73,6 +129,7 @@ function ListImageSearch(props) {
     const [ hasClicked, setHasClicked ] = useState(false);
     const  [ isLoading, setIsLoading ] = useState(false);
     const [ results, setResults ] = useState([]); 
+    const [ activeImg, setActiveImg ] = useState({item: null, index: -1});
 
     useEffect(() => {
 
@@ -86,6 +143,7 @@ function ListImageSearch(props) {
             
             setIsLoading(false);
             setHasClicked(true);
+            
             setResults(response.results);
             console.log(results)
         });
@@ -98,26 +156,30 @@ function ListImageSearch(props) {
 
     return (
         <ImageSearchBox>
-            <SearchInput onChange={handleChange} name='image-query' value={imageQuery} placeholder='Choose banner image' type="text" />
-            <SearchImageButton onClick={onClick}>
-                <FontAwesomeIcon icon={faSearch} />
-            </SearchImageButton>
+            <SearchBox>
+                <SearchInput onChange={handleChange} name='image-query' value={imageQuery} placeholder='Choose banner image' type="text" />
+                <SearchImageButton onClick={onClick}>
+                    <FontAwesomeIcon icon={faSearch} />
+                </SearchImageButton>
+            </SearchBox>
             <ImagesResults>
                 {
-                    isLoading ? <WorldLoader /> : <></>
+                    isLoading ? <LoaderBox><WorldLoader /></LoaderBox> : <></>
                 }
                 {
                     hasClicked ? 
                         <ImagesBox>
                             { results.length == 0 ? <NoResults>No results found</NoResults>
-                                : 
-                                <div>
-                                    {results.slice(0, 10).map((item, index) => {
+                                :
+                                <ImagesFlex>
+                                        {results.slice(0, 10).map((item, index) => {
                                         return (
-                                            <Image key={index} src={item.links.download} alt={item.alt_description} />
+                                            <ImageContainer key={index} onClick={() => setActiveImg({item: item, index: index})}>
+                                                <Image className={index === activeImg.index ? "active-img" : ""} key={index} src={item.urls.small} alt={item.alt_description} />
+                                            </ImageContainer>
                                         )
                                     })}
-                                </div>
+                                </ImagesFlex>
                             }
                         </ImagesBox>
                     : <></>

@@ -160,9 +160,14 @@ function ChecklistItem(props) {
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
                                     <SelectMembers name="members" id="members" >
-                                        <option value={null}>----</option>
                                         {members.map((member, index) => (
-                                             <option key={index} value={member.username}>{member.username}</option>
+                                            <>
+                                            {member.username === thisItem.assigned.username ?
+                                                <option selected="selected" key={index} value={member.username}>{member.username}</option> 
+                                                :
+                                                <option key={index} value={member.username}>{member.username}</option>
+                                            }
+                                            </>
                                         ))}
                                     </SelectMembers>
                                 </PopupContent>
@@ -194,9 +199,14 @@ function ChecklistItem(props) {
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
                                     <SelectMembers name="members" id="members" >
-                                        <option value={null}>----</option>
                                         {members.map((member, index) => (
-                                             <option key={index} value={member.username}>{member.username}</option>
+                                            <>
+                                            {member.username === thisItem.assigned.username ?
+                                                <option selected="selected" key={index} value={member.username}>{member.username}</option> 
+                                                :
+                                                <option key={index} value={member.username}>{member.username}</option>
+                                            }
+                                            </>
                                         ))}
                                     </SelectMembers>
                                 </PopupContent>

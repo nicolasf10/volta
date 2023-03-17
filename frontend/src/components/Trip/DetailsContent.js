@@ -20,6 +20,10 @@ const ContentContainer = styled.div`
         width: 90vw;
         height: 90vh;
     }
+
+    & *::-webkit-scrollbar {
+        display: none;
+    }
 `
 
 const BackContainer = styled.div`
@@ -134,7 +138,7 @@ function DetailsContent(props) {
                     <NewPlaces id='mobile' list={list}/>
                 }
                 <ToggleButton onClick={handleToggle}>
-                    {toggle === "existing" ? <><FontAwesomeIcon icon={faMagnifyingGlass}/> Explore</> : <><i class="fa fa-solid fa-bookmark"></i> View saved</>}
+                    {toggle === "existing" ? <><FontAwesomeIcon className='toggle-icon' icon={faMagnifyingGlass}/> <span style={{marginLeft: '5px'}}>Explore</span></> : <><i className="fa fa-solid fa-bookmark toggle-icon"></i> <span style={{marginLeft: '5px'}}>View saved</span></>}
                 </ToggleButton>
             </MobileVersion>
         </ContentContainer>

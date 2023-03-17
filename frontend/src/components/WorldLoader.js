@@ -7,7 +7,9 @@ const LoaderStyle = {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: "100px"
 }
 
 const InnerStyle = {
