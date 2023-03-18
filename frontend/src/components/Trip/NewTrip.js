@@ -203,8 +203,7 @@ function NewTrip(props) {
     const [ list, setTrip ] = useState(props.trip);
     const [ show, setShow ] = useState('none');
     const [ tripPlace, setTripPlace ] = useState('');
-    const [ codes, setCodes ] = useState([]);
-    const [ allCodes, setAllCodes ] = useState([])
+    const [ countryCode, setCountryCode ] = useState('')
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
 
     useEffect(() => {
@@ -212,23 +211,26 @@ function NewTrip(props) {
         setTrip(props.trip);
     }, [])
 
-    useEffect(() => {
-        setAllCodes([...allCodes, ...codes])
-        console.log(codes)
-    }, [codes])
-
     const onSubmit = (closing) => {
-        let codes = getAirports(tripPlace, callback);
-        console.log(codes);
-        // closing();
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripPlace}&key=AIzaSyBwLSV_KJEYZpoIn6DxFWN5rAowGsCKC9U`;
+        fetch(url).then((response) => {
+            const data = response.json().then(
+                (data) => {
+                    console.log(data)
+                    if (data.results.length > 0) {
+                        const country = data.results[0].address_components.filter(
+                        (component) => component.types.indexOf('country') !== -1
+                        )[0].short_name;
+                        console.log(country);
+                        setCountryCode(country)
+                    }
+                }
+            );
+            
+        });
+        
+        closing();
     }
-
-    const callback = useCallback((item) => {
-        console.log(item)
-        if (item) {
-            setCodes([...codes, item])
-        }
-    }, []);
 
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
 
