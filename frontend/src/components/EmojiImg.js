@@ -11,10 +11,6 @@ const Emoji = styled.img`
 
 function EmojiImg(props)
 {
-    useEffect (() => {
-        console.log(props.emoji.toString())
-    })
-
     return (
         <Emoji style={{height: props.size, width: props.size}} src={"https://emojicdn.elk.sh/" + props.emoji}/>
     );

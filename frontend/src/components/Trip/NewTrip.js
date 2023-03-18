@@ -11,6 +11,7 @@ import { faXmark, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from "react-datepicker";
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
+import getAirports from '../../services/GetAirports';
 
 
 const NewTripButton = styled.button`
@@ -201,6 +202,9 @@ var emojis = [
 function NewTrip(props) {
     const [ list, setTrip ] = useState(props.trip);
     const [ show, setShow ] = useState('none');
+    const [ tripPlace, setTripPlace ] = useState('');
+    const [ codes, setCodes ] = useState([]);
+    const [ allCodes, setAllCodes ] = useState([])
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
 
     useEffect(() => {
@@ -208,13 +212,23 @@ function NewTrip(props) {
         setTrip(props.trip);
     }, [])
 
+    useEffect(() => {
+        setAllCodes([...allCodes, ...codes])
+        console.log(codes)
+    }, [codes])
+
     const onSubmit = (closing) => {
-        closing()
+        let codes = getAirports(tripPlace, callback);
+        console.log(codes);
+        // closing();
     }
 
-    const handleFreeze = (e) => {
-        console.log('forze')
-    }
+    const callback = useCallback((item) => {
+        console.log(item)
+        if (item) {
+            setCodes([...codes, item])
+        }
+    }, []);
 
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
 
@@ -236,7 +250,7 @@ function NewTrip(props) {
                         <FontAwesomeIcon icon={faXmark} />
                     </BackContainer>
                     <FormMainInputs>
-                        <TripName placeholder="Trip place (country or city)" type='text'/>
+                        <TripName onChange={(e) => setTripPlace(e.target.value)} value={tripPlace} placeholder="Trip place (country or city)" type='text'/>
                         <Popup
                             trigger={open => (
                                 <CalendarContainer>
@@ -266,7 +280,6 @@ function NewTrip(props) {
                             )}
                             position="bottom center"
                             nested
-                            onOpen={handleFreeze}
                             contentStyle={contentStyleEmoji} 
                         >
                             <div>
