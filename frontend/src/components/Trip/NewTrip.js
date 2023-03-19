@@ -223,6 +223,9 @@ function NewTrip(props) {
                         )[0].short_name;
                         console.log(country);
                         setCountryCode(country)
+                    } else {
+                        console.log('No country found')
+                        setCountryCode(null)
                     }
                 }
             );

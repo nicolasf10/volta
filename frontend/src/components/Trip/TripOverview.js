@@ -7,9 +7,13 @@ import OverviewContent from './OverviewContent.js';
 
 
 const PageContainer = styled.div`
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     width: 100vw;
+    justify-content: end; */
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
     justify-content: end;
 `
 

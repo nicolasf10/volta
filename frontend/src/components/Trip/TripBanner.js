@@ -140,10 +140,15 @@ const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px
 function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
     const [ emoji, setEmoji ] = useState(props.trip.emoji)
+    const [text, setText] = useState("");
 
     // const changeBanner = useCallback(val => {
     //     console.log(val)
     // }, []);
+
+    function handleOnEnter(text) {
+        console.log("enter", text);
+      }
 
 
     return (
@@ -166,7 +171,7 @@ function TripBanner(props) {
                             contentStyle={contentStyleEmoji} 
                         >
                             <div>
-                                <Picker data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
+                                <Picker native={false} data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
                                 {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
                             </div>
                     </Popup>

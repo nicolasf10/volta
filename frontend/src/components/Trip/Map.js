@@ -9,7 +9,7 @@ import EmojiImg from '../EmojiImg';
 
 
 const containerStyle = {
-    width: '50vw',
+    width: '35vw',
     height: '100vh',
     borderRadius: '0px'
 };

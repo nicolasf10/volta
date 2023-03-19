@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import EmojiImg from '../EmojiImg';
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
+import Popup from 'reactjs-popup';
 
 
 const BannerContainer = styled.div`
@@ -98,9 +101,13 @@ const EmojiContainer = styled.div`
     }
 `
 
+const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
+
 
 function ListBanner(props) {
     const [ list, setList ] = useState(props.list);
+    const [ emoji, setEmoji ] = useState(props.list.emoji)
+
 
     useEffect(() => {
         console.log(props.list);
@@ -112,7 +119,24 @@ function ListBanner(props) {
         <BannerContainer background={list.img}>
             <BackgroundImg src={list.img}/>
             <BannerHeader>
-                <BannerTitle>{list.title}</BannerTitle><EmojiContainer><EmojiImg size="32px" emoji={list.emoji} /></EmojiContainer>
+                <BannerTitle>{list.title}</BannerTitle>
+                <EmojiContainer>
+                <Popup
+                            trigger={open => (
+                                <EmojiContainer>
+                                    <EmojiImg size="32px" emoji={emoji} />
+                                </EmojiContainer>
+                            )}
+                            position="bottom center"
+                            nested
+                            contentStyle={contentStyleEmoji} 
+                        >
+                            <div>
+                                <Picker native={false} data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
+                                {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
+                            </div>
+                    </Popup>
+                </EmojiContainer>
             </BannerHeader>
             <IconsContainer>
                 <IconI className="fa fa-solid fa-image"></IconI>
