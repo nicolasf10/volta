@@ -67,11 +67,11 @@ const IconsContainer = styled.div`
     height: 100%;
     color: #081736;
     font-size: 1.2rem;
-    min-width: 60px;
+    /* min-width: 60px; */
     height: 100%;
-    width: 130px;
+    /* width: 130px; */
     position: absolute;
-    right: 10px;
+    right: 0px;
     top: 0;
     display: flex;
     flex-direction: row;
@@ -98,6 +98,7 @@ const AssignedImg = styled.img`
     height: 30px;
     width: 30px;
     border-radius: 100px;
+    margin: 0px 15px 0px 10px;
 `
 
 const PopupContent = styled.div`
@@ -130,19 +131,20 @@ function ChecklistItem(props) {
                         <ItemTitle>{thisItem.title}</ItemTitle>
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
-                        <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/>
+                        {/* <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/> */}
                         <FontAwesomeIcon className='check-icon' icon={faTrash}/>
-                        { !thisItem.assigned ? 
+                        { !thisItem.isAssigned ? 
                             <Popup
                                 trigger={open => (
-                                    <FontAwesomeIcon className='check-icon' icon={faUserPlus}/>
+                                    <FontAwesomeIcon style={{margin: '0px 10px'}} className='check-icon' icon={faUserPlus}/>
                                 )}
                                 position="left center"
                                 closeOnDocumentClick
                             >
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
-                                    <SelectMembers name="members" id="members" >
+                                    <SelectMembers name="members" id="members">
+                                        <option value={null}>Unassigned</option>
                                         {members.map((member, index) => (
                                             <option key={index} value={member.username}>{member.username}</option>
                                         ))}
@@ -184,10 +186,26 @@ function ChecklistItem(props) {
                         <ItemTitle>{thisItem.title}</ItemTitle>
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
-                        <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/>
+                        {/* <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/> */}
                         <FontAwesomeIcon className='check-icon' icon={faTrash}/>
-                        { !thisItem.assigned ? 
-                            <FontAwesomeIcon className='check-icon' icon={faUserPlus}/>
+                        { !thisItem.isAssigned ? 
+                            <Popup
+                                trigger={open => (
+                                    <FontAwesomeIcon style={{margin: '0px 10px'}} className='check-icon' icon={faUserPlus}/>
+                                )}
+                                position="left center"
+                                closeOnDocumentClick
+                            >
+                                <PopupContent>
+                                    <PopupTitle>Assign to someone</PopupTitle>
+                                    <SelectMembers name="members" id="members">
+                                        <option value={null}>Unassigned</option>
+                                        {members.map((member, index) => (
+                                            <option key={index} value={member.username}>{member.username}</option>
+                                        ))}
+                                    </SelectMembers>
+                                </PopupContent>
+                            </Popup>
                             :
                             <Popup
                                 trigger={open => (

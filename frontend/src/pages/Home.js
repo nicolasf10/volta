@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import EmojiImg from '../components/EmojiImg';
 import SecondHero from '../components/SecondHero';
 import ThirdHero from '../components/ThirdHero';
+import FourthHero from '../components/FourthHero';
 
 
 const HomePage = styled.div`
@@ -30,6 +31,7 @@ const ContentContainer = styled.div`
     @media (max-width: 991px) {
         height: auto;
         padding-right: 50px;
+        padding-bottom: 10px;
     }
 `
 
@@ -103,7 +105,7 @@ function Home() {
                     <div className="row">
                         <ContentContainer className="col-lg-5 col-md-12">
                             <ContentTitle><span style={{fontSize:"1.5em"}}>⛰️</span> Trip planning at it's finest — trust us.</ContentTitle>
-                            <ContentText>Planning a trip can be overwhelming and time-consuming, but it doesn't have to be. Our platform is designed to make trip planning <b>easier</b> and more <b>collaborative</b>. Whether you're traveling with friends, family, or solo, our tool has everything you need to plan your <b>perfect trip</b>.</ContentText>
+                            <ContentText>Planning a trip can be overwhelming and time-consuming, but it doesn't have to be. We make trip planning <b>easier</b>, whether you're traveling with friends, family, or solo.</ContentText>
                             <ContentButton><Link className='button-link' to='/signup'>Sign up</Link></ContentButton>
                         </ContentContainer>
                         <SplineContainer className="col-lg-7 col-md-12">
@@ -121,6 +123,7 @@ function Home() {
                 </div>
             </MainHero>
             <SecondHero id="second"/>
+            {/* <FourthHero id="fourth"/> */}
             <ThirdHero id="third"/>
         </HomeContainer>
     </HomePage>

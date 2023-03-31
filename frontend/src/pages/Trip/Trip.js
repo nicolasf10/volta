@@ -56,9 +56,9 @@ function Trip(props) {
     const [currentPage, setCurrentPage] = useState(<>not updated</>)
 
     useEffect(() => {
-        if (!location.state) {
+        if (!location.state || !location.state.trip || !location.state.trip.date) {
             console.log("rerouting");
-            navigate("/");
+            navigate("/trips");
         } else {
             setTrip(location.state.trip);
             document.title = `Trip to ${location.state.trip.title}`

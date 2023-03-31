@@ -120,7 +120,7 @@ function ListBanner(props) {
             <BackgroundImg src={list.img}/>
             <BannerHeader>
                 <BannerTitle>{list.title}</BannerTitle>
-                <EmojiContainer>
+                {/* <EmojiContainer> */}
                 <Popup
                             trigger={open => (
                                 <EmojiContainer>
@@ -136,7 +136,7 @@ function ListBanner(props) {
                                 {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
                             </div>
                     </Popup>
-                </EmojiContainer>
+                {/* </EmojiContainer> */}
             </BannerHeader>
             <IconsContainer>
                 <IconI className="fa fa-solid fa-image"></IconI>

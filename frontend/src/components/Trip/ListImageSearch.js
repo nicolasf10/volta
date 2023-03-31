@@ -153,6 +153,14 @@ function ListImageSearch(props) {
         setImageQuery(e.target.value)
     }
 
+    const handleSelect = (item, index) => {
+        console.log(item)
+        setActiveImg({item: item, index: index})
+        if (props.parentCallback) {
+            props.parentCallback(item.urls.regular)
+        }
+    }
+
 
     return (
         <ImageSearchBox>
@@ -174,7 +182,7 @@ function ListImageSearch(props) {
                                 <ImagesFlex>
                                         {results.slice(0, 10).map((item, index) => {
                                         return (
-                                            <ImageContainer key={index} onClick={() => setActiveImg({item: item, index: index})}>
+                                            <ImageContainer key={index} onClick={() => handleSelect(item, index)}>
                                                 <Image className={index === activeImg.index ? "active-img" : ""} key={index} src={item.urls.small} alt={item.alt_description} />
                                             </ImageContainer>
                                         )

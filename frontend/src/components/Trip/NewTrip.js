@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import DetailsContent from './DetailsContent';
@@ -12,6 +12,9 @@ import DatePicker from "react-datepicker";
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import getAirports from '../../services/GetAirports';
+import { addDoc, collection, Timestamp } from 'firebase/firestore';
+import { AuthContext } from '../../Auth';
+import { db } from '../../firebase';
 
 
 const NewTripButton = styled.button`
@@ -205,6 +208,9 @@ function NewTrip(props) {
     const [ tripPlace, setTripPlace ] = useState('');
     const [ countryCode, setCountryCode ] = useState('')
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
+    const [ img, setImg ] = useState('');
+    const { currentUser } = useContext(AuthContext);
+
 
     useEffect(() => {
         console.log(props);
@@ -216,23 +222,62 @@ function NewTrip(props) {
         fetch(url).then((response) => {
             const data = response.json().then(
                 (data) => {
+                    var place_code = "";
                     console.log(data)
                     if (data.results.length > 0) {
                         const country = data.results[0].address_components.filter(
                         (component) => component.types.indexOf('country') !== -1
                         )[0].short_name;
                         console.log(country);
-                        setCountryCode(country)
+                        setCountryCode(country);
+                        place_code = country;
                     } else {
-                        console.log('No country found')
-                        setCountryCode(null)
+                        console.log('No country found');
+                        setCountryCode('');
+                    }
+
+                    // Adding to firebase
+                    if (tripPlace === '' || img === '') {
+                        alert("Plase fill out all fields");
+                    } else {
+                        const tripsCollectionRef = collection(db, 'trips');
+                        const today = new Date(); // Get the current date
+                        const start = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate()); // Add 1 month
+                        const end = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() + 7); // Add 1 month and 1 week
+
+                        addDoc(
+                            tripsCollectionRef,
+                            {
+                                blocks: [],
+                                checklist: [],
+                                date: {
+                                    start: Timestamp.fromDate(start),
+                                    end: Timestamp.fromDate(end)
+                                },
+                                emoji: emoji,
+                                image: img,
+                                lists: [],
+                                members: [
+                                    {
+                                        img: currentUser.photoURL,
+                                        uid: currentUser.uid,
+                                        username: currentUser.email
+                                    }
+                                ],
+                                place_code: place_code,
+                                title: tripPlace,
+                                users: [currentUser.uid]
+                            }
+                        ).then(() => {
+                            console.log('Added trip')
+                            closing();
+                            props.updateTrips();
+                        })
                     }
                 }
             );
             
         });
-        
-        closing();
     }
 
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
@@ -240,6 +285,11 @@ function NewTrip(props) {
     const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "255px"};
 
     const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
+
+    const changeImg = useCallback((item) => {
+        console.log(item)
+        setImg(item)
+    }, []);
 
 
     return (
@@ -289,11 +339,10 @@ function NewTrip(props) {
                         >
                             <div>
                                 <Picker data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
-                                {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
                             </div>
                         </Popup>
                     </FormMainInputs>
-                    <ListImageSearch />
+                    <ListImageSearch parentCallback={changeImg} />
                     <FormSubmit onClick={() => onSubmit(close)}>Save</FormSubmit>
                 </TripForm>
             )}

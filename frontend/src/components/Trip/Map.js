@@ -6,6 +6,7 @@ import mapIcon from './../../images/google-map-icon.png';
 import LocationPin from './LocationPin';
 import WorldLoader from '../WorldLoader';
 import EmojiImg from '../EmojiImg';
+import CodesCoordinate from './CodesCoordinate';
 
 
 const containerStyle = {
@@ -116,11 +117,14 @@ const convertMarkers = (trip) => {
                         emoji: item.emoji,
                         address: item.address,
                         link: marker.link,
-                        position: marker.position
+                        position: {
+                            lat: parseFloat(marker.position.lat),
+                            lng: parseFloat(marker.position.lng)
+                        }
                     }
                 )
-                lat += marker.position.lat;
-                lng += marker.position.lng;
+                lat += parseFloat(marker.position.lat);
+                lng += parseFloat(marker.position.lng);
             })
         })
     } else {
@@ -195,6 +199,7 @@ function Map(props) {
     const [ markers, setMarkers ] = useState([]);
     const [ center, setCenter ] = useState({lat: 0, lng: 0});
     const [ key, setKey] = useState(process.env.GOOGLEKEY);
+    const [ zoom, setZoom] = useState(13);
     const [ layers, setLayers ] = useState({
         bicycling: false,
         transit: false
@@ -209,8 +214,21 @@ function Map(props) {
         setTrip(props.trip);
         let convert = convertMarkers(trip);
         setMarkers(convert.markers);
-        setCenter(convert.center);
-        console.log("MAP LOADED")
+        if (convert.center && convert.center.lat) {
+            setCenter(convert.center);
+        } else if (trip.place_code != '') {
+            setZoom(6);
+            let coordinates = CodesCoordinate[trip.place_code]
+            if (coordinates) {
+                setCenter(coordinates)
+            } else {
+                setCenter({lat: 32.0853, lng: 34.7818})
+            }
+        } else {
+            setCenter({lat: 32.0853, lng: 34.7818})
+        }
+        
+        console.log("MAP LOADED");
 
     }, [props.trip])
 
@@ -225,7 +243,7 @@ function Map(props) {
                     id="map"
                     mapContainerStyle={containerStyle} 
                     center={center}
-                    zoom={13}
+                    zoom={zoom}
                     language="ko-KR"
                 >
                     {/* <SaveToGoogleMapsButton markers={markers} /> */}

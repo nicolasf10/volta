@@ -148,8 +148,14 @@ function TripBanner(props) {
 
     function handleOnEnter(text) {
         console.log("enter", text);
-      }
+    }
 
+    function handleSelect(emoji) {
+        setEmoji(emoji.native);
+        // const tripRef = doc(db, "trips", "DC");
+
+    }
+    
 
     return (
         <Banner background={trip.image}>
@@ -171,8 +177,7 @@ function TripBanner(props) {
                             contentStyle={contentStyleEmoji} 
                         >
                             <div>
-                                <Picker native={false} data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
-                                {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
+                                <Picker native={false} data={data} onEmojiSelect={(emoji) => handleSelect(emoji)} />
                             </div>
                     </Popup>
                 </BannerTitle>

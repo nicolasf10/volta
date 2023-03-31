@@ -34,6 +34,11 @@ const ExploreDashboardDestinationContainer = styled.div`
   box-shadow: 0px 8px 15px 0px rgba(0,0,0,0.28);
   margin-bottom: 35px;
   font-family: "Roboto", sans-serif;
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    height: auto;
+  }
 `
 
 const DestinationInfo = styled.div`
@@ -41,6 +46,11 @@ const DestinationInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 300px;
+
+  @media screen and (max-width: 1200px) {
+    margin-top: 10px;
+  }
 `
 
 const InfoTitle = styled.h2`
@@ -84,12 +94,18 @@ const InfoTag = styled.p`
 `
 
 const SliderContainer = styled.div`
-min-width: 300px;
-min-height: 300px;
-max-width: 300px;
-max-height: 300px;
+  min-width: 300px;
+  /* height: 100%; */
+  /* border: 1px solid gold; */
 `
 
+const ScrollContainer = styled.div`
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 function ExploreDashboardDestination(props) {
   return (
@@ -99,16 +115,18 @@ function ExploreDashboardDestination(props) {
         </SliderContainer>
         <DestinationInfo>
           <InfoTitle>{props.destination.title} <GraySpan>{props.destination.region}</GraySpan></InfoTitle>
-          <InfoDescription>{props.destination.description}</InfoDescription>
-          
-          <TagsContainer>
-            <TagsTitle>Perfect if you like...</TagsTitle>
-              <TagsList>
-                {props.destination.tags.map((tag) => (
-                    <InfoTag><EmojiImg emoji={filterDictionary[tag][0]}/>{filterDictionary[tag][1]}</InfoTag>
-                ))}
-              </TagsList>
-          </TagsContainer>
+          <ScrollContainer>
+            <InfoDescription>{props.destination.description}</InfoDescription>
+            
+            <TagsContainer>
+              <TagsTitle>Perfect if you like...</TagsTitle>
+                <TagsList>
+                  {props.destination.tags.map((tag) => (
+                      <InfoTag><EmojiImg emoji={filterDictionary[tag][0]}/>{filterDictionary[tag][1]}</InfoTag>
+                  ))}
+                </TagsList>
+            </TagsContainer>
+          </ScrollContainer>
         </DestinationInfo>
       </ExploreDashboardDestinationContainer>
   );

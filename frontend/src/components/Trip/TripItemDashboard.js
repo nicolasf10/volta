@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +7,9 @@ import DeleteConfirm from '../DeleteConfirm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import DateRange from '../DateRange';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { AuthContext } from '../../Auth';
 
 
 
@@ -114,6 +117,7 @@ function TripItemDashboard(props)
 {
     const [trip, setTrip] = useState(props.trip);
     const [ showDelete, setShowDelete ] = useState(false);
+    const { currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -130,6 +134,23 @@ function TripItemDashboard(props)
         setShowDelete(false);
     }, [setShowDelete]);
 
+    const deleteAction = useCallback(() => {
+        var tripID = props.id;
+        if (trip.users.length == 1) {
+            deleteDoc(doc(db, "trips", tripID)).then(() => {
+                console.log('trip delete')
+                props.updateTrips();
+            })
+        } 
+        else {
+            var newList = trip.users; // remove user from trip members and all checklist items he's assigned to
+
+            // updateDoc(washingtonRef, {
+            //     capital: true
+            // });
+        }
+    }, []);
+
 
     return (
         <div onClick={() => navigate("/trip", {state: {trip: trip}})} className='no-underline' to="/trip" state={{trip: trip}}>
@@ -144,7 +165,7 @@ function TripItemDashboard(props)
             </Trip>
             {
                 showDelete ?
-                    <DeleteConfirm parentCallback={toggleDeleteShow} trip={trip} />
+                    <DeleteConfirm deleteAction={deleteAction} parentCallback={toggleDeleteShow} trip={trip} />
                 :
                     <></>
             }

@@ -45,8 +45,8 @@ const FlightsLink = styled.a`
 
 function Flights(props) {
     const [trip, setTrip] = useState(props.trip);
-    const [ afterOffestStart, setAfterOffesetStart ] = useState(new Date(trip.date.start - trip.date.start.getTimezoneOffset() * 60000));
-    const [ afterOffestEnd, setAfterOffesetEnd ] = useState(new Date(trip.date.end - trip.date.end.getTimezoneOffset() * 60000));
+    const [ afterOffestStart, setAfterOffesetStart ] = useState(new Date(trip.date.start.toDate() - trip.date.start.toDate().getTimezoneOffset() * 60000));
+    const [ afterOffestEnd, setAfterOffesetEnd ] = useState(new Date(trip.date.end.toDate() - trip.date.end.toDate().getTimezoneOffset() * 60000));
 
     const [ kiwiLink, setKiwiLink ] = useState(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`);
 

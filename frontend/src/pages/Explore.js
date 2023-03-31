@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import EmojiImg from '../components/EmojiImg';
 import ExploreDestinations from '../components/Explore/ExploreDestinations';
 import ExploreFilter from '../components/Explore/ExploreFilter';
+import ExploreFilterValues from '../components/Explore/ExploreFilterValues';
 import ExploreSearch from '../components/Explore/ExploreSearch';
 import NavbarComponent from '../components/Navbar';
-// import Globe from 'react-globe.gl';
+import destinations from './ExploreData';
 
 
 const ExplorePage = styled.div`
@@ -14,7 +15,7 @@ const ExplorePage = styled.div`
 `
 
 const ExplorePageContainer = styled.div`
-  padding: 30px;
+  padding: 30px 30px 0px 30px;
   position: relative;
   height: inherit;
   /* background-color: lightblue; */
@@ -59,113 +60,150 @@ const NewTripButton = styled.button`
       color: var(--darkBlue);
       border: 1px solid var(--darkBlue);
   }
-    `
+`
 
-const destinations = [
-    {
-      title : "Rio de Janeiro",
-      region : "Brazil",
-      description : "Rio de Janeiro is a huge seaside city in Brazil, famed for its Copacabana and Ipanema beaches, 38m Christ the Redeemer statue atop Mount Corcovado and for Sugarloaf Mountain.",
-      tags : ["type-beach", "type-city", "society-sightseeing", "society-museums", "society-culinary", "society-sports", "society-night", "location-america"],
-      images : [
-        "https://images.unsplash.com/photo-1593995863951-57c27e518295?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-        "https://images.unsplash.com/photo-1663467673813-169dcfc7a04e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80",
-        "https://images.unsplash.com/photo-1576547849475-57662ff255ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-      ]
-    },
-    {
-      title : "Barcelona",
-      region : "Spain",
-      description : "Barcelona, the cosmopolitan capital of Spain’s Catalonia region, is known for its art and architecture. The fantastical Sagrada Família church and other modernist landmarks designed by Antoni Gaudí dot the city.",
-      tags : ["type-beach", "type-city", "society-sightseeing", "society-museums", "society-architecture", "society-sports", "society-night", "location-europe"],
-      images : [
-        "https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1579282240050-352db0a14c21?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=704&q=80"
-      ]
-    },
-    {
-      title: "Toronto",
-      region: "Canada",
-      description: "Toronto is the capital city of the Canadian province of Ontario. It's a major Canadian city known for its iconic CN Tower, diverse neighborhoods, and cultural attractions.",
-      tags: [
-        "type-city",
-        "society-architecture",
-        "society-sightseeing",
-        "society-museums",
-        "society-culinary",
-        "society-sports",
-        "society-night",
-        "location-america"
-      ],
-      images: [
-        "https://images.unsplash.com/photo-1507992781348-310259076fe0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80",
-        "https://images.unsplash.com/photo-1517090504586-fde19ea6066f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1542704792-e30dac463c90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-      ]
-    },
-    {
-      title: "Tokyo",
-      region: "Japan",
-      description: "Tokyo is the capital of Japan, and is known for its bright lights, bustling streets, and modern architecture. From the Imperial Palace to the iconic Tokyo Tower, there is plenty to see and do in this vibrant city.",
-      tags: ["type-city", "society-sightseeing", "society-museums", "society-culinary", "society-night", "location-asiaoceania"],
-      images: [
-        "https://images.unsplash.com/photo-1570521462033-3015e76e7432?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80",
-        "https://images.unsplash.com/photo-1570543922355-c64a19ab2bc7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-        "https://images.unsplash.com/photo-1634110555127-12685786b487?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-      ]
-    },
-    {
-      title: "Cape Town",
-      region: "South Africa",
-      description: "Cape Town is a coastal city in South Africa, known for its stunning natural scenery, including Table Mountain and the nearby Cape of Good Hope. Visitors can also enjoy the city's beaches, vineyards, and vibrant cultural scene.",
-      tags: ["type-beach", "type-city", "type-nature", "society-sightseeing", "society-museums", "society-culinary", "location-africa"],
-      images: [
-        "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80",
-        "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1599407384144-77deae48a47a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-      ]
-    },
-    {
-      title: "Sydney",
-      region: "Australia",
-      description: "Sydney is a bustling city on Australia's east coast, known for its iconic landmarks such as the Sydney Opera House and Harbour Bridge. Visitors can also enjoy the city's beaches, parks, and lively arts scene.",
-      tags: ["type-beach", "type-city", "society-sightseeing", "society-museums", "society-culinary", "society-night", "location-asiaoceania"],
-      images: [
-        "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1530276371031-2511efff9d5a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
-        "https://images.unsplash.com/photo-1559651868-066bcc28f358?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-      ]
-    },
-    {
-      title: "Venice",
-      region: "Italy",
-      description: "Venice is a picturesque city in northeastern Italy, known for its canals, historic architecture, and artistic heritage. Visitors can take a gondola ride, visit the famous St. Mark's Basilica, and enjoy the city's many museums and galleries.",
-      tags: ["type-city", "society-architecture", "society-sightseeing", "society-museums", "society-culinary", "location-europe"],
-      images: [
-        "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=766&q=80",
-        "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        "https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-      ]
-    },
-    {
-      title: "Marrakech",
-      region: "Morocco",
-      description: "Marrakech is a vibrant city in Morocco, known for its bustling markets, historic architecture, and lively cultural scene. Visitors can explore the medina, visit the stunning Bahia Palace, and sample delicious Moroccan cuisine.",
-      tags: ["type-city", "society-architecture", "society-sightseeing", "society-culinary", "society-night", "location-africa"],
-      images: [
-        "https://images.unsplash.com/photo-1580746738099-1cb74f972feb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-        "https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1848&q=80",
-        "https://images.unsplash.com/photo-1597212618440-806262de4f6b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1773&q=80"
-      ]
-    },                    
-]
+const ExploreContent = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }  
+`
+
+
+// Filter style
+const ExploreFilterContainer = styled.div`
+    width: 280px;
+    /* posit/ion: relative; */
+    margin-top: -50px;
+    margin-left: 20px;
+    height: calc(100vh - 140px);
+    /* background-color: tomato; */
+    /* position: fixed; */
+    /* right: 15px;
+    bottom: 15px; */
+    border-radius: 15px;
+    -webkit-box-shadow: 5px 5px 12px 5px rgba(0,0,0,0.17); 
+    box-shadow: 5px 5px 12px 5px rgba(0,0,0,0.17);
+    font-family: 'Sen', sans-serif;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media screen and (max-width: 1200px) {
+      margin-top: 20px;
+      margin-left: 0px;
+      width: 100%;
+      height: auto;
+    }
+`
+
+const ExploreForm = styled.form`
+  padding: 0px 15px;
+  @media(max-width: 1200px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 20px 0px;
+    height: auto;
+  }
+`
+
+const CheckboxContainer = styled.div`
+  margin: 10px;
+`
+
+const SectionItems = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const ExploreCheckbox = styled.input`
+    margin-right: 11px;
+    transform: scale(1.4);
+`
+
+const CheckboxLabel = styled.label`
+
+`
+
+const SectionLabel = styled.p`
+  color: #505050;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 15px;
+`
+
+const FiltersExpand = styled.button`
+  display: none;
+
+  @media(max-width: 991px) {
+    display: block;
+  }
+`
+
+const FilterSection = styled.div`
+  margin: 0px 15px;
+`
+// End of filter style
+
+
+// Function to check if set2 is subset of set1
+function subset(set1, set2) {
+  let isSubset = true;
+  for (let item of set1) {
+    if (!set2.has(item)) {
+      isSubset = false;
+      break;
+    }
+  }
+  return isSubset;
+}
 
 function Explore() {
 
+  const [ destinationsFilter, setDestinations ] = useState(destinations);
+  const [filters, setFilters] = useState(ExploreFilterValues);
+  const [ triggerState, setTriggerState ] = useState(false);
+
+
+  useEffect(() => {
+    // getting a list of all selected filters
+    var selectedFilters = []
+    var allFilters = Array.prototype.slice.call(document.getElementsByClassName('filter-checkbox'));
+    
+    allFilters.map((item, index) => {
+      if (item.checked) {
+        selectedFilters.push(item.value);
+      }
+    })
+
+    if (selectedFilters.length == 0) {
+      setDestinations(destinations)
+    } else {
+      var newDestinations = [];
+      var filtersSet = new Set(selectedFilters)
+      console.log(filtersSet)
+      destinations.map((item, index) => {
+        console.log(new Set(item.tags))
+        if (subset(filtersSet, new Set(item.tags))) {
+          newDestinations.push(item)
+        }
+      })
+
+      setDestinations(newDestinations);
+    }
+
+    console.log('trige')
+  }, [triggerState])
+
   useEffect(() => {
     document.title = `Explore`
-  })
+  }, [])
 
   return (
       <ExplorePage>
@@ -173,10 +211,33 @@ function Explore() {
         <ExplorePageContainer>
           <HeadingContainer>
             <ExploreHeading>Explore <EmojiImg size="45px" emoji="🧭"/></ExploreHeading>
-            <NewTripButton>New Template</NewTripButton>
+            {/* <NewTripButton>New Template</NewTripButton> */}
           </HeadingContainer>
-          <ExploreFilter/>
-          <ExploreDestinations destinations={destinations}/>
+          <ExploreContent>
+            <ExploreFilterContainer>
+              <ExploreForm>
+                {
+                  Object.keys(filters).map((key, index) =>  {
+                    return (
+                      <FilterSection key={index}>
+                        <SectionLabel>{key}</SectionLabel>
+                        <SectionItems>
+                          {filters[key].map((filter, index2) => (
+                              <CheckboxContainer key={index2}>
+                                <ExploreCheckbox className='filter-checkbox' onChange={() => setTriggerState(!triggerState)} id={filter.value} type="checkbox" value={filter.value}/>
+                                <CheckboxLabel><EmojiImg emoji={filter.emoji}/> {filter.title}</CheckboxLabel>
+                              </CheckboxContainer>
+                          ))}
+                        </SectionItems>
+                      </FilterSection>
+                    )
+                  })
+                }
+              </ExploreForm>
+              {/* <FiltersExpand>Filters</FiltersExpand> */}
+            </ExploreFilterContainer>
+            <ExploreDestinations destinations={destinationsFilter}/>
+          </ExploreContent>
         </ExplorePageContainer>
         
         {/* <ExploreSearch/> */}

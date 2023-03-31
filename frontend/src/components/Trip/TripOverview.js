@@ -14,7 +14,11 @@ const PageContainer = styled.div`
     width: 100vw;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    /* justify-content: end; */
+
+    @media screen and (max-width: 1001px) {
+        flex-direction: column;
+    } 
 `
 
 const mapStyle = {

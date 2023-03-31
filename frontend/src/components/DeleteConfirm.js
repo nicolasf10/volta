@@ -75,14 +75,14 @@ function DeleteConfirm(props)
     // }, [])
 
     const handleDelete = (e) => {
-        console.log("cancel")
+        if (props.deleteAction) {
+            props.deleteAction()
+        }
         props.parentCallback()
         e.stopPropagation()
-
     }
 
     const handleCancel = (e) => {
-        console.log("cancel")
         props.parentCallback()
         e.stopPropagation()
     }

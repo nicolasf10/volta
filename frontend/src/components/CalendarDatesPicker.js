@@ -11,8 +11,8 @@ const CalendarContainer = styled.div`
 `
 function CalendarDatesPicker(props) {
     const [ trip, setTrip ] = useState(props.trip);
-    const [startDate, setStartDate] = useState(props.trip.date.start);
-    const [endDate, setEndDate] = useState(props.trip.date.end);
+    const [startDate, setStartDate] = useState(props.trip.date.start.toDate());
+    const [endDate, setEndDate] = useState(props.trip.date.end.toDate());
 
     const [ newStart, setNewStart ] = useState(null);
     const [ newEnd, setNewEnd ] = useState(null);

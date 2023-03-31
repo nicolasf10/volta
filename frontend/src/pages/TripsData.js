@@ -58,25 +58,25 @@ export let TripsData = [
                         title: "Marco Martini Restaurant",
                         address: "Boulevard 123",
                         description: "Marco Martini defines cuisine in three words: eyes, stomach, head – it is memories of flavours from bygone days that provide the impetus for his own creations.",
-                        position: {lat: 41.880549484164426, lng: 12.48471773530235},
+                        position: {lat: '41.880549484164426', lng: '12.48471773530235'},
                         link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
-                        img: "https://lh3.googleusercontent.com/p/AF1QipODZpJ5HQL0y_nnDbuY_-v4AVUX1IcIcYOucNJq=s1360-w1360-h1020",
+                        img: "https://lh3.googleusercontent.com/places/AJQcZqLPPOoDIzcOnKjKFKZ_d-X6Fp8cxmzdgWsU1UKpyJBGsGVOW-IT0eFAT2jolRxAjsdolji1yM89f-pcPVPYoMlyBjEtj55N0RE=s1600-w550-h550",
                         notes: ""
                     },
                     {
                         title: "Trattoria Pennestri",
                         address: "Boulevard 123",
                         description: "You'll feel immediately at ease in this restaurant, which has the warm, simple atmosphere of a typical trattoria.",
-                        position: {lat: 41.873364, lng: 12.479696},
+                        position: {lat: '41.873364', lng: '12.479696'},
                         link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
-                        img: "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sAfLeUgNu0HLY_YvGvo_JbAZ7YPIdf0qFaPNk4W8Nqd2_GtWB9pxFbwlPSLF-lbGW7Ug6jqhlXNAJwDuocSlADkIruUB046XzUKrmRWsBTwiygokDykAuH-UpywQv7sDjdrUAnHILLefs0En7REH3ne-WwMEKFXNePZX1AMl_qsX3ISDKchdl&3u550&4u550&5m1&2e1&callback=none&key=AIzaSyAAqWy0DmJhNoklNmZgyVRiZY9daxfswrY&token=48463",
+                        img: "https://lh3.googleusercontent.com/p/AF1QipMkkXjwnrIIJqV4CKGd4RivSNhcd8zWnxFoKdqu=s1360-w1360-h1020",
                         notes: ""
                     },
                     {
                         title: "Green T.",
                         address: "Boulevard 123",
                         description: "Not far from the Pantheon, this original restaurant arranged over four floors serves the type of fine Chinese cuisine which has graced official banquets in China ever since the time of Chairman Mao.",
-                        position: {lat: 41.897558631883264, lng: 12.479295860690605},
+                        position: {lat: '41.897558631883264', lng: '12.479295860690605'},
                         link: "https://goo.gl/maps/2uifYqkZAnRF1pps5",
                         img: "https://zero-media.s3.amazonaws.com/uploads/2015/06/green-t..jpg",
                         notes: ""
@@ -165,6 +165,40 @@ export let TripsData = [
                     }
                 ]
             }
+        ],
+        blocks: [
+            {
+              type: 'note',
+              title: "Notes",
+              content: 'a'
+            },
+            {
+              type: 'links',
+              title: "Resources",
+              content: [
+                {
+                  label: "Best Munich Restaurants",
+                  link: "https://www.timeout.com/munich/restaurants/best-restaurants-in-munich"
+                },
+                {
+                  label: "Amazing Munich Hotels",
+                  link: "https://www.telegraph.co.uk/travel/destinations/europe/germany/munich/hotels/"
+                }
+              ]
+            },
+            {
+                type: 'budget',
+                title: "Budget",
+                content: {
+                    'Accomodation': 350,
+                    'Travel': 400,
+                    'Entertainment': 190,
+                    'Food': 240,
+                    'Shopping': 85,
+                    'Transportation': 30,
+                    'Other': 100,
+                }
+            },
         ],
         itinerary: [
             {
