@@ -35,7 +35,7 @@ function TripOverview(props) {
     }, [props.trip])
 
     return (
-        <PageContainer>
+        <PageContainer style={{display: props.display}}>
             {/* <Itinerary trip={trip} /> */}
             <OverviewContent trip={trip} />
             <Map

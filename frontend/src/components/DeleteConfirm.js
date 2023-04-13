@@ -78,7 +78,8 @@ function DeleteConfirm(props)
         if (props.deleteAction) {
             props.deleteAction()
         }
-        props.parentCallback()
+        
+        props.handleDelete()
         e.stopPropagation()
     }
 

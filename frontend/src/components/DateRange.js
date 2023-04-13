@@ -12,11 +12,17 @@ function DateRange(props) {
     // });
 
     useEffect(() => {
-        if (!props.date || !props.date.start) {
+        try {
+            if (!props.date || !props.date.start) {
+                navigate('/trips');
+            } else {
+                setRange(`${props.date.start.toDate().toLocaleDateString()} to ${props.date.end.toDate().toLocaleDateString()}`);
+            }
+        } catch (error) {
+            console.log(error.message);
             navigate('/trips');
-        } else {
-            setRange(`${props.date.start.toDate().toLocaleDateString()} to ${props.date.end.toDate().toLocaleDateString()}`);
         }
+        
     });
 
     return (

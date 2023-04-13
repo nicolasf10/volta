@@ -12,6 +12,8 @@ import CalendarDatesPicker from '../CalendarDatesPicker';
 import DateRange from '../DateRange';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 
 const Banner = styled.div`
@@ -141,6 +143,8 @@ function TripBanner(props) {
     const [trip, setTrip] = useState(props.trip);
     const [ emoji, setEmoji ] = useState(props.trip.emoji)
     const [text, setText] = useState("");
+    const [ changed, setChanged ] = useState(false);
+    const [ date, setDate ] = useState(props.trip.date)
 
     // const changeBanner = useCallback(val => {
     //     console.log(val)
@@ -152,10 +156,17 @@ function TripBanner(props) {
 
     function handleSelect(emoji) {
         setEmoji(emoji.native);
-        // const tripRef = doc(db, "trips", "DC");
-
+        const tripRef = doc(db, "trips", props.id);
+        updateDoc(tripRef, {
+            emoji: emoji.native
+        }).then(() => {
+            console.log("emoji changed")
+        }).catch(error => console.log(error.message));
     }
-    
+
+    const updateDate = useCallback((newDate) => {
+        setDate(newDate);
+    }, []); 
 
     return (
         <Banner background={trip.image}>
@@ -185,26 +196,26 @@ function TripBanner(props) {
                     <Popup
                         trigger={open => (
                             <DateTextBox>
-                                <DateRange date={trip.date}/>
+                                <DateRange date={date}/>
                             </DateTextBox>
                         )}
                         contentStyle={contentStyleCalendar} 
                         position="bottom center"
                         closeOnDocumentClick
                     >
-                        <CalendarModal><CalendarDatesPicker trip={trip} /></CalendarModal>
+                        <CalendarModal><CalendarDatesPicker updateDate={updateDate} id={props.id} trip={trip} /></CalendarModal>
                     </Popup>
                 </BannerDate>
             </BannerText>
-            <IconsContainer>
+            {/* <IconsContainer>
                 <Popup contentStyle={contentStyle} className='popup' trigger={<FontAwesomeIcon className='icon-banner' icon={faImage}/>} modal>
                     {close => (
                         <UnsplashPicker close={close} />
                     )}
                 </Popup>
-                {/* <FontAwesomeIcon className='icon-banner' icon={faPenToSquare}/> */}
-            </IconsContainer>
-            <TripShareContainer members={trip.members} />
+                // <FontAwesomeIcon className='icon-banner' icon={faPenToSquare}/>
+            </IconsContainer> */}
+            <TripShareContainer trip={trip} id={props.id} members={trip.members} />
         </Banner>
     );
 }

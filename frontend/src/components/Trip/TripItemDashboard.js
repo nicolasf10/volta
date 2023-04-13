@@ -143,18 +143,43 @@ function TripItemDashboard(props)
             })
         } 
         else {
-            var newList = trip.users; // remove user from trip members and all checklist items he's assigned to
+            console.log(trip);
+            var newUsers = trip.users; // remove user from trip members and all checklist items he's assigned to
+            console.log(trip.users)
+            console.log(currentUser.uid)
+            var removeID = currentUser.uid;
+            var index = newUsers.findIndex(item => item === removeID);
+            if (index > -1) {
+                newUsers.splice(index, 1);
+                // now removing from the members array
+                var newMembers = trip.members;
+                newMembers = newMembers.filter(member => member.uid !== removeID);
 
-            // updateDoc(washingtonRef, {
-            //     capital: true
-            // });
+                // now removing all checklist todos
+                var newChecklist = trip.checklist;
+                for (let i = 0; i < newChecklist.length; i++) {
+                    if (newChecklist[i].isAssigned && newChecklist[i].assigned.username === removeID) {
+                        newChecklist[i].isAssigned = false;
+                        newChecklist[i].assigned = null;
+                    }
+                }
+
+                const tripRef = doc(db, "trips", props.id);
+                updateDoc(tripRef, {
+                    users: newUsers,
+                    members: newMembers,
+                    checklist: newChecklist
+                }).then(() => {props.updateTrips()});
+            } else {
+                console.log('user not found')
+            }
         }
     }, []);
 
 
     return (
-        <div onClick={() => navigate("/trip", {state: {trip: trip}})} className='no-underline' to="/trip" state={{trip: trip}}>
-            <Trip image={trip.image}>
+        <div onClick={() => navigate("/trip", {state: {trip: trip, id: props.id}})} className='no-underline' to="/trip" state={{trip: trip}}>
+            <Trip updateTrips={props.updateTrips} image={trip.image}>
                 <TripDetails>
                     <IconsContainer onClick={(e) => handleChildElementClick(e)} style={{zIndex: 10}} className='icons-container'>
                         <FontAwesomeIcon icon={faTrash} className='trash-icon'/>

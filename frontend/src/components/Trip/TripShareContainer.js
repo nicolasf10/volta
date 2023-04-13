@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -6,6 +6,10 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { AuthContext } from '../../Auth';
+import { useNavigate } from 'react-router-dom';
 
 
 const ShareContainer = styled.div`
@@ -209,12 +213,103 @@ const ShareButton = styled(Button)`
 
 function TripShareContainer(props) {
     const [members, setMembers] = useState(props.members);
-    const [ newMembers, setNewMembers ] = useState([]);
+    const [ newMember, setNewMember ] = useState('');
     const [ show, setShow ] = useState('none');
+    const { currentUser } = useContext(AuthContext);
+    const [ trip, setTrip ] = useState(props.trip)
+
+    useEffect(() => {
+        setTrip(props.trip)
+    }, [props.trip])
 
     const wrapperSetShow = useCallback(val => {
         setShow(val);
     }, [setShow]);
+
+    const handleShare = (e) => {
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (emailRegex.test(newMember)) {
+            const userCollectionRef = query(collection(db, "users"), where("email", "==", newMember));
+            getDocs(userCollectionRef).then(response => {
+                const userResponse = response.docs.map(doc => ({
+                    data: doc.data(),
+                }))
+                if (userResponse.length > 0) {
+                    // check if user already is part of the trip
+                    if (props.trip.users.includes(userResponse[0].data.uid)) {
+                        alert('User already part of this trip')
+                    } else {
+                        console.log(userResponse)
+                        var newUsers = props.trip.users;
+                        newUsers.push(userResponse[0].data.uid);
+
+                        var newMembers = props.trip.members;
+                        newMembers.push({
+                            img: userResponse[0].data.photoURL,
+                            uid: userResponse[0].data.uid,
+                            username: userResponse[0].data.email
+                        })
+
+                        console.log(newUsers)
+                        console.log(newMembers)
+
+                        setMembers(newMembers)
+
+                        const tripRef = doc(db, "trips", props.id);
+                        updateDoc(tripRef, {
+                            users: newUsers,
+                            members: newMembers
+                        }).then(() => {
+                            setNewMember('');
+                            setShow('none');
+                        });
+                    }
+                } else {
+                    alert("Please enter the email of a valid Volta user")
+                }
+            }).catch(error => console.log(error.message));
+        } else {
+            alert("Please enter a valid email")
+        }
+    }
+
+    const navigate = useNavigate()
+
+    const handleRemove = (e, uid) => {
+        // removing collaborator
+        var newUsers = trip.users; // remove user from trip members and all checklist items he's assigned to
+        console.log(newUsers)
+        var removeID = uid;
+        var index = newUsers.findIndex(item => item === removeID);
+        if (index > -1) {
+            newUsers.splice(index, 1);
+            // now removing from the members array
+            var newMembers = trip.members;
+            newMembers = newMembers.filter(member => member.uid !== removeID);
+            console.log(newMembers)
+            // now removing all checklist todos
+            var newChecklist = trip.checklist;
+            for (let i = 0; i < newChecklist.length; i++) {
+                if (newChecklist[i].isAssigned && newChecklist[i].assigned.username === removeID) {
+                    newChecklist[i].isAssigned = false;
+                    newChecklist[i].assigned = null;
+                }
+            }
+
+            const tripRef = doc(db, "trips", props.id);
+            updateDoc(tripRef, {
+                users: newUsers,
+                members: newMembers,
+                checklist: newChecklist
+            }).then(() => {
+                setShow('none');
+                setTrip({...trip, members: newMembers, checklist: newChecklist, users: newUsers});
+                setMembers(newMembers)
+            }).catch(error => console.log(error.message));
+        } else {
+            console.log('user not found')
+        }
+    }
 
     return (
         <ShareContainer>
@@ -228,31 +323,39 @@ function TripShareContainer(props) {
                 placement="bottom">
                 <ShareButton onClick={() => setShow('flex')} variant="dark">Share</ShareButton>
             </OverlayTrigger>
-            <WindowBox style={{display: show}}>
-                <Modal>
-                    <BackContainer onClick={() => setShow('none')}>
-                        <FontAwesomeIcon icon={faXmark} />
-                    </BackContainer>
-                    <ModalTitle>🔗 Share your trip</ModalTitle>
-                    <ShareForm>
-                        <ShareInput placeholder='Add collaborators (Volta users)' type="email"/>
-                        <ShareSend type="submit">Send</ShareSend>
-                    </ShareForm>
-                    <MembersTitle>People with access</MembersTitle>
-                    <MembersContainer>
-                        {members.map((member, index) => (
-                            <Member key={index}>
-                                <MemberImg src={member.img} />
-                                <MemberEmail>{member.username}</MemberEmail>
-                                <DeleteContainer className='deleteContainer'>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </DeleteContainer>
-                            </Member>
-                        ))}
-                    </MembersContainer>
-                    <Quote>“A journey is best measured in friends, rather than miles.” – Tim Cahill</Quote>
-                </Modal>
-            </WindowBox>
+            {
+                show ? 
+                    <WindowBox style={{display: show}}>
+                        <Modal>
+                            <BackContainer onClick={() => setShow('none')}>
+                                <FontAwesomeIcon icon={faXmark} />
+                            </BackContainer>
+                            <ModalTitle>🔗 Share your trip</ModalTitle>
+                            <ShareForm>
+                                <ShareInput onChange={(e) => setNewMember(e.target.value)} value={newMember} placeholder='Add collaborators (Volta users)' type="email"/>
+                                <ShareSend onClick={handleShare} type="submit">Send</ShareSend>
+                            </ShareForm>
+                            <MembersTitle>People with access</MembersTitle>
+                            <MembersContainer>
+                                {members.map((member, index) => (
+                                    <Member key={index}>
+                                        <MemberImg src={member.img} />
+                                        <MemberEmail>{member.username}</MemberEmail>
+                                        {
+                                            currentUser.uid === member.uid ? <></> :
+                                            <DeleteContainer className='deleteContainer'>
+                                                <FontAwesomeIcon style={{cursor: 'pointer'}} onClick={(e) => handleRemove(e, member.uid)} icon={faTrash} />
+                                            </DeleteContainer>
+                                        }
+                                    </Member>
+                                ))}
+                            </MembersContainer>
+                            <Quote>“A journey is best measured in friends, rather than miles.” – Tim Cahill</Quote>
+                        </Modal>
+                    </WindowBox>
+                :
+                <></>
+            }
         </ShareContainer>
     );
 }

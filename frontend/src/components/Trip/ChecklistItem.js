@@ -116,10 +116,21 @@ const SelectMembers = styled.select`
 
 
 function ChecklistItem(props) {
-    const [thisItem, setThisItem] = useState(props.item)
-    const [ members, setMembers ] = useState(props.members)
+    const [thisItem, setThisItem] = useState(props.item);
+    const [ members, setMembers ] = useState(props.members);
     
-    console.log(thisItem)
+    console.log(thisItem);
+
+    const handleCheck = () => {
+        thisItem.status = thisItem.status === 'to-do' ? 'completed' : 'to-do';
+        props.handleCheck(
+            {
+                ...thisItem,
+                status: thisItem.status
+            }
+        )
+    }
+
 
     return (
         thisItem.status === 'to-do'
@@ -127,7 +138,7 @@ function ChecklistItem(props) {
             <ItemContainer>
                 <TodoItem className="item">
                     <TitleContainer>
-                        <Checkbox type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
+                        <Checkbox onChange={handleCheck} type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
                         <ItemTitle>{thisItem.title}</ItemTitle>
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
@@ -182,7 +193,7 @@ function ChecklistItem(props) {
             <ItemContainer>
                 <CompletedItem className="item">
                     <TitleContainer>
-                        <Checkbox checked type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
+                        <Checkbox onChange={handleCheck} checked type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
                         <ItemTitle>{thisItem.title}</ItemTitle>
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>

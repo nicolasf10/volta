@@ -21,7 +21,7 @@ function TripFlights(props) {
     }, [props.trip])
 
     return (
-        <PageContainer>
+        <PageContainer style={{display: props.display}}>
             <Flights trip={trip}/>
         </PageContainer>
     );

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { db } from '../firebase';
+import { doc, Timestamp, updateDoc } from 'firebase/firestore';
 
 
 
@@ -17,10 +19,28 @@ function CalendarDatesPicker(props) {
     const [ newStart, setNewStart ] = useState(null);
     const [ newEnd, setNewEnd ] = useState(null);
 
-    const onChange = (dates) => {
+    async function onChange (dates) {
       const [start, end] = dates;
       setStartDate(start);
       setEndDate(end);
+
+      props.updateDate(
+        {
+            start: Timestamp.fromDate(start),
+            end: Timestamp.fromDate(end)
+        }
+      )
+
+      const tripRef = doc(db, "trips", props.id);
+
+      if (start && end) {
+          await updateDoc(tripRef, {
+            date: {
+                start: Timestamp.fromDate(start),
+                end: Timestamp.fromDate(end)
+            }
+          });
+      }
     };
 
     const onSelect = (date) => {

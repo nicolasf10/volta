@@ -26,13 +26,13 @@ function TripLists(props) {
     }, [])
 
     return (
-        <ListsContainer>
+        <ListsContainer style={{display: props.display}}>
             {
                 trip.lists.map((item) => (
-                    <ListCategory list={item} />
+                    <ListCategory trip={trip} id={props.id} list={item} />
                 ))
             }
-            <NewList trip={trip} />
+            <NewList id={props.id} trip={trip} />
         </ListsContainer>
     );
 }

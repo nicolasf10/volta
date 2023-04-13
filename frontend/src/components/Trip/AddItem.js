@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 
 const AddContainer = styled.div`
@@ -77,9 +79,36 @@ const AddButton = styled.button`
 
 function AddItem(props) {
     const [ newForm, setNewForm ] = useState(false);
+    const [ title, setTitle ] = useState('');
 
     function handleAdd(e) {
         setNewForm(false);
+
+        const tripRef = doc(db, "trips", props.id);
+        updateDoc(tripRef, {
+            checklist: arrayUnion({
+                assigned: null,
+                isAssigned: false,
+                status: 'to-do',
+                title: title
+            })}).then(() => {
+            console.log("Item added")
+        }).catch(error => console.log(error.message));
+        
+        props.addItem(
+            {
+                assigned: null,
+                isAssigned: false,
+                status: 'to-do',
+                title: title
+            }
+        )
+        setTitle('');
+    }
+
+    function handleCancel(e) {
+        setNewForm(false);
+        setTitle('');
     }
 
     return (
@@ -91,12 +120,12 @@ function AddItem(props) {
                 </AddContainer>
                 :
                 <AddContainerForm>
-                    <AddInput placeholder="Untitled" type="text" />
+                    <AddInput value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Untitled" type="text" />
                     <AddButtons>
                         <AddButton onClick={handleAdd}>
                             <FontAwesomeIcon icon={faCheck} />
                         </AddButton>
-                        <AddButton onClick={() => setNewForm(false)}>
+                        <AddButton onClick={handleCancel}>
                             <FontAwesomeIcon icon={faXmark} />
                         </AddButton>
                     </AddButtons>

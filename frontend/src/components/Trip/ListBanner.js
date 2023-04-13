@@ -5,6 +5,8 @@ import EmojiImg from '../EmojiImg';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import Popup from 'reactjs-popup';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 
 const BannerContainer = styled.div`
@@ -105,14 +107,45 @@ const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px
 
 
 function ListBanner(props) {
+    const [ trip, setTrip ] = useState(props.trip);
     const [ list, setList ] = useState(props.list);
     const [ emoji, setEmoji ] = useState(props.list.emoji)
 
-
     useEffect(() => {
         console.log(props.list);
+        setTrip(props.trip)
         setList(props.list);
-    }, [props.list])
+    }, [props.list, props.trip])
+
+    async function onEmojiSelect(emoji) {
+        setEmoji(emoji.native);
+        const tripRef = doc(db, "trips", props.id);
+
+        const listIndex = trip.lists.findIndex(l => l.title === list.title);
+
+        // Update the emoji property of the list at the specified index
+        const updatedList = {
+        ...trip.lists[listIndex],
+            emoji: emoji.native
+        };
+
+        // Create a new array with the updated list
+        const updatedLists = [
+        ...trip.lists.slice(0, listIndex),
+        updatedList,
+        ...trip.lists.slice(listIndex + 1)
+        ];
+
+        // Update the document in Firestore with the new array of lists
+        await updateDoc(tripRef, { lists: updatedLists });
+
+
+        // updateDoc(tripRef, {
+            
+        // }).then(() => {
+        //     console.log("emoji changed")
+        // }).catch(error => console.log(error.message));
+    }
 
     
     return (
@@ -132,16 +165,16 @@ function ListBanner(props) {
                             contentStyle={contentStyleEmoji} 
                         >
                             <div>
-                                <Picker native={false} data={data} onEmojiSelect={(emoji) => setEmoji(emoji.native)} />
+                                <Picker native={false} data={data} onEmojiSelect={onEmojiSelect} />
                                 {/* <EmojiPicker onEmojiClick={(emoji) => setEmoji(emoji.emoji)} /> */}
                             </div>
                     </Popup>
                 {/* </EmojiContainer> */}
             </BannerHeader>
-            <IconsContainer>
+            {/* <IconsContainer>
                 <IconI className="fa fa-solid fa-image"></IconI>
                 <IconI className="fa fa-solid fa-pencil"></IconI>
-            </IconsContainer>
+            </IconsContainer> */}
         </BannerContainer>
     );
 }

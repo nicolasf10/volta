@@ -5,6 +5,8 @@ import DetailsContent from './DetailsContent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import DeleteConfirm from '../DeleteConfirm';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 
 const ListContainer = styled.div`
@@ -61,6 +63,7 @@ const CategoryTitle = styled.h1`
     font-size: 1.3em;
     font-family: "Sen", sans-serif;
     font-weight: 600;
+    max-width: calc(100% - 30px);
 `
 
 const CategoryDetails = styled.div`
@@ -118,10 +121,27 @@ function ListCategory(props) {
         setShow(val);
     }, [setShow]);
 
-    const toggleDeleteShow = useCallback(() => {
-        console.log(" toggle")
+    const toggleDeleteShow = useCallback(() => {        
         setShowDelete(false);
     }, [setShowDelete]);
+
+    const handleDelete = useCallback(() => {        
+        deleteList();
+    }, [setShowDelete]);
+
+    async function deleteList() {
+        const tripRef = doc(db, "trips", props.id);
+
+        const listIndex = props.trip.lists.findIndex(l => l.title === list.title);
+
+        // Create a new array without the list at the specified index
+        const updatedLists = props.trip.lists.filter((_, index) => index !== listIndex);
+
+        // Update the document in Firestore with the new array of lists
+        await updateDoc(tripRef, { lists: updatedLists }).then(
+            setShowDelete(false)
+        ).catch((error) => console.log(error.message));
+    }
 
     return (
         <ListContainer>
@@ -133,11 +153,12 @@ function ListCategory(props) {
                 <CategoryTitle>{list.title}</CategoryTitle>
             </CategoryContainer>
             <CategoryDetails style={{display: show}}>
-                <DetailsContent list={list} parentStateSetter={wrapperSetShow} />
+                <DetailsContent trip={props.trip} id={props.id} list={list} parentStateSetter={wrapperSetShow} />
             </CategoryDetails>
             {
                 showDelete ?
-                    <DeleteConfirm parentCallback={toggleDeleteShow} list={list} />
+                    <DeleteConfirm handleDelete={handleDelete
+                    } parentCallback={toggleDeleteShow} list={list} />
                 :
                     <></>
             }

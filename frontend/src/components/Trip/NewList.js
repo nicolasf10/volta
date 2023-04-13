@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 
 const NewListContainer = styled.div`
@@ -166,18 +168,31 @@ var emojis = [
 
 
 function NewList(props) {
-    const [ list, setTrip ] = useState(props.trip);
-    const [ show, setShow ] = useState('none');
+    const [ title, setTitle ] = useState('');
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
-
-    useEffect(() => {
-        console.log(props);
-        setTrip(props.trip);
-    }, [])
+    const [ img, setImg ] = useState('');
 
     const onSubmit = (closing) => {
-        closing()
+        const tripRef = doc(db, "trips", props.id);
+        if (img !== '' && title !== '') {
+            updateDoc(tripRef, {
+                lists: arrayUnion({
+                    title: title,
+                    emoji: emoji,
+                    img: img,
+                    items: []
+                })}).then(() => {
+                console.log("List added")
+                closing()
+            }).catch(error => console.log(error.message));
+        } else {
+            alert('Please select all fields')
+        }
     }
+
+    const updateImg = useCallback((newUrl) => {
+        setImg(newUrl)
+    }, []);
 
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
 
@@ -198,7 +213,7 @@ function NewList(props) {
                     </BackContainer>
                     <FormTitle>New list</FormTitle>
                     <FormMainInputs>
-                        <ListName placeholder="List name" type='text'/>
+                        <ListName value={title} onChange={(e) => setTitle(e.target.value)} placeholder="List name" type='text'/>
                         <Popup
                             trigger={open => (
                                 <EmojiContainer><EmojiImg size="40px" emoji={emoji}/></EmojiContainer>
@@ -214,7 +229,7 @@ function NewList(props) {
                             </div>
                         </Popup>
                     </FormMainInputs>
-                    <ListImageSearch />
+                    <ListImageSearch parentCallback={updateImg}/>
                     <FormSubmit onClick={() => onSubmit(close)}>Save</FormSubmit>
                 </ListForm>
             )}

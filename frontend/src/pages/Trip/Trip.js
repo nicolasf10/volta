@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -9,6 +9,8 @@ import TripChecklist from '../../components/Trip/TripChecklist';
 import TripBudget from '../../components/Trip/TripBudget';
 import TripFlights from '../../components/Trip/TripFlights';
 import TripActivities from '../../components/Trip/TripActivities';
+import { db } from '../../firebase';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 
 const TripPage = styled.div`
@@ -52,7 +54,7 @@ function Trip(props) {
     const navigate = useNavigate();
     const [ status, setStatus ] = useState("loading")
     const [trip, setTrip] = useState(null);
-    const [page, setPage] = useState("overview");
+    const [page, setPage] = useState('overview');
     const [currentPage, setCurrentPage] = useState(<>not updated</>)
 
     useEffect(() => {
@@ -60,25 +62,70 @@ function Trip(props) {
             console.log("rerouting");
             navigate("/trips");
         } else {
+            console.log(location.state)
             setTrip(location.state.trip);
             document.title = `Trip to ${location.state.trip.title}`
         }
 
         if (page === "overview") {
-            setCurrentPage(<TripOverview key={status} trip={location.state.trip}/>);
+            setCurrentPage(<TripOverview id={location.state.id} key={status} trip={location.state.trip}/>);
         } else if (page === "lists") {
-            setCurrentPage(<TripLists key={status} trip={trip}/>);
+            setCurrentPage(<TripLists id={location.state.id} key={status} trip={trip}/>);
         } else if (page === "budget") {
-            setCurrentPage(<TripBudget key={status} trip={trip}/>);
+            setCurrentPage(<TripBudget id={location.state.id} key={status} trip={trip}/>);
         } else if (page === "flights") {
-            setCurrentPage(<TripFlights key={status} trip={trip}/>);
+            setCurrentPage(<TripFlights id={location.state.id} key={status} trip={trip}/>);
         } else {
-            setCurrentPage(<TripChecklist key={status} trip={trip}/>);
+            setCurrentPage(<span></span>);
         }
 
         // console.log(location.state.trip)
         
-    }, [page]);
+    }, [page, trip]);
+
+    async function getTrip() {
+        console.log('getting trip')
+        const tripRef = doc(db, "trips", location.state.id) // query(collection(db, "trips"), where("id", "array-contains", currentUser.uid));
+        const docSnap = await getDoc(tripRef)
+        if (docSnap.exists()) {
+            setTrip(docSnap.data());
+          } else {
+            console.log("No such document!");
+          }
+
+        // getDocs(tripsCollectionRef).then(response => {
+        //     console.log(response);
+        //     const tripsResponse = response.docs.map(doc => ({
+        //             data: doc.data(),
+        //             id: doc.id
+        //     }))
+        //     console.log(tripsResponse);
+        //     setTrips(tripsResponse);
+        //     setLoading(false);
+        // }).catch(error => console.log(error.message));
+    }
+
+    // const unsub = onSnapshot(doc(db, "trips", location.state.id), (doc) => {
+    //     console.log("Current data: ", doc.data());
+    //     setTrip(doc.data());
+    // });    
+
+    const updateTrip = useCallback((newTrip) => {
+        console.log('updateee')
+        console.log(newTrip)
+        setTrip(newTrip);
+    }, []);
+
+    const updateChecklist = useCallback((newChecklist) => {
+        console.log("*******************************")
+        console.log(newChecklist)
+        console.log("*******************************")
+
+        setTrip(prevState => ({
+            ...prevState,
+            checklist: location.state.trip.checklist.concat(newChecklist)
+        }));
+    }, []);
 
     
     function pageClick(e) {
@@ -116,7 +163,7 @@ function Trip(props) {
     return (
         trip != null ?
         <TripPage>
-            <TripBanner trip={trip}/>
+            <TripBanner updateTrip={updateTrip} id={location.state.id} trip={trip}/>
             <NavList>
                 <NavItem onClick={pageClick} className='active-underline' id="overview">Overview</NavItem>
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
@@ -124,8 +171,19 @@ function Trip(props) {
                 {/* <NavItem onClick={pageClick} id="budget">Budget</NavItem> */}
                 <NavItem onClick={pageClick} id="flights">Flights</NavItem>
             </NavList>
-            {currentPage}
-        </TripPage>
+            {/* {currentPage} */}
+            {
+                page ?
+                <>
+                    <TripOverview display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={location.state.trip}/>
+                    <TripLists display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripFlights display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripChecklist display={page === 'checklist' ? 'block' : 'none'} updateChecklist={updateChecklist} id={location.state.id} trip={trip}/>
+                </>
+                :
+                <></>
+            }
+            </TripPage>
         :
         <></>
     );

@@ -118,7 +118,7 @@ function DetailsContent(props) {
             <BackContainer onClick={() => props.parentStateSetter('none')}>
                 <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> Back
             </BackContainer>
-            <ListBanner list={list}/>
+            <ListBanner trip={props.trip} id={props.id} list={list}/>
             <PlacesCategories className="container">
                 <Row className="row">
                     <Column className="col-lg-6 col-md-12 col-sm-12">
