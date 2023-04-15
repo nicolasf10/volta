@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Block from './Blocks/Block.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGripVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase.js';
 
 const ListContainer = styled.div`
     display: flex;
@@ -47,32 +49,64 @@ const Handle = styled.div`
 
 function BlocksArea(props) {
     const [trip, setTrip] = useState(props.trip);
+    const [hidden, setHidden] = useState([]);
+    var defaultList = props.trip.blocks.map((x) => x);
+
+    const [itemList, setItemList] = useState(defaultList);
 
     useEffect(() => {
         console.log(props);
         setTrip(props.trip);
+        defaultList = props.trip.blocks.map((x) => x);
+        setItemList(defaultList);
         
     }, [props.trip])
 
     // React state to track order of items
     console.log(props.trip)
-    const defaultList = props.trip.blocks.map((x) => x);
-
-    const [itemList, setItemList] = useState(defaultList);
+    
   
     // Function to update list on drop
-    const handleDrop = (droppedItem) => {
+    async function handleDrop (droppedItem) {
       // Ignore drop outside droppable container
       if (!droppedItem.destination) return;
-      var updatedList = [...itemList];
+
+      const tripRefGet = doc(db, "trips", props.id);
+      const docSnap = await getDoc(tripRefGet);
+      const currentTrip = docSnap.data();
+      var updatedList = [...currentTrip.blocks];
       // Remove dragged item
       const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
       // Add dropped item
       updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
       // Update State
       setItemList(updatedList);
-      console.log(updatedList)
+      console.log(updatedList);
+
+      // updating the order on firebase
+      console.log('handleDrop')
+      console.log(updatedList.length)
+      const tripRef = doc(db, "trips", props.id);
+      await updateDoc(tripRef, { blocks: updatedList }).catch((error) => console.log(error.message));
+      
+      props.updateTrip({
+        ...props.trip,
+        blocks: updatedList
+      })
     };
+
+    const addToHidden = useCallback((newHidden) => {
+      setHidden(oldHidden => [...oldHidden, newHidden]);
+      const newItems = trip.blocks.filter(i => i.created !== newHidden);
+
+      let defaultListDelete =newItems.map((x) => x);
+      setItemList(defaultListDelete);
+      setTrip(oldTrip => ({
+        ...oldTrip,
+        blocks: newItems
+      }))
+
+    })
   
     return (
       <div className="App">
@@ -86,7 +120,9 @@ function BlocksArea(props) {
                   ref={provided.innerRef}
                 >
                   {itemList.map((item, index) => (
-                    <Draggable key={`drag-${index.toString()}`} draggableId={`drag-${index.toString()}`} index={index}>
+                    <>
+                    { !hidden.includes(item.created) ? 
+                      <Draggable key={`drag-${index.toString()}`} draggableId={`drag-${index.toString()}`} index={index}>
                       {(provided) => (
                         <ItemContainer
                           className="item-container"
@@ -97,10 +133,14 @@ function BlocksArea(props) {
                           <Handle className='handle'>
                             <FontAwesomeIcon icon={faGripVertical}/>
                           </Handle>
-                          <Block item={itemList[index]} trip={trip} />
+                          <Block addToHidden={addToHidden} id={props.id} item={itemList[index]} trip={trip} />
                         </ItemContainer>
                       )}
                     </Draggable>
+                      :
+                      <></>
+                    }
+                    </>
                   ))}
                   {provided.placeholder}
                 </ListContainer>

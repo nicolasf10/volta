@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Itinerary from './Itinerary.js';
@@ -34,10 +34,17 @@ function TripOverview(props) {
         
     }, [props.trip])
 
+    const saveTrip = useCallback((item) => {
+        setTrip(prevTrip => ({
+            ...prevTrip,
+            blocks: [...prevTrip.blocks, item]
+        }));
+    }, []);
+
     return (
         <PageContainer style={{display: props.display}}>
             {/* <Itinerary trip={trip} /> */}
-            <OverviewContent trip={trip} />
+            <OverviewContent saveTrip={saveTrip} id={props.id} trip={trip} />
             <Map
                 style={mapStyle}
                 trip={trip}

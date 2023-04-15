@@ -68,6 +68,7 @@ function NoteBlock(props) {
 
     useEffect(() => {
         console.log(props);
+        console.log('IM here')
         setTrip(props.trip);
         setItem(props.item);
         setNotes(props.item.content);

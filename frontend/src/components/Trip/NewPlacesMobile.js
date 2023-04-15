@@ -60,7 +60,7 @@ const  NoLocationsText = styled.h4`
 `
 
 
-function NewPlaces(props) {
+function NewPlacesMobile(props) {
     const [ searched, setSearched ] = useState(false);
     const [ list, setList ] = useState({
         ...props.list,
@@ -75,7 +75,7 @@ function NewPlaces(props) {
             ...props.list,
         })
 
-        const input = document.getElementById(`pac-input-${list.title}-${props.id}-1`);
+        const input = document.getElementById(`pac-input-${list.title}-${props.id}-2`);
         const searchBox = new window.google.maps.places.SearchBox(input);
 
         // Listen for the event fired when the user selects a prediction and retrieve
@@ -137,8 +137,8 @@ function NewPlaces(props) {
     return (
         <PlacesContainer>
             <PlacesHeading>Explore</PlacesHeading>
-            <SearchContainer id={`pac-container-${list.id}-${props.id}-1`}>
-                <InputField onChange={() => setSearched(false)} id={`pac-input-${list.title}-${props.id}-1`} type="text"
+            <SearchContainer id={`pac-container-${list.id}-${props.id}-2`}>
+                <InputField onChange={() => setSearched(false)} id={`pac-input-${list.title}-${props.id}-2`} type="text"
                     placeholder="Search for location" />
                 { loaded ?  
                 <SubmitButton onClick={handleSubmit}><FontAwesomeIcon icon={faMagnifyingGlass}/></SubmitButton>
@@ -166,4 +166,4 @@ function NewPlaces(props) {
     );
 }
 
-export default NewPlaces;
+export default NewPlacesMobile;

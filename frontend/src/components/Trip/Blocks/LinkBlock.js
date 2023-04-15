@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faLink, faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const BlockContainer = styled.div`
 `
@@ -151,8 +153,33 @@ function LinkBlock(props) {
         
     }, [props.trip, props.item])
 
-    function newLink(e) {
+    async function newLink(e) {
         e.preventDefault();
+
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        var currentTrip = docSnap.data();
+        var newBlocks = new Array();
+        
+        for (let i = 0; i < currentTrip.blocks.length; i++) {
+            if (currentTrip.blocks[i].created !== item.created) {
+                newBlocks.push(currentTrip.blocks[i])
+            } else {
+                newBlocks.push({
+                    type: item.type,
+                    title: item.title,
+                    content: [...item.content, {
+                        label: labelInput,
+                        link: addHttpsToUrl(linkInput)
+                    }],
+                    created: item.created
+                })
+            }
+        }
+        
+        await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
+
+
 
         setItem({
             type: item.type,
@@ -160,9 +187,10 @@ function LinkBlock(props) {
             content: [...item.content, {
                 label: labelInput,
                 link: addHttpsToUrl(linkInput)
-            }]
+            }],
+            created: item.created
         })
-
+        
         setLabelInput('');
         setLinkInput('');
         setOpenNew(false);
@@ -175,17 +203,53 @@ function LinkBlock(props) {
         setOpenNew(false);
     }
 
-    function openEdit(item, index) {
-        // console.log('wok');
-        setOpenNew(true);
-        setLabelInput(item.label);
-        setLinkInput(item.link);
+    // function openEdit(item, index) {
+    //     // console.log('wok');
+    //     setOpenNew(true);
+    //     setLabelInput(item.label);
+    //     setLinkInput(item.link);
 
-        // setItem({
-        //     type: item.type,
-        //     title: item.title,
-        //     content: [item.content.slice(0, index).concat(item.content.slice(index+1))]
-        // })
+    //     // setItem({
+    //     //     type: item.type,
+    //     //     title: item.title,
+    //     //     content: [item.content.slice(0, index).concat(item.content.slice(index+1))]
+    //     // })
+    // }
+
+    async function handleDelete(created_id, title) {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        var currentTrip = docSnap.data();
+        var newBlocks = new Array();
+        var newLink;
+        var newContent = [];
+        
+        for (let i = 0; i < currentTrip.blocks.length; i++) {
+            console.log(created_id)
+            if (currentTrip.blocks[i].created !== created_id) {
+                newBlocks.push(currentTrip.blocks[i])
+            } else {
+                newLink = currentTrip.blocks[i];
+                console.log(newLink);
+                console.log(created_id)
+                for (let n = 0; n < newLink.content.length; n++) {
+                    if (newLink.content[n].title !== title) {
+                        newContent.push(newLink.content[n])
+                    }
+                }
+                newLink.content = newBlocks;
+                newBlocks.push(newLink);
+            }
+        }
+        
+        await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
+
+        setItem({
+            type: item.type,
+            title: item.title,
+            content: newBlocks,
+            created: item.created
+        })
     }
 
     return (
@@ -193,11 +257,12 @@ function LinkBlock(props) {
             { Array.isArray(item.content) ?
                 <Items>
                     {
-                        item.content.map((item, index) => {
+                        item.content.map((i, index) => {
                             return(
                                 <Item key={index}>
-                                    <Link target="_blank" href={item.link}>{item.label}</Link>
-                                    <ItemIcons className='icons'><FontAwesomeIcon onClick={() => openEdit(item, index)} icon={faPencil}/><FontAwesomeIcon icon={faTrash}/></ItemIcons>
+                                    <Link target="_blank" href={i.link}>{i.label}</Link>
+                                    {/* <ItemIcons className='icons'><FontAwesomeIcon onClick={() => openEdit(item, index)} icon={faPencil}/><FontAwesomeIcon icon={faTrash}/></ItemIcons> */}
+                                    <ItemIcons className='icons'><FontAwesomeIcon onClick={() => handleDelete(item.created, i.title)} icon={faTrash}/></ItemIcons>
                                 </Item>
                             )
                         })

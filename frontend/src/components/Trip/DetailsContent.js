@@ -6,6 +6,7 @@ import ListBanner from './ListBanner';
 import NewPlaces from './NewPlaces';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import NewPlacesMobile from './NewPlacesMobile';
 
 const google = window.google;
 
@@ -123,7 +124,6 @@ function DetailsContent(props) {
         console.log(list.items)
     }, [])
 
-    // const newPlaces = <NewPlaces list={list}/>;
 
     return (
         <ContentContainer>
@@ -137,7 +137,7 @@ function DetailsContent(props) {
                         <ExistingPlaces list={list}/>
                     </Column>
                     <Column className="col-lg-6 col-md-12 col-sm-12">
-                        <NewPlaces updateList={updateList} id={props.id} list={list}/>
+                        <NewPlaces updateList={updateList} id={props.id} list={props.list}/>
                     </Column>
                 </Row>
             </PlacesCategories>
@@ -147,7 +147,7 @@ function DetailsContent(props) {
                     ?
                     <ExistingPlaces id={props.id} list={list}/>
                     :
-                    <NewPlaces updateList={updateList} id={props.id} list={list}/>
+                    <NewPlacesMobile updateList={updateList} id={props.id} list={props.list}/>
                 }
                 <ToggleButton onClick={handleToggle}>
                     {toggle === "existing" ? <><FontAwesomeIcon className='toggle-icon' icon={faMagnifyingGlass}/> <span style={{marginLeft: '5px'}}>Explore</span></> : <><i className="fa fa-solid fa-bookmark toggle-icon"></i> <span style={{marginLeft: '5px'}}>View saved</span></>}

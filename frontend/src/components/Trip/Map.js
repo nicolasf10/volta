@@ -10,7 +10,7 @@ import CodesCoordinate from './CodesCoordinate';
 
 
 const containerStyle = {
-    width: '35vw',
+    width: '100vw',
     height: '100vh',
     borderRadius: '0px'
 };

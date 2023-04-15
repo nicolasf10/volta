@@ -15,11 +15,10 @@ const LogButton = styled.button`
     height: 40px;
     font-family: "Sen", sans-serif;
     color: #fff;
-    border: none;
     background-color: #1746A2;
     transition: all 0.2s ease;
-    outline: 1px solid var(--darkBlue);
     margin-right: 25px;
+    border: 1px solid rgba(0,0,0,0);
 
     @media screen and (max-width: 991px) {
         margin-right: 0px;
@@ -28,6 +27,7 @@ const LogButton = styled.button`
     &:hover {
         background-color: transparent;
         color: var(--darkBlue);
+        border: 1px solid var(--darkBlue);
     }
 
     &:focus {
