@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PlaceNotes from './PlaceNotes';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const PlaceContainer = styled.div`
     max-width: 100%;
@@ -80,16 +82,75 @@ const PaddingRight = styled.div`
     padding-right: 75px;
 `
 
+const SavePlace = styled.button`
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+`
+
 
 function Place(props) {
     const [ item, setItem ] = useState(props.item);
 
     useEffect(() => {
-        console.log(item)
+        // console.log(item)
         setItem(props.item);
     }, [])
 
-    //test
+    async function savePlace (e) {
+        console.log(item.position.lat())
+        const newItem = {
+            title: item.title,
+            link: item.link,
+            img: item.img,
+            address: item.address,
+            position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
+        }
+
+        const tripRef = doc(db, "trips", props.id);
+
+        // Get the current trip data from Firestore
+        const tripData = (await getDoc(tripRef)).data();
+
+        // console.log(props.list)
+        var list = props.list
+        // console.log(list)
+
+        // Make sure the list object was found before continuing
+        if (list) {
+            props.updateList({
+                title: item.title,
+                link: item.link,
+                img: item.img,
+                address: item.address,
+                position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
+            })
+
+            // Find the index of the list object in the `lists` array
+            console.log(props.id)
+            const listIndex = tripData.lists.findIndex(obj => obj.title === props.list.title);
+
+            // Create a new array of list objects with the updated items array
+            const updatedLists = [
+                ...tripData.lists.slice(0, listIndex),
+                {
+                ...list,
+                items: [...list.items, newItem]
+                },
+                ...tripData.lists.slice(listIndex + 1)
+            ];
+            console.log(listIndex);
+
+            // Update the Firestore document with the new list data
+
+            await updateDoc(tripRef, { lists: updatedLists });
+        } else {
+        console.error(`List with title "${props.list.title}" not found.`);
+        }
+    }
+
     return (
         <>
             { props.new ?
@@ -98,7 +159,7 @@ function Place(props) {
                         <PlaceContainer>
                             <PlaceIcons>
                                 <a href={item.link} target="a_blank"><i class="fa fa-solid fa-map"></i></a>
-                                <i class="fa fa-solid fa-bookmark"></i>
+                                <SavePlace onClick={savePlace}><i class="fa fa-solid fa-bookmark"></i></SavePlace>
                             </PlaceIcons>
                             <PlaceContent>
                                 <PaddingRight>
@@ -134,7 +195,7 @@ function Place(props) {
                                     <PlaceTitle>{item.title}</PlaceTitle>
                                     <PlaceAddress>{item.address}</PlaceAddress>
                                 </PaddingRight>
-                                <PlaceNotes item={item}/>
+                                {/* <PlaceNotes item={item}/> */}
                             </PlaceContent>
                             <PlaceImg src={item.img} />
                         </PlaceContainer>  
@@ -148,7 +209,7 @@ function Place(props) {
                                 <PlaceTitle>{item.title}</PlaceTitle>
                                 <PlaceAddress>{item.address}</PlaceAddress>
                             </PaddingRight>
-                            <PlaceNotes item={item}/>
+                            {/* <PlaceNotes item={item}/> */}
                         </PlaceContainer> 
                     }
                 </>

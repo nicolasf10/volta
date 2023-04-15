@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import ExistingPlaces from './ExistingPlaces';
@@ -95,7 +95,6 @@ const ToggleButton = styled.div`
 
 function DetailsContent(props) {
     const [ list, setList ] = useState(props.list);
-    const [ recommendations, setRecommendations] = useState([]);
     const [ toggle, setToggle ] = useState("existing");
 
     useEffect(() => {
@@ -111,6 +110,19 @@ function DetailsContent(props) {
         }
     }
 
+    const updateList = useCallback((newItem) => {
+        console.log(newItem)
+        setList(
+            oldList => ({
+                ...oldList,
+                items: [...oldList.items, newItem, 'ohbhij']
+            })
+        );
+
+        
+        console.log(list.items)
+    }, [])
+
     // const newPlaces = <NewPlaces list={list}/>;
 
     return (
@@ -125,7 +137,7 @@ function DetailsContent(props) {
                         <ExistingPlaces list={list}/>
                     </Column>
                     <Column className="col-lg-6 col-md-12 col-sm-12">
-                        <NewPlaces id='desktop' list={list}/>
+                        <NewPlaces updateList={updateList} id={props.id} list={list}/>
                     </Column>
                 </Row>
             </PlacesCategories>
@@ -133,9 +145,9 @@ function DetailsContent(props) {
                 {
                     toggle === "existing"
                     ?
-                    <ExistingPlaces list={list}/>
+                    <ExistingPlaces id={props.id} list={list}/>
                     :
-                    <NewPlaces id='mobile' list={list}/>
+                    <NewPlaces updateList={updateList} id={props.id} list={list}/>
                 }
                 <ToggleButton onClick={handleToggle}>
                     {toggle === "existing" ? <><FontAwesomeIcon className='toggle-icon' icon={faMagnifyingGlass}/> <span style={{marginLeft: '5px'}}>Explore</span></> : <><i className="fa fa-solid fa-bookmark toggle-icon"></i> <span style={{marginLeft: '5px'}}>View saved</span></>}

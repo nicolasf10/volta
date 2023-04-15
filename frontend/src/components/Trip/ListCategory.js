@@ -5,7 +5,7 @@ import DetailsContent from './DetailsContent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import DeleteConfirm from '../DeleteConfirm';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 
@@ -112,7 +112,6 @@ function ListCategory(props) {
     }, [])
     
     const handleChildElementClick = (e) => {
-        console.log("clik")
         e.stopPropagation()
         setShowDelete(!showDelete);
     }
@@ -131,16 +130,33 @@ function ListCategory(props) {
 
     async function deleteList() {
         const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
 
-        const listIndex = props.trip.lists.findIndex(l => l.title === list.title);
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            var tripResponse = docSnap.data()
 
-        // Create a new array without the list at the specified index
-        const updatedLists = props.trip.lists.filter((_, index) => index !== listIndex);
+            const listIndex = tripResponse.lists.findIndex(l => l.title === list.title);
 
-        // Update the document in Firestore with the new array of lists
-        await updateDoc(tripRef, { lists: updatedLists }).then(
-            setShowDelete(false)
-        ).catch((error) => console.log(error.message));
+            // Create a new array without the list at the specified index
+            var updatedLists = [...tripResponse.lists];
+            updatedLists.splice(listIndex, 1);
+
+
+            console.log(" **************** ")
+            console.log(listIndex)
+            console.log(updatedLists)
+            console.log(" **************** ")
+
+
+            // Update the document in Firestore with the new array of lists
+            await updateDoc(tripRef, { lists: updatedLists }).then(
+                setShowDelete(false)
+            ).then(props.deleteList(updatedLists)).catch((error) => console.log(error.message));
+        } else {
+            // docSnap.data() will be undefined in this case
+            console.log("No such document!");
+        }          
     }
 
     return (

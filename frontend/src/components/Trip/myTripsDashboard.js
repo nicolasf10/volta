@@ -106,7 +106,7 @@ function MyTripsDashboard(props)
                         {trips.length > 0 ?
                         trips.map((trip, index) => (
                             <div key={index} className="col-lg-4 col-md-6 col-sm-12">
-                                <TripItemDashboard updateTrips={updateTrips} id={trip.id} trip={trip.data}/>
+                                <TripItemDashboard key={`${index}-${Math.random()}`} updateTrips={updateTrips} id={trip.id} trip={trip.data}/>
                             </div>
                         )) :
                             <>

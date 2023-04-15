@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 
@@ -171,9 +171,20 @@ function NewList(props) {
     const [ title, setTitle ] = useState('');
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
     const [ img, setImg ] = useState('');
+    const [ valid, setValid ] = useState(true);
 
-    const onSubmit = (closing) => {
+    async function onSubmit (closing, saveTrip) {
         const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        const currentLists = docSnap.data().lists;
+        console.log(currentLists);
+
+        for (let i = 0; i < currentLists.length; i++) {
+            if (currentLists[i].title === title) {
+                alert(`You already have a list called ${title}`)
+            }
+        }
+
         if (img !== '' && title !== '') {
             updateDoc(tripRef, {
                 lists: arrayUnion({
@@ -182,8 +193,22 @@ function NewList(props) {
                     img: img,
                     items: []
                 })}).then(() => {
-                console.log("List added")
-                closing()
+            console.log("List added");
+            closing();
+            setTitle('');
+            if (valid) {
+                console.log(' omgom')
+                saveTrip({
+                    title: title,
+                    emoji: emoji,
+                    img: img,
+                    items: []
+                });
+            }
+            console.log(valid)
+            setValid(false);
+            setImg('');
+            setTitle('')
             }).catch(error => console.log(error.message));
         } else {
             alert('Please select all fields')
@@ -194,10 +219,14 @@ function NewList(props) {
         setImg(newUrl)
     }, []);
 
+    const handleChange = e => {
+        setValid(true);
+        setTitle(e.target.value);
+    }
+
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
 
     const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
-
 
     return (
         <Popup contentStyle={contentStyle} className='popup form-modal' nested trigger={
@@ -213,7 +242,7 @@ function NewList(props) {
                     </BackContainer>
                     <FormTitle>New list</FormTitle>
                     <FormMainInputs>
-                        <ListName value={title} onChange={(e) => setTitle(e.target.value)} placeholder="List name" type='text'/>
+                        <ListName value={title} onChange={handleChange} placeholder="List name" type='text'/>
                         <Popup
                             trigger={open => (
                                 <EmojiContainer><EmojiImg size="40px" emoji={emoji}/></EmojiContainer>
@@ -230,7 +259,7 @@ function NewList(props) {
                         </Popup>
                     </FormMainInputs>
                     <ListImageSearch parentCallback={updateImg}/>
-                    <FormSubmit onClick={() => onSubmit(close)}>Save</FormSubmit>
+                    <FormSubmit onClick={() => onSubmit(close, props.saveList)}>Save</FormSubmit>
                 </ListForm>
             )}
         </Popup>

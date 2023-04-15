@@ -64,22 +64,19 @@ function NewPlaces(props) {
     const [ searched, setSearched ] = useState(false);
     const [ list, setList ] = useState({
         ...props.list,
-        items: []
     });
     const [ searchList, setSearchList ] = useState([]);
     const [ mapList, setMapList ] = useState([])
-    const [ loaded, setLoaded ] = useState(true) 
+    const [ loaded, setLoaded ] = useState(true);
+    const [ counter, setCounter ] = useState(0);
 
     useEffect(() => {
         setList({
             ...props.list,
-            items: []
         })
 
-        const input = document.getElementById(`pac-input-${list.id}-${props.id}`);
+        const input = document.getElementById(`pac-input-${list.title}-${props.id}`);
         const searchBox = new window.google.maps.places.SearchBox(input);
-
-        let markers = [];
 
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
@@ -99,8 +96,10 @@ function NewPlaces(props) {
                     return;
                 } else {
                     let imgUrl = null;
-                    if (place.photos.length > 0) {
+                    if (place.photos && place.photos.length > 0) {
                         imgUrl = place.photos[0].getUrl({ 'maxWidth': 550, 'maxHeight': 550 })
+                    } else {
+                        imgUrl = '';
                     }
                     setSearchList([...newItemsPrev,
                         {
@@ -118,26 +117,6 @@ function NewPlaces(props) {
                         link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
                         img: imgUrl
                     })
-                    console.log(place)
-                
-
-                // setSearchList([...newItemsPrev,
-                //         {
-                //             title: place.name,
-                //             address: place.formatted_address,
-                //             position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
-                //             link: place.url
-                //         }
-                //     ]
-                // )
-                // newItemsPrev.push({
-                //     title: place.name,
-                //     address: place.formatted_address,
-                //     position: {lat: place.geometry.location.lat, lng: place.geometry.location.lng},
-                //     link: place.url
-                // })
-                console.log(place)
-                console.log(place.url)
             }
             });
             console.log(searchList)
@@ -147,20 +126,19 @@ function NewPlaces(props) {
     }, [searchList])
 
     const handleSubmit = (event) => {
+        console.log('Submit!!')
         setSearched(true);
-        var newPlaces = new Array()
-
-        searchList.forEach((place) => {
-            newPlaces.push({...place})
-        })
-        setMapList([...newPlaces]);
+        const newPlaces = searchList.map(place => ({...place}));
+        setMapList(newPlaces);
+        setCounter(counter+1);
+        console.log(newPlaces);
     }
 
     return (
         <PlacesContainer>
             <PlacesHeading>Explore</PlacesHeading>
             <SearchContainer id={`pac-container-${list.id}-${props.id}`}>
-                <InputField onChange={() => setSearched(false)} id={`pac-input-${list.id}-${props.id}`} type="text"
+                <InputField onChange={() => setSearched(false)} id={`pac-input-${list.title}-${props.id}`} type="text"
                     placeholder="Search for location" />
                 { loaded ?  
                 <SubmitButton onClick={handleSubmit}><FontAwesomeIcon icon={faMagnifyingGlass}/></SubmitButton>
@@ -168,10 +146,10 @@ function NewPlaces(props) {
                 <SubmitButton style={{background: "#a8a8a8"}} disabled onClick={handleSubmit}><i class="fa fa-solid fa-binoculars"></i></SubmitButton>
                 }
             </SearchContainer>
-            {   [...mapList].length > 0 ?
+            {   mapList.length > 0 ?
                     <>
                         {mapList.map((item, index) => (
-                            <Place key={item.title} item={{...item}} new={true} />
+                            <Place updateList={props.updateList} id={props.id} list={list} key={`${item.title}-${Math.random()}`} item={{...item}} new={true} />
                         ))}
                     </>
                 :

@@ -20,7 +20,6 @@ const VoltaLogo = styled.img`
 
 const GoogleButton = styled.button`
     margin-top: 25px;
-    border: none;
     background: none;
     text-transform: uppercase;
     font-family: "Sen", "sans-serif";
@@ -28,6 +27,15 @@ const GoogleButton = styled.button`
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 100px;
+    padding: 15px;
+    transition: 0.1s ease-in all;
+
+    &:hover {
+        border: 3px solid black;
+    }
 `
 
 const GoogleLogo = styled.i`
@@ -62,7 +70,7 @@ function SignupPage() {
             <main className="form-signin w-100 m-auto">
                 <form>
                     <Link to="/"><VoltaLogo clasName="mb-4" src={logo} alt="Volta"/></Link>
-                    <div className="form-floating">
+                    {/* <div className="form-floating">
                         <input onChange={(e) => setName(e.target.value)} style={{borderRadius: "10px 10px 0px 0px", borderBottom: 'none'}} value={name} type="text" className="form-control" id="floatingName" placeholder="Name"/>
                         <label for="floatingInput">Name</label>
                     </div>
@@ -74,7 +82,7 @@ function SignupPage() {
                         <input onChange={(e) => setPassword(e.target.value)} style={{borderRadius: "0px 0px 10px 10px"}} value={password} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
                         <label for="floatingPassword">Password</label>
                     </div>
-                    <button onClick={() => registerWithEmailAndPassword(name, email, password)} style={{backgroundColor: "#1746A2", border: "none", fontFamily: '"Sen", "sans-serif"', textTransform: "uppercase"}} className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                    <button onClick={() => registerWithEmailAndPassword(name, email, password)} style={{backgroundColor: "#1746A2", border: "none", fontFamily: '"Sen", "sans-serif"', textTransform: "uppercase"}} className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button> */}
 
                     <GoogleButton onClick={handleClick}><GoogleLogo className='fa fa-brands fa-google'></GoogleLogo><span> Sign up with Google</span></GoogleButton>
 

@@ -135,6 +135,7 @@ function TripItemDashboard(props)
     }, [setShowDelete]);
 
     const deleteAction = useCallback(() => {
+        setShowDelete(false);
         var tripID = props.id;
         if (trip.users.length == 1) {
             deleteDoc(doc(db, "trips", tripID)).then(() => {

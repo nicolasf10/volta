@@ -1,4 +1,4 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
@@ -34,8 +34,9 @@ function TripChecklist(props) {
     }, [props.trip])
 
     const addItem = useCallback((newItem) => {
-        console.log(trip.checklist);
+        // console.log(trip.checklist);
 
+        updateTrip();
         
 
         // setTrip(
@@ -45,33 +46,66 @@ function TripChecklist(props) {
         //     })
         // )
         
-        setAdditions(additions.concat([newItem]))
+        // setAdditions(additions.concat([newItem]))
 
     }, []);
 
-    const handleCheck = useCallback((item) => {
-        var newChecklist = trip.checklist.filter(i => item.title.localeCompare(i.title) !== 0);
-        
-        console.log('!!!!')
-        console.log(newChecklist)
-        console.log('!!!!')        
-        
-        newChecklist.push(item)
-        setTrip(
-            prevState => ({
-                ...prevState,
-                checklist: newChecklist
-            })
-        )
-
+    async function updateTrip() {
         const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        const currentTrip = docSnap.data();
+        setTrip(currentTrip)
+    }
+
+    const handleCheck = useCallback((item) => {
+        handleCheckAsync(item);
+    }, []);
+
+    async function handleCheckAsync(item) {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        const currentTrip = docSnap.data();
+
+        var newChecklist = currentTrip.checklist.filter(i => item.title.localeCompare(i.title) !== 0);
+        console.log(newChecklist)
+
+        newChecklist.push(item)
+        // setTrip(
+        //     prevState => ({
+        //         ...prevState,
+        //         checklist: newChecklist
+        //     })
+        // )
+
+        console.log(newChecklist)
+
         updateDoc(tripRef, {
             checklist: newChecklist
         }).then(() => {
             console.log("Item added")
+            // updateTrip()
         }).catch(error => console.log(error.message));
-        
-    }, [])
+    }
+
+    const handleDelete= useCallback((item) => {
+        handleDeleteAsync(item);
+    }, []);
+
+    async function handleDeleteAsync(item) {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        const currentTrip = docSnap.data();
+
+        var newChecklist = currentTrip.checklist.filter(i => item.title.localeCompare(i.title) !== 0);
+        updateDoc(tripRef, {
+            checklist: newChecklist
+        }).then(() => {
+            console.log("Item added")
+            // updateTrip()
+        }).catch(error => console.log(error.message));
+    }
+
+
     
     console.log(trip)
     return (
@@ -85,7 +119,7 @@ function TripChecklist(props) {
                                 {trip.checklist.concat(additions).map((item, index) => {
                                     return(
                                         item.status === "to-do" ?
-                                            <ChecklistItem handleCheck={handleCheck} key={index*Math.random()} members={trip.members} item={item}/>
+                                            <ChecklistItem id={props.id} trip={trip} handleDelete={handleDelete} handleCheck={handleCheck} key={`${item.title}-${index*Math.random()}`} members={trip.members} item={item}/>
                                         :
                                             <></>
                                     )
@@ -99,7 +133,7 @@ function TripChecklist(props) {
                             {trip.checklist.concat(additions).map((item, index) => {
                                     return(
                                         item.status === "completed" ?
-                                            <ChecklistItem handleCheck={handleCheck} key={index*Math.random()} members={trip.members} item={item} />
+                                            <ChecklistItem id={props.id} trip={trip} handleDelete={handleDelete} handleCheck={handleCheck} key={`${item.title}-${index*Math.random()}`} members={trip.members} item={item} />
                                         :
                                             <></>
                                     )

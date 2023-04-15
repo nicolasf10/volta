@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const ItemContainer = styled.div`
     & .item {
@@ -118,24 +120,101 @@ const SelectMembers = styled.select`
 function ChecklistItem(props) {
     const [thisItem, setThisItem] = useState(props.item);
     const [ members, setMembers ] = useState(props.members);
+    const [ status, setStatus ] = useState(props.item.status);
+    const [ hidden, setHidden ] = useState(false)
     
     console.log(thisItem);
 
     const handleCheck = () => {
-        thisItem.status = thisItem.status === 'to-do' ? 'completed' : 'to-do';
+        const newStatus = status === 'to-do' ? 'completed' : 'to-do';
+        setStatus(newStatus);
         props.handleCheck(
             {
                 ...thisItem,
-                status: thisItem.status
+                status: newStatus
             }
         )
     }
+
+    const handleDelete = () => {
+        props.handleDelete(thisItem);
+        setHidden(true);
+    }
+
+    async function handleAssigned (e) {
+        console.log(e.target.value)
+        console.log(members)
+        var imgUrl;
+        for (let i = 0; i < members.length; i++) {
+            if (members[i].username === e.target.value) {
+                imgUrl = members[i].img;
+            }
+        }
+
+        var newItem;
+
+        if (e.target.value !== 'Unassigned') {
+            newItem = {
+                ...thisItem,
+                isAssigned: true,
+                assigned: {
+                    username: e.target.value,
+                    img: imgUrl
+                }
+            }
+            setThisItem(prevItem => ({
+                ...prevItem,
+                isAssigned: true,
+                assigned: {
+                    username: e.target.value,
+                    img: imgUrl
+                }
+            }))
+            } else {
+                newItem = {
+                    ...thisItem,
+                    isAssigned: false,
+                    assigned: null
+                }
+                setThisItem(prevItem => ({
+                    ...prevItem,
+                    isAssigned: false,
+                    assigned: null
+                }))
+            }
+
+            const tripRef = doc(db, "trips", props.id);
+            const docSnap = await getDoc(tripRef);
+            const currentTrip = docSnap.data();
+
+            const isItem = (element) => element.title === thisItem.title;
+            var index = currentTrip.checklist.findIndex(isItem)
+            var newChecklist = currentTrip.checklist.slice(0, index);
+            newChecklist.push(newItem)
+
+            newChecklist = newChecklist.concat(currentTrip.checklist.slice(index+1))
+
+            updateDoc(tripRef, {
+                checklist: newChecklist
+            }).then(() => {
+                console.log("Assign added")
+                // updateTrip()
+            }).catch(error => console.log(error.message));
+    }
+
+    const [selectedValue, setSelectedValue] = useState(thisItem.isAssigned ? thisItem.assigned.username : "Unassigned");
+
+    const handleSelectChange = (event) => {
+        setSelectedValue(event.target.value);
+        // call your handleAssigned function here
+        handleAssigned(event);
+      };
 
 
     return (
         thisItem.status === 'to-do'
         ?
-            <ItemContainer>
+            <ItemContainer style={hidden ? {display: 'none'} : {}}>
                 <TodoItem className="item">
                     <TitleContainer>
                         <Checkbox onChange={handleCheck} type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
@@ -143,7 +222,7 @@ function ChecklistItem(props) {
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
                         {/* <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/> */}
-                        <FontAwesomeIcon className='check-icon' icon={faTrash}/>
+                        <FontAwesomeIcon onClick={handleDelete} className='check-icon' icon={faTrash}/>
                         { !thisItem.isAssigned ? 
                             <Popup
                                 trigger={open => (
@@ -154,7 +233,7 @@ function ChecklistItem(props) {
                             >
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
-                                    <SelectMembers name="members" id="members">
+                                    <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members">
                                         <option value={null}>Unassigned</option>
                                         {members.map((member, index) => (
                                             <option key={index} value={member.username}>{member.username}</option>
@@ -172,16 +251,17 @@ function ChecklistItem(props) {
                             >
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
-                                    <SelectMembers name="members" id="members" >
+                                    <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members" >
                                         {members.map((member, index) => (
                                             <>
                                             {member.username === thisItem.assigned.username ?
-                                                <option selected="selected" key={index} value={member.username}>{member.username}</option> 
+                                                <option key={index} value={member.username}>{member.username}</option> 
                                                 :
                                                 <option key={index} value={member.username}>{member.username}</option>
                                             }
                                             </>
                                         ))}
+                                         <option value={null}>Unassigned</option>
                                     </SelectMembers>
                                 </PopupContent>
                           </Popup>
@@ -190,7 +270,7 @@ function ChecklistItem(props) {
                 </TodoItem>
             </ItemContainer>
         :
-            <ItemContainer>
+            <ItemContainer style={hidden ? {display: 'none'} : {}}>
                 <CompletedItem className="item">
                     <TitleContainer>
                         <Checkbox onChange={handleCheck} checked type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
@@ -198,7 +278,7 @@ function ChecklistItem(props) {
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
                         {/* <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/> */}
-                        <FontAwesomeIcon className='check-icon' icon={faTrash}/>
+                        <FontAwesomeIcon className='check-icon' onClick={handleDelete} icon={faTrash}/>
                         { !thisItem.isAssigned ? 
                             <Popup
                                 trigger={open => (
@@ -209,7 +289,7 @@ function ChecklistItem(props) {
                             >
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
-                                    <SelectMembers name="members" id="members">
+                                    <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members">
                                         <option value={null}>Unassigned</option>
                                         {members.map((member, index) => (
                                             <option key={index} value={member.username}>{member.username}</option>
@@ -227,11 +307,11 @@ function ChecklistItem(props) {
                             >
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
-                                    <SelectMembers name="members" id="members" >
+                                    <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members" >
                                         {members.map((member, index) => (
                                             <>
                                             {member.username === thisItem.assigned.username ?
-                                                <option selected="selected" key={index} value={member.username}>{member.username}</option> 
+                                                <option key={index} value={member.username}>{member.username}</option> 
                                                 :
                                                 <option key={index} value={member.username}>{member.username}</option>
                                             }

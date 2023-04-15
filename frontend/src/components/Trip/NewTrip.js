@@ -270,6 +270,7 @@ function NewTrip(props) {
                             }
                         ).then(() => {
                             console.log('Added trip')
+                            setTripPlace('');
                             closing();
                             props.updateTrips();
                         })

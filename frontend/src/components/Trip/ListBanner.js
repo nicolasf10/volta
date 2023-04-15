@@ -112,7 +112,7 @@ function ListBanner(props) {
     const [ emoji, setEmoji ] = useState(props.list.emoji)
 
     useEffect(() => {
-        console.log(props.list);
+        // console.log(props.list);
         setTrip(props.trip)
         setList(props.list);
     }, [props.list, props.trip])

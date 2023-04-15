@@ -33,7 +33,7 @@ function ExistingPlaces(props) {
         <PlacesContainer>
             <PlacesHeading>Saved Places</PlacesHeading>
             {list.items.map((item, index) => (
-                <Place item={item} new={false} />
+                <Place key={index} id={props.id} list={list} item={item} new={false} />
             ))}
         </PlacesContainer>
     );
