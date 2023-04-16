@@ -170,11 +170,11 @@ function TripBanner(props) {
 
     return (
         <Banner background={trip.image}>
-            <BackDiv>
-                <Link style={{color: "#000", textDecoration: "none"}} to="/trips">
+            <Link style={{color: "#000", textDecoration: "none"}} to="/trips">
+                <BackDiv>
                     <BackIcon className="fa fa-solid fa-arrow-left"></BackIcon> <BackText>My trips</BackText>
-                </Link>
-            </BackDiv>
+                </BackDiv>
+            </Link>
             <BannerText>
                 <BannerTitle>{trip.title}
                     <Popup

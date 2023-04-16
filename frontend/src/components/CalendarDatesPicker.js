@@ -68,6 +68,7 @@ function CalendarDatesPicker(props) {
                 selectsRange
                 inline
                 onSelect={onSelect}
+                minDate={new Date()}
             />
         </CalendarContainer>
     );

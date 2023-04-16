@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBed, faPlane, faFilm, faBurger, faBagShopping, faBus, faTag, faCoins } from '@fortawesome/free-solid-svg-icons';
+import Progress from './BudgetProgress';
 
 const BlockContainer = styled.div`
     margin-top: 10px;
@@ -71,6 +72,32 @@ const TotalAmount = styled.p`
     color: #2A2A2A;
 `
 
+// Goal area
+const Limit = styled.div`
+    margin: 15px 10px;
+    font-family: 'Sen', sans-serif;
+`
+
+const LimitTitle = styled.h4`
+    display: inline-block;
+    margin-right: 10px;
+`
+
+const LimitInput = styled.input`
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 1.3em;
+    width: 100px;
+    
+
+    &:focus {
+        background: none;
+        border: none;
+        border-bottom: 4px solid #d9d9d9;
+    }
+`
+
 const icons = {
     'Accomodation': faBed,
     'Travel': faPlane,
@@ -86,6 +113,7 @@ const icons = {
 function BudgetBlock(props) {
     const [trip, setTrip] = useState(props.trip);
     const [item, setItem] = useState(props.item);
+    const [limit, setLimit] = useState(0);
     const [ total, setTotal ] = useState(0);
     const [ categories, setCategories ] = useState({});
 
@@ -94,6 +122,8 @@ function BudgetBlock(props) {
         setTrip(props.trip);
         console.log(props.item);
         setItem(props.item);
+
+        setLimit(props.item.limit);
         
     }, [props.trip, props.item])
 
@@ -127,11 +157,28 @@ function BudgetBlock(props) {
                 }
             }));
         }
-      }
+    }
+
+    function handleLimitChange(e) {
+        const value = e.target.value;
+      
+        if (/^\$\d*$/.test(value)) {
+            var newVal = parseInt(e.target.value.substring(1))
+            if (!newVal) {
+                newVal = 0;
+            }
+            setLimit(newVal)
+        }
+    }
       
 
     return (
         <BlockContainer>
+            <Limit>
+                <LimitTitle>Limit</LimitTitle>
+                <LimitInput onChange={handleLimitChange} value={`$${limit}`} type='text'/>
+                <Progress total={limit} current={calcTotal()}/>
+            </Limit>
             { typeof item.content === 'object' && item.content !== null ?
                 <Categories>
                     {

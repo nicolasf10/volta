@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const BlockContainer = styled.div`
     height: 160px;
@@ -53,7 +55,7 @@ const Buttons = styled.div`
     width: calc(90% + 2px);
 
     & * {
-        width: 50%;
+        width: 100%;
         border-radius: 5px;
         border: none;
         font-family: "Sen", sans-serif;
@@ -78,13 +80,38 @@ function NoteBlock(props) {
     function handleChange(e) {
         setNotes(e.target.value);
     }
+    
+    async function handleSave() {
+        console.log('Saving note');
+
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        var currentTrip = docSnap.data();
+        var newBlocks = new Array();
+        
+        for (let i = 0; i < currentTrip.blocks.length; i++) {
+            if (currentTrip.blocks[i].created !== item.created) {
+                newBlocks.push(currentTrip.blocks[i])
+            } else {
+                newBlocks.push({
+                    type: item.type,
+                    title: item.title,
+                    content: notes,
+                    created: item.created
+                })
+            }
+        }
+        
+        await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
+    }
+
 
     return (
         <BlockContainer>
-            <NoteArea onChange={handleChange} value={notes} placeholder='Write some notes here ;)'/>
+            <NoteArea onChange={handleChange} onBlur={() => handleSave()} value={notes} placeholder='Write some notes here ;)'/>
             <Buttons className='note-buttons'>
                 <SaveNotes>Save</SaveNotes>
-                <CancelNotes>Cancel</CancelNotes>
+                {/* <CancelNotes onClick={() => { console.log("button clicked");}}>Cancel</CancelNotes> */}
             </Buttons>
         </BlockContainer>
     );

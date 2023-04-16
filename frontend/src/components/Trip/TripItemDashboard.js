@@ -191,7 +191,7 @@ function TripItemDashboard(props)
             </Trip>
             {
                 showDelete ?
-                    <DeleteConfirm deleteAction={deleteAction} parentCallback={toggleDeleteShow} trip={trip} />
+                    <DeleteConfirm deleteAction={deleteAction} handleDelete={() => console.log('Deleting trip')} parentCallback={toggleDeleteShow} trip={trip} />
                 :
                     <></>
             }

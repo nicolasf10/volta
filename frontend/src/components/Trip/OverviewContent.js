@@ -109,6 +109,7 @@ function OverviewContent(props) {
                     'Transportation': 0,
                     'Other': 0,
                 },
+                limit: 1000,
                 created: `${Math.random()}`
             }
         }

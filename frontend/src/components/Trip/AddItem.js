@@ -71,7 +71,7 @@ const AddButtons = styled.div`
 const AddButton = styled.button`
     background: none;
     border: none;
-    margin: 0px 3px;
+    padding: 0px 5px;
     color: #081736;
     font-size: 1.2em;
 `
@@ -82,28 +82,32 @@ function AddItem(props) {
     const [ title, setTitle ] = useState('');
 
     function handleAdd(e) {
-        setNewForm(false);
+        if (title === '') {
+            alert('To-do title is empty...')
+        } else {
+            setNewForm(false);
 
-        const tripRef = doc(db, "trips", props.id);
-        updateDoc(tripRef, {
-            checklist: arrayUnion({
-                assigned: null,
-                isAssigned: false,
-                status: 'to-do',
-                title: title
-            })}).then(() => {
-            console.log("Item added")
-        }).catch(error => console.log(error.message));
-        
-        props.addItem(
-            {
-                assigned: null,
-                isAssigned: false,
-                status: 'to-do',
-                title: title
-            }
-        )
-        setTitle('');
+            const tripRef = doc(db, "trips", props.id);
+            updateDoc(tripRef, {
+                checklist: arrayUnion({
+                    assigned: null,
+                    isAssigned: false,
+                    status: 'to-do',
+                    title: title
+                })}).then(() => {
+                console.log("Item added")
+            }).catch(error => console.log(error.message));
+            
+            props.addItem(
+                {
+                    assigned: null,
+                    isAssigned: false,
+                    status: 'to-do',
+                    title: title
+                }
+            )
+            setTitle('');
+        }
     }
 
     function handleCancel(e) {
