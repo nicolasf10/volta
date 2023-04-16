@@ -196,6 +196,7 @@ const CalendarContainer = styled.div`
     cursor: pointer;
 `
 
+const CalendarModal = styled.div``
 
 var emojis = [
     '🗺️', '🇧🇧', '🇦🇺', '🇿🇼', '🇵🇭', '🇯🇵', '🇧🇷', '🇳🇴', '🇩🇪', '🇵🇹', '🇬🇧', '🇺🇸'
@@ -307,7 +308,7 @@ function NewTrip(props) {
                     </BackContainer>
                     <FormMainInputs>
                         <TripName onChange={(e) => setTripPlace(e.target.value)} value={tripPlace} placeholder="Trip place (country or city)" type='text'/>
-                        <Popup
+                        {/* <Popup
                             trigger={open => (
                                 <CalendarContainer>
                                     <FontAwesomeIcon icon={faCalendar} />
@@ -318,16 +319,10 @@ function NewTrip(props) {
                             contentStyle={contentStyleCalendar} 
                             closeOnDocumentClick
                         >
-                            <DatePicker
-                                // selected={startDate}
-                                // onChange={onChange}
-                                // startDate={startDate}
-                                // endDate={endDate}
-                                selectsRange
-                                inline
-                                // onSelect={onSelect}
-                            />
-                        </Popup>
+                            <CalendarModal>
+                                <CalendarDatesPicker updateDate={updateDate} id={props.id} trip={trip} />
+                            </CalendarModal>
+                        </Popup> */}
                         
                         <Popup
                             trigger={open => (
