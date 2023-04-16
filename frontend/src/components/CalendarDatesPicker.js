@@ -11,6 +11,8 @@ import { doc, Timestamp, updateDoc } from 'firebase/firestore';
 const CalendarContainer = styled.div`
 
 `
+
+
 function CalendarDatesPicker(props) {
     const [ trip, setTrip ] = useState(props.trip);
     const [startDate, setStartDate] = useState(props.trip.date.start.toDate());
