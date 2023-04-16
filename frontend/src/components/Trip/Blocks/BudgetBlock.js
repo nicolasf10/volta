@@ -114,8 +114,7 @@ function BudgetBlock(props) {
     const [trip, setTrip] = useState(props.trip);
     const [item, setItem] = useState(props.item);
     const [limit, setLimit] = useState(0);
-    const [ total, setTotal ] = useState(0);
-    const [ categories, setCategories ] = useState({});
+    const [accepetedOver, setAcceptedOver] = useState(false);
 
     useEffect(() => {
         console.log(props);
@@ -140,6 +139,7 @@ function BudgetBlock(props) {
     function handleChange(e) {
         const name = e.target.getAttribute('name');
         const value = e.target.value;
+        const prevTotal = calcTotal();
       
         if (/^\$\d*$/.test(value)) {
             console.log('targert')
@@ -149,13 +149,34 @@ function BudgetBlock(props) {
             if (!newVal) {
                 newVal = 0;
             }
-            setItem(prevState => ({
-                ...prevState,
-                content: {
-                  ...prevState.content,
-                  [e.target.getAttribute('name')]: newVal
+
+            if (newVal <= 9999) {
+                setItem(prevState => ({
+                    ...prevState,
+                    content: {
+                      ...prevState.content,
+                      [e.target.getAttribute('name')]: newVal
+                    }
+                }));
+    
+                // Warning if user is over budget
+                if (!accepetedOver) {
+                    console.log('okok')
+                    var total = 0;
+                    Object.keys(item.content).forEach(function(c) {
+                        if (c !== e.target.getAttribute('name')) {
+                            total += item.content[c];
+                        }
+                    });
+    
+                    total += newVal;
+                    if (total > limit && total > prevTotal) {
+                        setAcceptedOver(true);
+                        alert("You're over your spending limit!")
+                    }
                 }
-            }));
+            }
+
         }
     }
 
@@ -163,11 +184,13 @@ function BudgetBlock(props) {
         const value = e.target.value;
       
         if (/^\$\d*$/.test(value)) {
-            var newVal = parseInt(e.target.value.substring(1))
+            var newVal = parseInt(e.target.value.substring(1));
             if (!newVal) {
                 newVal = 0;
             }
-            setLimit(newVal)
+            if (newVal <= 999999) {
+                setLimit(newVal)
+            }
         }
     }
       
@@ -175,7 +198,7 @@ function BudgetBlock(props) {
     return (
         <BlockContainer>
             <Limit>
-                <LimitTitle>Limit</LimitTitle>
+                <LimitTitle>Limit: </LimitTitle>
                 <LimitInput onChange={handleLimitChange} value={`$${limit}`} type='text'/>
                 <Progress total={limit} current={calcTotal()}/>
             </Limit>
