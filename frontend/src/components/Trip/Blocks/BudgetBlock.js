@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBed, faPlane, faFilm, faBurger, faBagShopping, faBus, faTag, faCoins } from '@fortawesome/free-solid-svg-icons';
 import Progress from './BudgetProgress';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const BlockContainer = styled.div`
     margin-top: 10px;
@@ -89,8 +91,8 @@ const LimitInput = styled.input`
     border: none;
     font-size: 1.3em;
     width: 100px;
+    font-weight: 600;
     
-
     &:focus {
         background: none;
         border: none;
@@ -172,7 +174,6 @@ function BudgetBlock(props) {
                     total += newVal;
                     if (total > limit && total > prevTotal) {
                         setAcceptedOver(true);
-                        alert("You're over your spending limit!")
                     }
                 }
             }
@@ -193,13 +194,55 @@ function BudgetBlock(props) {
             }
         }
     }
-      
+
+    async function limitSave(e) {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        var currentTrip = docSnap.data();
+        var newBlocks = [];
+        var newLink;
+        var newContent = [];
+        
+        for (let i = 0; i < currentTrip.blocks.length; i++) {
+            console.log(item.created)
+            if (currentTrip.blocks[i].created !== item.created) {
+                newBlocks.push(currentTrip.blocks[i]);
+            } else {
+                currentTrip.blocks[i].limit = limit;
+                newBlocks.push(currentTrip.blocks[i])
+            }
+        }
+
+        await updateDoc(tripRef, {blocks: currentTrip.blocks}).catch((error) => console.log(error.message));
+    }
+    
+    async function budgetItemSave(e, category) {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        var currentTrip = docSnap.data();
+        var newBlocks = [];
+        var newLink;
+        var newContent = [];
+        
+        for (let i = 0; i < currentTrip.blocks.length; i++) {
+            console.log(item.created)
+            if (currentTrip.blocks[i].created !== item.created) {
+                newBlocks.push(currentTrip.blocks[i]);
+            } else {
+                currentTrip.blocks[i].content[category] = item.content[category]
+                newBlocks.push(currentTrip.blocks[i])
+            }
+        }
+
+        await updateDoc(tripRef, {blocks: currentTrip.blocks}).catch((error) => console.log(error.message));
+    }
+
 
     return (
         <BlockContainer>
             <Limit>
-                <LimitTitle>Limit: </LimitTitle>
-                <LimitInput onChange={handleLimitChange} value={`$${limit}`} type='text'/>
+                <LimitTitle>Spending limit: </LimitTitle>
+                <LimitInput onBlur={limitSave} onChange={handleLimitChange} value={`$${limit}`} type='text'/>
                 <Progress total={limit} current={calcTotal()}/>
             </Limit>
             { typeof item.content === 'object' && item.content !== null ?
@@ -211,7 +254,7 @@ function BudgetBlock(props) {
                                 <Category key={`budget-${index}`}>
                                     <CategoryIcon icon={icons[category]}/>
                                     <CategoryTitle>{category}</CategoryTitle>
-                                    <CategoryInput autoComplete="off" value={`$${item.content[category]}`} name={category} onChange={handleChange} placeholder='$0' type="text" />
+                                    <CategoryInput onBlur={(e) => budgetItemSave(e, category)} autoComplete="off" value={`$${item.content[category]}`} name={category} onChange={handleChange} placeholder='$0' type="text" />
                                 </Category>
                             )
                         })

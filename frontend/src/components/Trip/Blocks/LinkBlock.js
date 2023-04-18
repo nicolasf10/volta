@@ -116,7 +116,7 @@ const CancelLink = styled.button`
 const Buttons = styled.div`
     display: flex;
     flex-direction: row;
-    margin-top: 3px;
+    padding-top: 3px;
     transition: 0.1s ease-in all;
     width: 100%;
 
@@ -156,44 +156,48 @@ function LinkBlock(props) {
     async function newLink(e) {
         e.preventDefault();
 
-        const tripRef = doc(db, "trips", props.id);
-        const docSnap = await getDoc(tripRef);
-        var currentTrip = docSnap.data();
-        var newBlocks = new Array();
-        
-        for (let i = 0; i < currentTrip.blocks.length; i++) {
-            if (currentTrip.blocks[i].created !== item.created) {
-                newBlocks.push(currentTrip.blocks[i])
-            } else {
-                newBlocks.push({
-                    type: item.type,
-                    title: item.title,
-                    content: [...item.content, {
-                        label: labelInput,
-                        link: addHttpsToUrl(linkInput)
-                    }],
-                    created: item.created
-                })
+        if (labelInput === '' || linkInput) {
+            alert('Please enter both the label and link')
+        } else {
+            const tripRef = doc(db, "trips", props.id);
+            const docSnap = await getDoc(tripRef);
+            var currentTrip = docSnap.data();
+            var newBlocks = new Array();
+            
+            for (let i = 0; i < currentTrip.blocks.length; i++) {
+                if (currentTrip.blocks[i].created !== item.created) {
+                    newBlocks.push(currentTrip.blocks[i])
+                } else {
+                    newBlocks.push({
+                        type: item.type,
+                        title: item.title,
+                        content: [...item.content, {
+                            label: labelInput,
+                            link: addHttpsToUrl(linkInput)
+                        }],
+                        created: item.created
+                    })
+                }
             }
+            
+            await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
+    
+    
+    
+            setItem({
+                type: item.type,
+                title: item.title,
+                content: [...item.content, {
+                    label: labelInput,
+                    link: addHttpsToUrl(linkInput)
+                }],
+                created: item.created
+            })
+            
+            setLabelInput('');
+            setLinkInput('');
+            setOpenNew(false);
         }
-        
-        await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
-
-
-
-        setItem({
-            type: item.type,
-            title: item.title,
-            content: [...item.content, {
-                label: labelInput,
-                link: addHttpsToUrl(linkInput)
-            }],
-            created: item.created
-        })
-        
-        setLabelInput('');
-        setLinkInput('');
-        setOpenNew(false);
     }
 
     function cancelLink(e) {
@@ -220,7 +224,7 @@ function LinkBlock(props) {
         const tripRef = doc(db, "trips", props.id);
         const docSnap = await getDoc(tripRef);
         var currentTrip = docSnap.data();
-        var newBlocks = new Array();
+        var newBlocks = [];
         var newLink;
         var newContent = [];
         
@@ -229,25 +233,35 @@ function LinkBlock(props) {
             if (currentTrip.blocks[i].created !== created_id) {
                 newBlocks.push(currentTrip.blocks[i])
             } else {
+                newContent = []
                 newLink = currentTrip.blocks[i];
                 console.log(newLink);
-                console.log(created_id)
+                // console.log(title)
                 for (let n = 0; n < newLink.content.length; n++) {
-                    if (newLink.content[n].title !== title) {
+                    console.log(newLink.content[n])
+                    if (newLink.content[n].label !== title) {
                         newContent.push(newLink.content[n])
                     }
                 }
-                newLink.content = newBlocks;
-                newBlocks.push(newLink);
+                currentTrip.blocks[i].content = newContent
+                // newBlocks.push(currentTrip.blocks[i])
+                // newBlocks.push(newLink);
+                // newLink.content = newBlocks;
+                // newBlocks.push(newLink);
             }
         }
+        console.log(newContent)
+
+        console.log(newBlocks)
+
+        console.log(currentTrip)
         
-        await updateDoc(tripRef, { blocks: newBlocks }).catch((error) => console.log(error.message));
+        await updateDoc(tripRef, {blocks: currentTrip.blocks}).catch((error) => console.log(error.message));
 
         setItem({
             type: item.type,
             title: item.title,
-            content: newBlocks,
+            content: newContent,
             created: item.created
         })
     }
@@ -262,7 +276,7 @@ function LinkBlock(props) {
                                 <Item key={index}>
                                     <Link target="_blank" href={i.link}>{i.label}</Link>
                                     {/* <ItemIcons className='icons'><FontAwesomeIcon onClick={() => openEdit(item, index)} icon={faPencil}/><FontAwesomeIcon icon={faTrash}/></ItemIcons> */}
-                                    <ItemIcons className='icons'><FontAwesomeIcon onClick={() => handleDelete(item.created, i.title)} icon={faTrash}/></ItemIcons>
+                                    <ItemIcons className='icons'><FontAwesomeIcon onClick={() => handleDelete(item.created, i.label)} icon={faTrash}/></ItemIcons>
                                 </Item>
                             )
                         })

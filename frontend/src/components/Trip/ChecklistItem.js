@@ -41,7 +41,7 @@ const ItemContainer = styled.div`
 `
 
 const CompletedItem = styled.div`
-    text-decoration: line-through;
+    /* text-decoration: line-through; */
     color: #838383;
 `
 
@@ -273,8 +273,18 @@ function ChecklistItem(props) {
             <ItemContainer style={hidden ? {display: 'none'} : {}}>
                 <CompletedItem className="item">
                     <TitleContainer>
-                        <Checkbox onChange={handleCheck} checked type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
-                        <ItemTitle>{thisItem.title}</ItemTitle>
+                        {
+                            status === 'to-do' ?
+                                <Checkbox onChange={handleCheck} type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
+                            :
+                                <Checkbox onChange={handleCheck} checked type="checkbox" id="vehicle1" name="vehicle1" value="Bike"/>
+                        }
+                        {
+                            status === 'to-do' ?
+                                <ItemTitle style={{textDecoration: 'none'}}>{thisItem.title}</ItemTitle>
+                            :
+                                <ItemTitle style={{textDecoration: 'line-through'}}>{thisItem.title}</ItemTitle>
+                        }
                     </TitleContainer>
                     <IconsContainer className='iconsContainer'>
                         {/* <FontAwesomeIcon className='check-icon' icon={faPenToSquare}/> */}

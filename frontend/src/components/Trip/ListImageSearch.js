@@ -177,7 +177,7 @@ function ListImageSearch(props) {
                 {
                     hasClicked ? 
                         <ImagesBox>
-                            { results.length == 0 ? <NoResults>No results found</NoResults>
+                            { (!results || results.length === 0) ? <NoResults>No results found</NoResults>
                                 :
                                 <ImagesFlex>
                                         {results.slice(0, 10).map((item, index) => {
