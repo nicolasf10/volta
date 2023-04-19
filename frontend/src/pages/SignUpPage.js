@@ -56,7 +56,7 @@ function SignupPage() {
         }
         if (user) {
             console.log("Logged in")
-            navigate("/")
+            navigate("/trips")
         };
       }, [user, loading]);
     

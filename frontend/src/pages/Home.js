@@ -104,8 +104,8 @@ function Home() {
                 <div className="containe">
                     <div className="row">
                         <ContentContainer className="col-lg-5 col-md-12">
-                            <ContentTitle><span style={{fontSize:"1.5em"}}>⛰️</span> Trip planning at it's finest — trust us.</ContentTitle>
-                            <ContentText>Planning a trip can be overwhelming and time-consuming, but it doesn't have to be. We make trip planning <b>easier</b>, whether you're traveling with friends, family, or solo.</ContentText>
+                            <ContentTitle><span style={{fontSize:"1.5em"}}>⛰️</span> Trip planning at it's finest.</ContentTitle>
+                            <ContentText>Planning a trip can be overwhelming and time-consuming, but it doesn't have to be. Volta makes trip planning <b>easier</b>, whether you're traveling with friends, family, or solo.</ContentText>
                             <ContentButton><Link className='button-link' to='/signup'>Sign up</Link></ContentButton>
                         </ContentContainer>
                         <SplineContainer className="col-lg-7 col-md-12">

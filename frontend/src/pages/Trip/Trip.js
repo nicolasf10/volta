@@ -66,21 +66,6 @@ function Trip(props) {
             setTrip(location.state.trip);
             document.title = `Trip to ${location.state.trip.title}`
         }
-
-        if (page === "overview") {
-            setCurrentPage(<TripOverview id={location.state.id} key={status} trip={location.state.trip}/>);
-        } else if (page === "lists") {
-            setCurrentPage(<TripLists id={location.state.id} key={status} trip={trip}/>);
-        } else if (page === "budget") {
-            setCurrentPage(<TripBudget id={location.state.id} key={status} trip={trip}/>);
-        } else if (page === "flights") {
-            setCurrentPage(<TripFlights id={location.state.id} key={status} trip={trip}/>);
-        } else {
-            setCurrentPage(<span></span>);
-        }
-
-        // console.log(location.state.trip)
-        
     }, [page, trip]);
 
     async function getTrip() {
@@ -92,23 +77,7 @@ function Trip(props) {
           } else {
             console.log("No such document!");
           }
-
-        // getDocs(tripsCollectionRef).then(response => {
-        //     console.log(response);
-        //     const tripsResponse = response.docs.map(doc => ({
-        //             data: doc.data(),
-        //             id: doc.id
-        //     }))
-        //     console.log(tripsResponse);
-        //     setTrips(tripsResponse);
-        //     setLoading(false);
-        // }).catch(error => console.log(error.message));
     }
-
-    // const unsub = onSnapshot(doc(db, "trips", location.state.id), (doc) => {
-    //     console.log("Current data: ", doc.data());
-    //     setTrip(doc.data());
-    // });    
 
     const updateTrip = useCallback((newTrip) => {
         console.log('updateee')
@@ -171,12 +140,11 @@ function Trip(props) {
                 {/* <NavItem onClick={pageClick} id="budget">Budget</NavItem> */}
                 <NavItem onClick={pageClick} id="flights">Flights</NavItem>
             </NavList>
-            {/* {currentPage} */}
             {
                 page ?
                 <>
                     <TripOverview display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={location.state.trip}/>
-                    <TripLists display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripLists updateTrip={updateTrip} display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
                     <TripFlights display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripChecklist display={page === 'checklist' ? 'block' : 'none'} updateChecklist={updateChecklist} id={location.state.id} trip={trip}/>
                 </>

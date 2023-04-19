@@ -7,6 +7,8 @@ import NewPlaces from './NewPlaces';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import NewPlacesMobile from './NewPlacesMobile';
+import { db } from '../../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const google = window.google;
 
@@ -112,17 +114,34 @@ function DetailsContent(props) {
     }
 
     const updateList = useCallback((newItem) => {
-        console.log(newItem)
         setList(
             oldList => ({
                 ...oldList,
-                items: [...oldList.items, newItem, 'ohbhij']
+                items: [...oldList.items, newItem]
             })
         );
-
         
-        console.log(list.items)
-    }, [])
+        updateTrip()
+
+    }, []);
+
+    async function updateTrip() {
+        const tripRef = doc(db, "trips", props.id);
+        const docSnap = await getDoc(tripRef);
+        const currentTrip = docSnap.data();
+        // props.updateTrip(currentTrip);
+    }
+
+    const deletePlace = useCallback((newItems) => {
+        console.log(newItems)
+        setList(
+            oldList => ({
+                ...oldList,
+                items: newItems
+            })
+        );
+        updateTrip();
+    })
 
 
     return (
@@ -134,7 +153,7 @@ function DetailsContent(props) {
             <PlacesCategories className="container">
                 <Row className="row">
                     <Column className="col-lg-6 col-md-12 col-sm-12">
-                        <ExistingPlaces list={list}/>
+                        <ExistingPlaces id={props.id} deletePlace={deletePlace} list={list}/>
                     </Column>
                     <Column className="col-lg-6 col-md-12 col-sm-12">
                         <NewPlaces updateList={updateList} id={props.id} list={props.list}/>
@@ -145,7 +164,7 @@ function DetailsContent(props) {
                 {
                     toggle === "existing"
                     ?
-                    <ExistingPlaces id={props.id} list={list}/>
+                    <ExistingPlaces deletePlace={deletePlace} id={props.id} list={list}/>
                     :
                     <NewPlacesMobile updateList={updateList} id={props.id} list={props.list}/>
                 }

@@ -156,7 +156,7 @@ function LinkBlock(props) {
     async function newLink(e) {
         e.preventDefault();
 
-        if (labelInput === '' || linkInput) {
+        if (labelInput === '' || linkInput === '') {
             alert('Please enter both the label and link')
         } else {
             const tripRef = doc(db, "trips", props.id);
@@ -206,19 +206,6 @@ function LinkBlock(props) {
         setLinkInput('');
         setOpenNew(false);
     }
-
-    // function openEdit(item, index) {
-    //     // console.log('wok');
-    //     setOpenNew(true);
-    //     setLabelInput(item.label);
-    //     setLinkInput(item.link);
-
-    //     // setItem({
-    //     //     type: item.type,
-    //     //     title: item.title,
-    //     //     content: [item.content.slice(0, index).concat(item.content.slice(index+1))]
-    //     // })
-    // }
 
     async function handleDelete(created_id, title) {
         const tripRef = doc(db, "trips", props.id);

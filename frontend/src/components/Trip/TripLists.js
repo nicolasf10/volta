@@ -56,7 +56,7 @@ function TripLists(props) {
         <ListsContainer style={{display: props.display}}>
             {
                 trip.lists.map((item) => (
-                    <ListCategory key={item.title} deleteList={deleteList} trip={trip} id={props.id} list={item} />
+                    <ListCategory updateTrip={props.updateTrip} key={item.title} deleteList={deleteList} trip={trip} id={props.id} list={item} />
                 ))
             }
             <NewList id={props.id} trip={trip} saveList={saveList} />

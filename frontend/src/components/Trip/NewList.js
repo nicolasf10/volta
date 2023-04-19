@@ -178,40 +178,45 @@ function NewList(props) {
         const docSnap = await getDoc(tripRef);
         const currentLists = docSnap.data().lists;
         console.log(currentLists);
+        var allow = true;
 
         for (let i = 0; i < currentLists.length; i++) {
             if (currentLists[i].title === title) {
-                alert(`You already have a list called ${title}`)
+                allow = false;
             }
         }
 
-        if (img !== '' && title !== '') {
-            updateDoc(tripRef, {
-                lists: arrayUnion({
-                    title: title,
-                    emoji: emoji,
-                    img: img,
-                    items: []
-                })}).then(() => {
-            console.log("List added");
-            closing();
-            setTitle('');
-            if (valid) {
-                console.log(' omgom')
-                saveTrip({
-                    title: title,
-                    emoji: emoji,
-                    img: img,
-                    items: []
-                });
+        if (allow) {
+            if (img !== '' && title !== '') {
+                updateDoc(tripRef, {
+                    lists: arrayUnion({
+                        title: title,
+                        emoji: emoji,
+                        img: img,
+                        items: []
+                    })}).then(() => {
+                console.log("List added");
+                closing();
+                setTitle('');
+                if (valid) {
+                    console.log(' omgom')
+                    saveTrip({
+                        title: title,
+                        emoji: emoji,
+                        img: img,
+                        items: []
+                    });
+                }
+                console.log(valid)
+                setValid(false);
+                setImg('');
+                setTitle('')
+                }).catch(error => console.log(error.message));
+            } else {
+                alert('Please select all fields')
             }
-            console.log(valid)
-            setValid(false);
-            setImg('');
-            setTitle('')
-            }).catch(error => console.log(error.message));
         } else {
-            alert('Please select all fields')
+            alert(`You already have a list called ${title}`)
         }
     }
 

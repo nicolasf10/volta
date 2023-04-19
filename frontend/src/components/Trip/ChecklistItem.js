@@ -236,7 +236,7 @@ function ChecklistItem(props) {
                                     <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members">
                                         <option value={null}>Unassigned</option>
                                         {members.map((member, index) => (
-                                            <option key={index} value={member.username}>{member.username}</option>
+                                            <option key={`${index}-${Math.random()}`} value={member.username}>{member.username}</option>
                                         ))}
                                     </SelectMembers>
                                 </PopupContent>
@@ -253,13 +253,13 @@ function ChecklistItem(props) {
                                     <PopupTitle>Assign to someone</PopupTitle>
                                     <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members" >
                                         {members.map((member, index) => (
-                                            <>
-                                            {member.username === thisItem.assigned.username ?
-                                                <option key={index} value={member.username}>{member.username}</option> 
-                                                :
-                                                <option key={index} value={member.username}>{member.username}</option>
-                                            }
-                                            </>
+                                            <div key={`${index}-${Math.random()}`}>
+                                                {member.username === thisItem.assigned.username ?
+                                                    <option key={index} value={member.username}>{member.username}</option> 
+                                                    :
+                                                    <option key={index} value={member.username}>{member.username}</option>
+                                                }
+                                            </div>
                                         ))}
                                          <option value={null}>Unassigned</option>
                                     </SelectMembers>

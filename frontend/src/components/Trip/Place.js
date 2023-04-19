@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import PlaceNotes from './PlaceNotes';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark, faMap, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const PlaceContainer = styled.div`
     max-width: 100%;
@@ -90,6 +92,14 @@ const SavePlace = styled.button`
     padding: 0;
 `
 
+const DeleteButton = styled.button`
+    background: none;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+`
+
 
 function Place(props) {
     const [ item, setItem ] = useState(props.item);
@@ -100,13 +110,13 @@ function Place(props) {
     }, [])
 
     async function savePlace (e) {
-        console.log(item.position.lat())
+        console.log(item.position.lat)
         const newItem = {
             title: item.title,
             link: item.link,
             img: item.img,
             address: item.address,
-            position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
+            position: {lat: item.position.lat.toString(), lng: item.position.lng.toString()},
         }
 
         const tripRef = doc(db, "trips", props.id);
@@ -120,34 +130,99 @@ function Place(props) {
 
         // Make sure the list object was found before continuing
         if (list) {
-            props.updateList({
-                title: item.title,
-                link: item.link,
-                img: item.img,
-                address: item.address,
-                position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
-            })
-
             // Find the index of the list object in the `lists` array
-            console.log(props.id)
             const listIndex = tripData.lists.findIndex(obj => obj.title === props.list.title);
+
+            // check if item is already in list
+            var alreadyExists = false;
+            console.log(tripData.lists[listIndex].items)
+            for (let i = 0; i < tripData.lists[listIndex].items.length; i++) {
+                console.log(tripData.lists[listIndex].items[i])
+                console.log(item.title)
+                if (tripData.lists[listIndex].items[i].title === item.title) {
+                    alreadyExists = true;
+                    break
+                }
+            }
+
+            if (!alreadyExists) {
+                props.updateList({
+                    title: item.title,
+                    link: item.link,
+                    img: item.img,
+                    address: item.address,
+                    position: {lat: item.position.lat.toString(), lng: item.position.lng.toString()},
+                })
+    
+                
+                // Create a new array of list objects with the updated items array
+                const updatedLists = [
+                    ...tripData.lists.slice(0, listIndex),
+                    {
+                    ...list,
+                    items: [...tripData.lists[listIndex].items, newItem]
+                    },
+                    ...tripData.lists.slice(listIndex + 1)
+                ];
+                console.log(listIndex);
+    
+                // Update the Firestore document with the new list data
+    
+                await updateDoc(tripRef, { lists: updatedLists });
+            } else {
+                alert('Item already added');
+            }
+
+        } else {
+            console.error(`List with title "${props.list.title}" not found.`);
+        }
+    }
+    
+    async function deletePlace(e) {
+        const tripRef = doc(db, "trips", props.id);
+
+        // Get the current trip data from Firestore
+        const tripData = (await getDoc(tripRef)).data();
+
+        // console.log(props.list)
+        var list = props.list
+        // console.log(list)
+
+        // Make sure the list object was found before continuing
+        if (list) {
+            // Find the index of the list object in the `lists` array
+            const listIndex = tripData.lists.findIndex(obj => obj.title === props.list.title);
+
+            // Go over the items in the list and delete when i.title === item.title
+            var oldItems = tripData.lists[listIndex].items;
+            var newItems = [];
+
+            for (let i = 0; i < oldItems.length; i++) {
+                if (oldItems[i].title !== item.title) {
+                    newItems.push(oldItems[i])
+                }
+            }
+
+            
+            // Calling prop function to sync state
+            props.deletePlace(newItems)
 
             // Create a new array of list objects with the updated items array
             const updatedLists = [
                 ...tripData.lists.slice(0, listIndex),
                 {
                 ...list,
-                items: [...list.items, newItem]
+                items: [...newItems]
                 },
                 ...tripData.lists.slice(listIndex + 1)
             ];
-            console.log(listIndex);
-
+    
             // Update the Firestore document with the new list data
-
+    
             await updateDoc(tripRef, { lists: updatedLists });
+
         } else {
-        console.error(`List with title "${props.list.title}" not found.`);
+            console.error(`List with title "${props.list.title}" not found.`);
         }
     }
 
@@ -158,8 +233,12 @@ function Place(props) {
                     {item.img ?
                         <PlaceContainer>
                             <PlaceIcons>
-                                <a href={item.link} target="a_blank"><i class="fa fa-solid fa-map"></i></a>
-                                <SavePlace onClick={savePlace}><i class="fa fa-solid fa-bookmark"></i></SavePlace>
+                                <a href={item.link} target="a_blank">
+                                    <FontAwesomeIcon icon={faMap} />
+                                </a>
+                                <SavePlace onClick={savePlace}>
+                                    <FontAwesomeIcon icon={faBookmark}/>
+                                </SavePlace>
                             </PlaceIcons>
                             <PlaceContent>
                                 <PaddingRight>
@@ -172,8 +251,12 @@ function Place(props) {
                     :
                         <PlaceContainer>
                             <PlaceIcons>
-                                <a href={item.link} target="a_blank"><i class="fa fa-solid fa-map"></i></a>
-                                <i class="fa fa-solid fa-bookmark"></i>
+                                <a href={item.link} target="a_blank">
+                                    <FontAwesomeIcon icon={faMap} />
+                                </a>
+                                <SavePlace onClick={savePlace}>
+                                    <FontAwesomeIcon icon={faBookmark}/>
+                                </SavePlace>
                             </PlaceIcons>
                             <PaddingRight>
                                 <PlaceTitle>{item.title}</PlaceTitle>
@@ -187,8 +270,12 @@ function Place(props) {
                     {item.img ?
                         <PlaceContainer>
                             <PlaceIcons>
-                                <a href={item.link} target="a_blank"><i class="fa fa-solid fa-map"></i></a>
-                                <i class="fa fa-solid fa-trash"></i>
+                                <a href={item.link} target="a_blank">
+                                    <FontAwesomeIcon icon={faMap} />
+                                </a>
+                                <DeleteButton onClick={deletePlace}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </DeleteButton>
                             </PlaceIcons>
                             <PlaceContent>
                                 <PaddingRight>
@@ -202,8 +289,12 @@ function Place(props) {
                     :
                         <PlaceContainer>
                             <PlaceIcons>
-                                <a href={item.link} target="a_blank"><i class="fa fa-solid fa-map"></i></a>
-                                <i class="fa fa-solid fa-trash"></i>
+                                <a href={item.link} target="a_blank">
+                                    <FontAwesomeIcon icon={faMap} />
+                                </a>
+                                <DeleteButton onClick={deletePlace}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </DeleteButton>
                             </PlaceIcons>
                             <PaddingRight>
                                 <PlaceTitle>{item.title}</PlaceTitle>

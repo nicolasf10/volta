@@ -91,7 +91,7 @@ function NewPlaces(props) {
             setSearchList([]);
 
             places.forEach((place) => {
-                if (!place.geometry || !place.geometry.location) {
+                if (!place.geometry || !place.geometry.location || !place.geometry.location.lat()) {
                     console.log("Returned place contains no geometry");
                     return;
                 } else {
