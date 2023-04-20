@@ -147,7 +147,7 @@ function ImageSlider(props) {
                             }
                         ).then(() => {
                             console.log('Added trip')
-                            alert("Trip created! Go to 'My trips' to view it")
+                            navigate('/trips')
                         })
                     }
                 }
