@@ -143,7 +143,8 @@ function ImageSlider(props) {
                                 ],
                                 place_code: place_code,
                                 title: tripPlace,
-                                users: [currentUser.uid]
+                                users: [currentUser.uid],
+                                owner: currentUser.uid
                             }
                         ).then(() => {
                             console.log('Added trip')

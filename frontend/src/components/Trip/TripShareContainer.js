@@ -342,7 +342,7 @@ function TripShareContainer(props) {
                                         <MemberImg src={member.img} />
                                         <MemberEmail>{member.username}</MemberEmail>
                                         {
-                                            currentUser.uid === member.uid ? <></> :
+                                            (currentUser.uid === member.uid || currentUser.uid !== trip.owner) ? <></> :
                                             <DeleteContainer className='deleteContainer'>
                                                 <FontAwesomeIcon style={{cursor: 'pointer'}} onClick={(e) => handleRemove(e, member.uid)} icon={faTrash} />
                                             </DeleteContainer>
