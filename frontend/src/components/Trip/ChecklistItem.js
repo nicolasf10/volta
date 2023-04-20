@@ -252,6 +252,7 @@ function ChecklistItem(props) {
                                 <PopupContent>
                                     <PopupTitle>Assign to someone</PopupTitle>
                                     <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members" >
+                                        <option value={null}>Unassigned</option>
                                         {members.map((member, index) => (
                                             <div key={`${index}-${Math.random()}`}>
                                                 {member.username === thisItem.assigned.username ?
@@ -320,11 +321,11 @@ function ChecklistItem(props) {
                                     <SelectMembers value={selectedValue} onChange={handleSelectChange} name="members" id="members" >
                                         {members.map((member, index) => (
                                             <>
-                                            {member.username === thisItem.assigned.username ?
-                                                <option key={index} value={member.username}>{member.username}</option> 
-                                                :
-                                                <option key={index} value={member.username}>{member.username}</option>
-                                            }
+                                                {member.username === thisItem.assigned.username ?
+                                                    <option key={index} value={member.username}>{member.username}</option> 
+                                                    :
+                                                    <option key={index} value={member.username}>{member.username}</option>
+                                                }
                                             </>
                                         ))}
                                     </SelectMembers>

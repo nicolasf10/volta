@@ -169,7 +169,7 @@ function ListCategory(props) {
                 <CategoryTitle>{list.title}</CategoryTitle>
             </CategoryContainer>
             <CategoryDetails style={{display: show}}>
-                <DetailsContent updateTrip={props.updateTrip} trip={props.trip} id={props.id} list={list} parentStateSetter={wrapperSetShow} />
+                <DetailsContent refreshTrip={props.refreshTrip} updateTrip={props.updateTrip} trip={props.trip} id={props.id} list={list} parentStateSetter={wrapperSetShow} />
             </CategoryDetails>
             {
                 showDelete ?

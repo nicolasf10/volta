@@ -22,16 +22,15 @@ function ExistingPlaces(props) {
     const [ list, setList ] = useState(props.list);
 
     useEffect(() => {
-        console.log(props.list);
-        console.log(props)
         setList(props.list);
-    }, [props.list])
+    }, [props.list]);
+    
 
     return (
         <PlacesContainer>
             <PlacesHeading>Saved Places</PlacesHeading>
             {list.items.map((item, index) => (
-                <Place deletePlace={props.deletePlace} key={`${item.title}-${Math.random()}`} id={props.id} list={list} item={item} new={false} />
+                <Place refreshTrip={props.refreshTrip} deletePlace={props.deletePlace} key={`${item.title}-${Math.random()}`} id={props.id} list={list} item={item} new={false} />
             ))}
         </PlacesContainer>
     );

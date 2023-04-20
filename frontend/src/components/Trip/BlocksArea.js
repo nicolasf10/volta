@@ -55,16 +55,11 @@ function BlocksArea(props) {
     const [itemList, setItemList] = useState(defaultList);
 
     useEffect(() => {
-        console.log(props);
         setTrip(props.trip);
         defaultList = props.trip.blocks.map((x) => x);
         setItemList(defaultList);
         
     }, [props.trip])
-
-    // React state to track order of items
-    console.log(props.trip)
-    
   
     // Function to update list on drop
     async function handleDrop (droppedItem) {

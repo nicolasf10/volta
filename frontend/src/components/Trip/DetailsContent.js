@@ -141,8 +141,7 @@ function DetailsContent(props) {
             })
         );
         updateTrip();
-    })
-
+    });
 
     return (
         <ContentContainer>
@@ -153,10 +152,10 @@ function DetailsContent(props) {
             <PlacesCategories className="container">
                 <Row className="row">
                     <Column className="col-lg-6 col-md-12 col-sm-12">
-                        <ExistingPlaces id={props.id} deletePlace={deletePlace} list={list}/>
+                        <ExistingPlaces refreshTrip={props.refreshTrip} id={props.id} deletePlace={deletePlace} list={list}/>
                     </Column>
                     <Column className="col-lg-6 col-md-12 col-sm-12">
-                        <NewPlaces updateList={updateList} id={props.id} list={props.list}/>
+                        <NewPlaces refreshTrip={props.refreshTrip} updateList={updateList} id={props.id} list={props.list}/>
                     </Column>
                 </Row>
             </PlacesCategories>
@@ -164,9 +163,9 @@ function DetailsContent(props) {
                 {
                     toggle === "existing"
                     ?
-                    <ExistingPlaces deletePlace={deletePlace} id={props.id} list={list}/>
+                    <ExistingPlaces refreshTrip={props.refreshTrip} deletePlace={deletePlace} id={props.id} list={list}/>
                     :
-                    <NewPlacesMobile updateList={updateList} id={props.id} list={props.list}/>
+                    <NewPlacesMobile refreshTrip={props.refreshTrip} updateList={updateList} id={props.id} list={props.list}/>
                 }
                 <ToggleButton onClick={handleToggle}>
                     {toggle === "existing" ? <><FontAwesomeIcon className='toggle-icon' icon={faMagnifyingGlass}/> <span style={{marginLeft: '5px'}}>Explore</span></> : <><i className="fa fa-solid fa-bookmark toggle-icon"></i> <span style={{marginLeft: '5px'}}>View saved</span></>}

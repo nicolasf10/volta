@@ -149,7 +149,7 @@ function NewPlacesMobile(props) {
             {   mapList.length > 0 ?
                     <>
                         {mapList.map((item, index) => (
-                            <Place updateList={props.updateList} id={props.id} list={list} key={`${item.title}-${Math.random()}`} item={{...item}} new={true} />
+                            <Place refreshTrip={props.refreshTrip} updateList={props.updateList} id={props.id} list={list} key={`${item.title}-${Math.random()}`} item={{...item}} new={true} />
                         ))}
                     </>
                 :

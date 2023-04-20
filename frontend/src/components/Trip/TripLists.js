@@ -36,7 +36,9 @@ function TripLists(props) {
 
     const deleteList = useCallback((updatedLists) => {
         updateTrips()
+        props.refreshTrip()
     }, []);
+
 
     async function updateTrips() {
         const tripRef = doc(db, "trips", props.id);
@@ -56,7 +58,7 @@ function TripLists(props) {
         <ListsContainer style={{display: props.display}}>
             {
                 trip.lists.map((item) => (
-                    <ListCategory updateTrip={props.updateTrip} key={item.title} deleteList={deleteList} trip={trip} id={props.id} list={item} />
+                    <ListCategory refreshTrip={props.refreshTrip} updateTrip={props.updateTrip} key={item.title} deleteList={deleteList} trip={trip} id={props.id} list={item} />
                 ))
             }
             <NewList id={props.id} trip={trip} saveList={saveList} />

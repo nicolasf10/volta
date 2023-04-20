@@ -62,11 +62,10 @@ function Trip(props) {
             console.log("rerouting");
             navigate("/trips");
         } else {
-            console.log(location.state)
             setTrip(location.state.trip);
             document.title = `Trip to ${location.state.trip.title}`
         }
-    }, [page, trip]);
+    }, [location.state.trip, page, trip]);
 
     async function getTrip() {
         console.log('getting trip')
@@ -74,26 +73,25 @@ function Trip(props) {
         const docSnap = await getDoc(tripRef)
         if (docSnap.exists()) {
             setTrip(docSnap.data());
-          } else {
+        } else {
             console.log("No such document!");
-          }
+        }
     }
 
     const updateTrip = useCallback((newTrip) => {
-        console.log('updateee')
-        console.log(newTrip)
         setTrip(newTrip);
     }, []);
 
     const updateChecklist = useCallback((newChecklist) => {
-        console.log("*******************************")
-        console.log(newChecklist)
-        console.log("*******************************")
-
         setTrip(prevState => ({
             ...prevState,
             checklist: location.state.trip.checklist.concat(newChecklist)
         }));
+    }, []);
+
+    const refreshTrip = useCallback(() => {
+        console.log("Refreshing for sure")
+        getTrip();
     }, []);
 
     
@@ -129,6 +127,7 @@ function Trip(props) {
         setStatus("loaded")
     }
 
+
     return (
         trip != null ?
         <TripPage>
@@ -143,8 +142,8 @@ function Trip(props) {
             {
                 page ?
                 <>
-                    <TripOverview display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={location.state.trip}/>
-                    <TripLists updateTrip={updateTrip} display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripOverview display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripLists refreshTrip={refreshTrip} updateTrip={updateTrip} display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
                     <TripFlights display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripChecklist display={page === 'checklist' ? 'block' : 'none'} updateChecklist={updateChecklist} id={location.state.id} trip={trip}/>
                 </>

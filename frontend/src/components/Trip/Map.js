@@ -109,7 +109,7 @@ const convertMarkers = (trip) => {
         trip.lists.forEach(function(item) {
             console.log(item)
             item.items.forEach(function(marker) {
-                console.log(marker)
+                console.log(marker.position.lat)
                 markersList.push(
                     {
                         list: item.title,
@@ -132,8 +132,6 @@ const convertMarkers = (trip) => {
     }
 
     console.log(markersList);
-
-    console.log(lat);
 
     var convert = {
         markers: markersList,
@@ -211,6 +209,7 @@ function Map(props) {
     })
 
     useEffect(() => {
+        console.log(props.trip)
         setTrip(props.trip);
         let convert = convertMarkers(trip);
         setMarkers(convert.markers);
