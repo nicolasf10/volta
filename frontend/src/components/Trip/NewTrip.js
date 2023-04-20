@@ -239,7 +239,7 @@ function NewTrip(props) {
 
                     // Adding to firebase
                     if (tripPlace === '' || img === '') {
-                        alert("Plase fill out all fields");
+                        alert("Please fill out all fields");
                     } else {
                         const tripsCollectionRef = collection(db, 'trips');
                         const today = new Date(); // Get the current date

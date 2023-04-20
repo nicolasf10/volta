@@ -111,7 +111,7 @@ function ExploreDashboardDestination(props) {
   return (
       <ExploreDashboardDestinationContainer>
         <SliderContainer>
-          <ImageSlider images={props.destination.images}/>
+          <ImageSlider destination={props.destination} images={props.destination.images}/>
         </SliderContainer>
         <DestinationInfo>
           <InfoTitle>{props.destination.title} <GraySpan>{props.destination.region}</GraySpan></InfoTitle>
