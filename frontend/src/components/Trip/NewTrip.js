@@ -226,9 +226,14 @@ function NewTrip(props) {
                     var place_code = "";
                     console.log(data)
                     if (data.results.length > 0) {
-                        const country = data.results[0].address_components.filter(
-                        (component) => component.types.indexOf('country') !== -1
-                        )[0].short_name;
+                        var country;
+                        try {
+                            country = data.results[0].address_components.filter(
+                                (component) => component.types.indexOf('country') !== -1
+                            )[0].short_name;
+                        } catch {
+                            country = "US";
+                        }
                         console.log(country);
                         setCountryCode(country);
                         place_code = country;
