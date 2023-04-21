@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const FlightsContainer = styled.div`
@@ -45,32 +46,42 @@ const FlightsLink = styled.a`
 
 function Flights(props) {
     const [trip, setTrip] = useState(props.trip);
-    const [ afterOffestStart, setAfterOffesetStart ] = useState(new Date(trip.date.start.toDate() - trip.date.start.toDate().getTimezoneOffset() * 60000));
-    const [ afterOffestEnd, setAfterOffesetEnd ] = useState(new Date(trip.date.end.toDate() - trip.date.end.toDate().getTimezoneOffset() * 60000));
+    const [ afterOffestStart, setAfterOffesetStart ] = useState('');
+    const [ afterOffestEnd, setAfterOffesetEnd ] = useState('');
+    const navigate = useNavigate();
 
-    const [ kiwiLink, setKiwiLink ] = useState(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`);
+    const [ kiwiLink, setKiwiLink ] = useState('');
 
 
     useEffect(() => {
-        const script = document.createElement('script');
-        console.log(kiwiLink)
-      
-        script.src = "https://widgets.kiwi.com/scripts/widget-search-iframe.js";
-        script.setAttribute('data-lang','en');
-        script.setAttribute('data-affilid','nicolasfuchsvoltaflights');
-        script.setAttribute('data-to', trip.place_code);
-        script.setAttribute('data-primary-color','1746a2');
-        script.setAttribute('data-results-only','true');
-        script.setAttribute('data-departure',  afterOffestStart.toISOString().split('T')[0])
-        script.setAttribute('data-return', afterOffestEnd.toISOString().split('T')[0])
-        script.async = true;
-      
-        document.body.appendChild(script);
-      
-        return () => {
-          document.body.removeChild(script);
+        try {
+            setAfterOffesetStart(new Date(trip.date.start.toDate() - trip.date.start.toDate().getTimezoneOffset() * 60000))
+            setAfterOffesetEnd(new Date(trip.date.end.toDate() - trip.date.end.toDate().getTimezoneOffset() * 60000))
+            setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`)
+            const script = document.createElement('script');
+            console.log(kiwiLink)
+        
+            script.src = "https://widgets.kiwi.com/scripts/widget-search-iframe.js";
+            script.setAttribute('data-lang','en');
+            script.setAttribute('data-affilid','nicolasfuchsvoltaflights');
+            script.setAttribute('data-to', trip.place_code);
+            script.setAttribute('data-primary-color','1746a2');
+            script.setAttribute('data-results-only','true');
+            script.setAttribute('data-departure',  afterOffestStart.toISOString().split('T')[0])
+            script.setAttribute('data-return', afterOffestEnd.toISOString().split('T')[0])
+            script.async = true;
+        
+            document.body.appendChild(script);
+        
+            return () => {
+            document.body.removeChild(script);
+            }
+        } catch (error) {
+            console.log(error)
+            console.log(trip)
+            // navigate('/trips')
         }
-      }, []);
+      }, [props]);
 
     return (
         <FlightsContainer>

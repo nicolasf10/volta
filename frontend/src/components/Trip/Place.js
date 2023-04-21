@@ -111,13 +111,13 @@ function Place(props) {
 
     async function savePlace (e) {
         console.log(item.position.lat)
-        if (item.position.lat()) {
+        if (item.position.lat) {
             const newItem = {
                 title: item.title,
                 link: item.link,
                 img: item.img,
                 address: item.address,
-                position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
+                position: {lat: item.position.lat.toString(), lng: item.position.lng.toString()},
             }
     
             const tripRef = doc(db, "trips", props.id);

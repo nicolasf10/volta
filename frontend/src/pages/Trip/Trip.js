@@ -62,6 +62,7 @@ function Trip(props) {
             console.log("rerouting");
             navigate("/trips");
         } else {
+            console.log(location.state.trip.date)
             setTrip(location.state.trip);
             document.title = `Trip to ${location.state.trip.title}`
         }
@@ -129,7 +130,7 @@ function Trip(props) {
 
 
     return (
-        trip != null ?
+        (trip != null) ?
         <TripPage>
             <TripBanner updateTrip={updateTrip} id={location.state.id} trip={trip}/>
             <NavList>
