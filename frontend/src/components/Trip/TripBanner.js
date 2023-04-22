@@ -203,7 +203,7 @@ function TripBanner(props) {
                         position="bottom center"
                         closeOnDocumentClick
                     >
-                        <CalendarModal><CalendarDatesPicker updateDate={updateDate} id={props.id} trip={trip} /></CalendarModal>
+                        <CalendarModal><CalendarDatesPicker refreshTrip={props.refreshTrip} updateDate={updateDate} id={props.id} trip={trip} /></CalendarModal>
                     </Popup>
                 </BannerDate>
             </BannerText>

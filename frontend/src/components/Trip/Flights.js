@@ -54,9 +54,12 @@ function Flights(props) {
 
 
     useEffect(() => {
+        setTrip(props.trip)
+        console.log(props)
+        console.log('whoa!!')
         try {
-            setAfterOffesetStart(new Date(trip.date.start.toDate() - trip.date.start.toDate().getTimezoneOffset() * 60000))
-            setAfterOffesetEnd(new Date(trip.date.end.toDate() - trip.date.end.toDate().getTimezoneOffset() * 60000))
+            setAfterOffesetStart(new Date(props.trip.date.start.toDate() - props.trip.date.start.toDate().getTimezoneOffset() * 60000))
+            setAfterOffesetEnd(new Date(props.trip.date.end.toDate() - props.trip.date.end.toDate().getTimezoneOffset() * 60000))
             setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`)
             const script = document.createElement('script');
             console.log(kiwiLink)
@@ -64,7 +67,7 @@ function Flights(props) {
             script.src = "https://widgets.kiwi.com/scripts/widget-search-iframe.js";
             script.setAttribute('data-lang','en');
             script.setAttribute('data-affilid','nicolasfuchsvoltaflights');
-            script.setAttribute('data-to', trip.place_code);
+            script.setAttribute('data-to', props.trip.place_code);
             script.setAttribute('data-primary-color','1746a2');
             script.setAttribute('data-results-only','true');
             script.setAttribute('data-departure',  afterOffestStart.toISOString().split('T')[0])
@@ -78,7 +81,7 @@ function Flights(props) {
             }
         } catch (error) {
             console.log(error)
-            console.log(trip)
+            console.log(props.trip)
             // navigate('/trips')
         }
       }, [props]);

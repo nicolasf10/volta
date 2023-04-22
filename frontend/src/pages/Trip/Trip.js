@@ -132,7 +132,7 @@ function Trip(props) {
     return (
         (trip != null) ?
         <TripPage>
-            <TripBanner updateTrip={updateTrip} id={location.state.id} trip={trip}/>
+            <TripBanner refreshTrip={refreshTrip} updateTrip={updateTrip} id={location.state.id} trip={trip}/>
             <NavList>
                 <NavItem onClick={pageClick} className='active-underline' id="overview">Overview</NavItem>
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
@@ -143,7 +143,7 @@ function Trip(props) {
             {
                 page ?
                 <>
-                    <TripOverview display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripOverview refreshTrip={refreshTrip} display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripLists refreshTrip={refreshTrip} updateTrip={updateTrip} display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
                     <TripFlights display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripChecklist display={page === 'checklist' ? 'block' : 'none'} updateChecklist={updateChecklist} id={location.state.id} trip={trip}/>
