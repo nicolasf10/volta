@@ -117,8 +117,9 @@ function Place(props) {
                 link: item.link,
                 img: item.img,
                 address: item.address,
-                position: {lat: item.position.lat.toString(), lng: item.position.lng.toString()},
+                position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
             }
+            console.log(item.position)
     
             const tripRef = doc(db, "trips", props.id);
     
