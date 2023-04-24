@@ -55,7 +55,8 @@ function Trip(props) {
     const [ status, setStatus ] = useState("loading")
     const [trip, setTrip] = useState(null);
     const [page, setPage] = useState('overview');
-    const [currentPage, setCurrentPage] = useState(<>not updated</>)
+    const [currentPage, setCurrentPage] = useState(<>not updated</>);
+    const [newDate, setNewDate] = useState(false);
 
     useEffect(() => {
         if (!location.state || !location.state.trip || !location.state.trip.date) {
@@ -95,6 +96,11 @@ function Trip(props) {
         getTrip();
     }, []);
 
+    const updateDate = useCallback((newD) => {
+        console.log('dawmn')
+        setNewDate(newD);
+    }, []);
+
     
     function pageClick(e) {
         let pages = ['overview', 'lists', 'checklist', 'flights']
@@ -132,7 +138,7 @@ function Trip(props) {
     return (
         (trip != null) ?
         <TripPage>
-            <TripBanner refreshTrip={refreshTrip} updateTrip={updateTrip} id={location.state.id} trip={trip}/>
+            <TripBanner updateDate={updateDate} refreshTrip={refreshTrip} updateTrip={updateTrip} id={location.state.id} trip={trip}/>
             <NavList>
                 <NavItem onClick={pageClick} className='active-underline' id="overview">Overview</NavItem>
                 <NavItem onClick={pageClick} id="lists">Lists</NavItem>
@@ -145,7 +151,7 @@ function Trip(props) {
                 <>
                     <TripOverview refreshTrip={refreshTrip} display={page === 'overview' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripLists refreshTrip={refreshTrip} updateTrip={updateTrip} display={page === 'lists' ? 'flex' : 'none'} id={location.state.id} trip={trip}/>
-                    <TripFlights display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
+                    <TripFlights newDate={newDate} display={page === 'flights' ? 'block' : 'none'} id={location.state.id} trip={trip}/>
                     <TripChecklist display={page === 'checklist' ? 'block' : 'none'} updateChecklist={updateChecklist} id={location.state.id} trip={trip}/>
                 </>
                 :

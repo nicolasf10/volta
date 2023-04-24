@@ -134,7 +134,7 @@ const CalendarModal = styled.div``
 
 const contentStyle = {borderRadius:'10px', width: '700px', height: '330px', maxWidth: '90%'};
 
-const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "286px"};
+const contentStyleCalendar = {borderRadius:'10px', width: "255px", height: "254px"};
 
 const contentStyleEmoji = {borderRadius:'10px', width: "363px", height: "447.5px"};
 
@@ -203,7 +203,7 @@ function TripBanner(props) {
                         position="bottom center"
                         closeOnDocumentClick
                     >
-                        <CalendarModal><CalendarDatesPicker refreshTrip={props.refreshTrip} updateDate={updateDate} id={props.id} trip={trip} /></CalendarModal>
+                        <CalendarModal><CalendarDatesPicker date={date} refreshTrip={props.refreshTrip} updateDate={updateDate} id={props.id} trip={trip} /></CalendarModal>
                     </Popup>
                 </BannerDate>
             </BannerText>

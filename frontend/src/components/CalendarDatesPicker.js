@@ -15,8 +15,8 @@ const CalendarContainer = styled.div`
 
 function CalendarDatesPicker(props) {
     const [ trip, setTrip ] = useState(props.trip);
-    const [startDate, setStartDate] = useState(props.trip.date.start.toDate());
-    const [endDate, setEndDate] = useState(props.trip.date.end.toDate());
+    const [startDate, setStartDate] = useState(props.date.start.toDate());
+    const [endDate, setEndDate] = useState(props.date.end.toDate());
 
     const [ newStart, setNewStart ] = useState(null);
     const [ newEnd, setNewEnd ] = useState(null);
@@ -26,22 +26,26 @@ function CalendarDatesPicker(props) {
       setStartDate(start);
       setEndDate(end);
 
-      props.updateDate(
-        {
-            start: Timestamp.fromDate(start),
-            end: Timestamp.fromDate(end)
-        }
-      )
+      setStartDate(start);
+      setEndDate(end)
 
       const tripRef = doc(db, "trips", props.id);
 
       if (start && end) {
+            props.updateDate(
+                {
+                    start: Timestamp.fromDate(start),
+                    end: Timestamp.fromDate(end)
+                }
+            )
           await updateDoc(tripRef, {
             date: {
                 start: Timestamp.fromDate(start),
                 end: Timestamp.fromDate(end)
             }
-          });
+          }).then(() => {
+            props.refreshTrip();
+        });
       }
     };
 
@@ -55,8 +59,13 @@ function CalendarDatesPicker(props) {
     }
 
     useEffect(() => {
-        setTrip(props.trip)
-    }, [])
+        console.log('underhere')
+        console.log(props.date.start.toDate())
+        // setTrip(props.trip);
+        // setStartDate(props.trip.date.start.toDate());
+        // setEndDate(props.trip.date.end.toDate());
+
+    }, [props])
 
     return (
         <CalendarContainer>

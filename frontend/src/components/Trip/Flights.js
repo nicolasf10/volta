@@ -84,7 +84,7 @@ function Flights(props) {
             console.log(props.trip)
             // navigate('/trips')
         }
-      }, [props]);
+      }, [props.trip]);
 
     return (
         <FlightsContainer>
