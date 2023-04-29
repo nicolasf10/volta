@@ -211,6 +211,7 @@ function NewTrip(props) {
     const [ emoji, setEmoji ] = useState(emojis[Math.floor(Math.random() * emojis.length)]);
     const [ img, setImg ] = useState('');
     const { currentUser } = useContext(AuthContext);
+    const [disableClick, setDisableClick] = useState(false);
 
 
     useEffect(() => {
@@ -219,38 +220,40 @@ function NewTrip(props) {
     }, [])
 
     const onSubmit = (closing) => {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripPlace}&key=AIzaSyBwLSV_KJEYZpoIn6DxFWN5rAowGsCKC9U`;
-        fetch(url).then((response) => {
-            const data = response.json().then(
-                (data) => {
-                    var place_code = "";
-                    console.log(data)
-                    if (data.results.length > 0) {
-                        var country;
-                        try {
-                            country = data.results[0].address_components.filter(
-                                (component) => component.types.indexOf('country') !== -1
-                            )[0].short_name;
-                        } catch {
-                            country = "US";
+        if (tripPlace === '' || img === '') {
+            alert("Please fill out all fields");
+        }
+        else {
+            setDisableClick(true);
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripPlace}&key=AIzaSyBwLSV_KJEYZpoIn6DxFWN5rAowGsCKC9U`;
+            fetch(url).then((response) => {
+                const data = response.json().then(
+                    (data) => {
+                        var place_code = "";
+                        console.log(data)
+                        if (data.results.length > 0) {
+                            var country;
+                            try {
+                                country = data.results[0].address_components.filter(
+                                    (component) => component.types.indexOf('country') !== -1
+                                )[0].short_name;
+                            } catch {
+                                country = "US";
+                            }
+                            console.log(country);
+                            setCountryCode(country);
+                            place_code = country;
+                        } else {
+                            console.log('No country found');
+                            setCountryCode('');
                         }
-                        console.log(country);
-                        setCountryCode(country);
-                        place_code = country;
-                    } else {
-                        console.log('No country found');
-                        setCountryCode('');
-                    }
-
-                    // Adding to firebase
-                    if (tripPlace === '' || img === '') {
-                        alert("Please fill out all fields");
-                    } else {
+    
+                        // Adding to firebase
                         const tripsCollectionRef = collection(db, 'trips');
                         const today = new Date(); // Get the current date
                         const start = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate()); // Add 1 month
                         const end = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() + 7); // Add 1 month and 1 week
-
+    
                         addDoc(
                             tripsCollectionRef,
                             {
@@ -276,16 +279,16 @@ function NewTrip(props) {
                                 owner: currentUser.uid
                             }
                         ).then(() => {
-                            console.log('Added trip')
+                            console.log('Added trip');
+                            setDisableClick(false);
                             setTripPlace('');
                             closing();
                             props.updateTrips();
                         })
-                    }
+                    })
                 }
-            );
-            
-        });
+            )
+        }
     }
 
     const contentStyle = {borderRadius:'10px', width: '700px', height: '500px', maxWidth: '90%'};
@@ -345,7 +348,7 @@ function NewTrip(props) {
                         </Popup>
                     </FormMainInputs>
                     <ListImageSearch parentCallback={changeImg} />
-                    <FormSubmit onClick={() => onSubmit(close)}>Save</FormSubmit>
+                    <FormSubmit style={disableClick ? {backgroundColor: 'gray'} : {}} disabled={disableClick} onClick={() => onSubmit(close)}>Save</FormSubmit>
                 </TripForm>
             )}
         </Popup>
