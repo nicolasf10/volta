@@ -105,12 +105,10 @@ function Place(props) {
     const [ item, setItem ] = useState(props.item);
 
     useEffect(() => {
-        console.log(props)
         setItem(props.item);
     }, [])
 
     async function savePlace (e) {
-        console.log(item.position.lat)
         if (item.position.lat) {
             const newItem = {
                 title: item.title,
@@ -119,16 +117,13 @@ function Place(props) {
                 address: item.address,
                 position: {lat: item.position.lat().toString(), lng: item.position.lng().toString()},
             }
-            console.log(item.position)
     
             const tripRef = doc(db, "trips", props.id);
     
             // Get the current trip data from Firestore
             const tripData = (await getDoc(tripRef)).data();
     
-            // console.log(props.list)
             var list = props.list
-            // console.log(list)
     
             // Make sure the list object was found before continuing
             if (list) {
@@ -137,10 +132,7 @@ function Place(props) {
     
                 // check if item is already in list
                 var alreadyExists = false;
-                console.log(tripData.lists[listIndex].items)
                 for (let i = 0; i < tripData.lists[listIndex].items.length; i++) {
-                    console.log(tripData.lists[listIndex].items[i])
-                    console.log(item.title)
                     if (tripData.lists[listIndex].items[i].title === item.title) {
                         alreadyExists = true;
                         break
@@ -166,7 +158,6 @@ function Place(props) {
                         },
                         ...tripData.lists.slice(listIndex + 1)
                     ];
-                    console.log(listIndex);
         
                     // Update the Firestore document with the new list data
         
@@ -187,9 +178,7 @@ function Place(props) {
         // Get the current trip data from Firestore
         const tripData = (await getDoc(tripRef)).data();
 
-        // console.log(props.list)
         var list = props.list
-        // console.log(list)
 
         // Make sure the list object was found before continuing
         if (list) {

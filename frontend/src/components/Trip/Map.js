@@ -138,6 +138,9 @@ const convertMarkers = (trip) => {
         center: {lat: lat/markersList.length, lng: lng/markersList.length}
     }
 
+    console.log('yooooooo')
+    console.log(convert.center)
+
     return convert;
 }
 

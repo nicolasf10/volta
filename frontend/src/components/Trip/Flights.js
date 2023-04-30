@@ -58,9 +58,12 @@ function Flights(props) {
         console.log(props)
         console.log('whoa!!')
         try {
-            setAfterOffesetStart(new Date(props.trip.date.start.toDate() - props.trip.date.start.toDate().getTimezoneOffset() * 60000))
-            setAfterOffesetEnd(new Date(props.trip.date.end.toDate() - props.trip.date.end.toDate().getTimezoneOffset() * 60000))
-            setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${afterOffestStart.toISOString().split('T')[0]}_${afterOffestStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${afterOffestEnd.toISOString().split('T')[0]}_${afterOffestEnd.toISOString().split('T')[0]}`)
+            var tempAfterOffsetStart = new Date(props.trip.date.start.toDate() - props.trip.date.start.toDate().getTimezoneOffset() * 60000)
+            var tempAfterOffsetEnd = new Date(props.trip.date.end.toDate() - props.trip.date.end.toDate().getTimezoneOffset() * 60000)
+            setAfterOffesetStart(tempAfterOffsetStart)
+            setAfterOffesetEnd(tempAfterOffsetEnd)
+
+            setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${tempAfterOffsetStart.toISOString().split('T')[0]}_${tempAfterOffsetStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${tempAfterOffsetEnd.toISOString().split('T')[0]}_${tempAfterOffsetEnd.toISOString().split('T')[0]}`)
             const script = document.createElement('script');
             console.log(kiwiLink)
         
@@ -70,8 +73,8 @@ function Flights(props) {
             script.setAttribute('data-to', props.trip.place_code);
             script.setAttribute('data-primary-color','1746a2');
             script.setAttribute('data-results-only','true');
-            script.setAttribute('data-departure',  afterOffestStart.toISOString().split('T')[0])
-            script.setAttribute('data-return', afterOffestEnd.toISOString().split('T')[0])
+            script.setAttribute('data-departure',  tempAfterOffsetStart.toISOString().split('T')[0])
+            script.setAttribute('data-return', tempAfterOffsetEnd.toISOString().split('T')[0])
             script.async = true;
         
             document.body.appendChild(script);
