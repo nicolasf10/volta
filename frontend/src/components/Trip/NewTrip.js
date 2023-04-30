@@ -243,48 +243,50 @@ function NewTrip(props) {
                             console.log(country);
                             setCountryCode(country);
                             place_code = country;
+
+                            // Adding to firebase
+                            const tripsCollectionRef = collection(db, 'trips');
+                            const today = new Date(); // Get the current date
+                            const start = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate()); // Add 1 month
+                            const end = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() + 7); // Add 1 month and 1 week
+
+                            addDoc(
+                                tripsCollectionRef,
+                                {
+                                    blocks: [],
+                                    checklist: [],
+                                    date: {
+                                        start: Timestamp.fromDate(start),
+                                        end: Timestamp.fromDate(end)
+                                    },
+                                    emoji: emoji,
+                                    image: img,
+                                    lists: [],
+                                    members: [
+                                        {
+                                            img: currentUser.photoURL,
+                                            uid: currentUser.uid,
+                                            username: currentUser.email
+                                        }
+                                    ],
+                                    place_code: place_code,
+                                    title: tripPlace,
+                                    users: [currentUser.uid],
+                                    owner: currentUser.uid
+                                }
+                            ).then(() => {
+                                console.log('Added trip');
+                                setDisableClick(false);
+                                setTripPlace('');
+                                closing();
+                                props.updateTrips();
+                            })
                         } else {
                             console.log('No country found');
-                            setCountryCode('');
+                            alert('Location not found...')
+                            setDisableClick(false);
                         }
     
-                        // Adding to firebase
-                        const tripsCollectionRef = collection(db, 'trips');
-                        const today = new Date(); // Get the current date
-                        const start = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate()); // Add 1 month
-                        const end = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate() + 7); // Add 1 month and 1 week
-    
-                        addDoc(
-                            tripsCollectionRef,
-                            {
-                                blocks: [],
-                                checklist: [],
-                                date: {
-                                    start: Timestamp.fromDate(start),
-                                    end: Timestamp.fromDate(end)
-                                },
-                                emoji: emoji,
-                                image: img,
-                                lists: [],
-                                members: [
-                                    {
-                                        img: currentUser.photoURL,
-                                        uid: currentUser.uid,
-                                        username: currentUser.email
-                                    }
-                                ],
-                                place_code: place_code,
-                                title: tripPlace,
-                                users: [currentUser.uid],
-                                owner: currentUser.uid
-                            }
-                        ).then(() => {
-                            console.log('Added trip');
-                            setDisableClick(false);
-                            setTripPlace('');
-                            closing();
-                            props.updateTrips();
-                        })
                     })
                 }
             )
