@@ -174,7 +174,7 @@ function ImageSlider(props) {
         </IconsContainer>
         <Carousel fade style={{height: "100%"}} interval={null}>
             {props.images.map((image) => (
-                <CarouselItem>
+                <CarouselItem key={Math.random()}>
                     <SliderImage src={image} className="d-block w-100 h-100 carousel-img" alt="..."/>
                 </CarouselItem>
             ))}
