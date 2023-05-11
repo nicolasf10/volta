@@ -87,11 +87,31 @@ function MyTripsDashboard(props)
             const tripsResponse = response.docs.map(doc => ({
                     data: doc.data(),
                     id: doc.id
-            }))
-            console.log(tripsResponse);
-            setTrips(tripsResponse);
+            }));
+
+            setTrips(tripsQuicksort(tripsResponse));
             setLoading(false);
         }).catch(error => console.log(error.message));
+    }
+
+    function tripsQuicksort(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+
+        let pivot = arr[0];
+        let leftArr = [];
+        let rightArr = [];
+
+        for (let n = 1; n < arr.length; n++) {
+            if (arr[n].data.date.start >= pivot.data.date.start) {
+                leftArr.push(arr[n]);
+            } else {
+                rightArr.push(arr[n]);
+            }
+        }
+
+        return [...tripsQuicksort(leftArr), pivot, ...tripsQuicksort(rightArr)]
     }
 
     const updateTrips = useCallback(() => {
