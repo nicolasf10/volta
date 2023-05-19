@@ -94,35 +94,13 @@ const logInWithEmailAndPassword = async (email, password) => {
 
 const getTrips = async (uid) => {
     console.log('Finding user trips');
-    console.log(new Date())
-  try {
-    const querySnapshot = await db.collection("trips").get();
-    console.log(querySnapshot.docs.map((doc) => doc.data()));
-    // trips.get().then((querySnapshot) => {
-    //     const tempDoc = []
-    //     querySnapshot.forEach((doc) => {
-    //         tempDoc.push({ id: doc.id, ...doc.data() })
-    //     })
-    //     console.log(tempDoc)
-    // })
-
-    // const q = query(collection(db, "trips"));
-    // const docs = await getDocs(q);
-    // console.log(docs);
-    // if (docs.docs.length === 0) {
-    //   await addDoc(collection(db, "users"), {
-    //     uid: user.uid,
-    //     name: user.displayName,
-    //     authProvider: "google",
-    //     email: user.email,
-    //     photoURL: user.photoURL,
-    //     trips: []
-    //   });
-    // }
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  }
+    try {
+      const querySnapshot = await db.collection("trips").get();
+      console.log(querySnapshot.docs.map((doc) => doc.data()));
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
 };
 
 export {

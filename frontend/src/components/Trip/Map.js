@@ -246,9 +246,7 @@ function Map(props) {
                     mapContainerStyle={containerStyle} 
                     center={center}
                     zoom={zoom}
-                    language="ko-KR"
                 >
-                    {/* <SaveToGoogleMapsButton markers={markers} /> */}
                     <Toggles>
                         <ToggleOption style={{color: layers.bicycling ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, bicycling: !(layers.bicycling)}))}><i className="fa fa-solid fa-bicycle"></i></ToggleOption>
                         <ToggleOption style={{color: layers.transit ? "#000" : "#7d7d7d"}} onClick={() => (setLayers({...layers, transit: !(layers.transit)}))}><i className="fa fa-solid fa-train"></i></ToggleOption>

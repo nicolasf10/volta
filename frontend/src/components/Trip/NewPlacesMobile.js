@@ -113,7 +113,7 @@ function NewPlacesMobile(props) {
                     newItemsPrev.push({
                         title: place.name,
                         address: place.formatted_address,
-                        position: {lat: place.geometry.location.lat, lng: place.geometry.location.lng},
+                        position: {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()},
                         link: `https://www.google.com/maps/place/?q=place_id:${place.place_id}`,
                         img: imgUrl
                     })
