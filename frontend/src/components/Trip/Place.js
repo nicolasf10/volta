@@ -124,7 +124,8 @@ function Place(props) {
             // Get the current trip data from Firestore
             const tripData = (await getDoc(tripRef)).data();
     
-            var list = props.list
+            const listIndex = tripData.lists.findIndex(l => l.title === props.list.title);
+            var list = tripData.lists[listIndex]
     
             // Make sure the list object was found before continuing
             if (list) {
@@ -185,6 +186,7 @@ function Place(props) {
         if (list) {
             // Find the index of the list object in the `lists` array
             const listIndex = tripData.lists.findIndex(obj => obj.title === props.list.title);
+            list = tripData.lists[listIndex]
 
             // Go over the items in the list and delete when i.title === item.title
             var oldItems = tripData.lists[listIndex].items;

@@ -5,7 +5,7 @@ import EmojiImg from '../EmojiImg';
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import Popup from 'reactjs-popup';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 
@@ -120,20 +120,21 @@ function ListBanner(props) {
     async function onEmojiSelect(emoji) {
         setEmoji(emoji.native);
         const tripRef = doc(db, "trips", props.id);
+        const tripData = (await getDoc(tripRef)).data();
 
-        const listIndex = trip.lists.findIndex(l => l.title === list.title);
+        const listIndex = tripData.lists.findIndex(l => l.title === list.title);
 
         // Update the emoji property of the list at the specified index
         const updatedList = {
-        ...trip.lists[listIndex],
+        ...tripData.lists[listIndex],
             emoji: emoji.native
         };
 
         // Create a new array with the updated list
         const updatedLists = [
-        ...trip.lists.slice(0, listIndex),
+        ...tripData.lists.slice(0, listIndex),
         updatedList,
-        ...trip.lists.slice(listIndex + 1)
+        ...tripData.lists.slice(listIndex + 1)
         ];
 
         // Update the document in Firestore with the new array of lists
