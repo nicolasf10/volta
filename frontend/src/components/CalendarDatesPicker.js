@@ -7,7 +7,6 @@ import { db } from '../firebase';
 import { doc, Timestamp, updateDoc } from 'firebase/firestore';
 
 
-
 const CalendarContainer = styled.div`
 
 `

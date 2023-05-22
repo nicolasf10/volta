@@ -11,7 +11,6 @@ import { faXmark, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import DatePicker from "react-datepicker";
 import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
-import getAirports from '../../services/GetAirports';
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import { AuthContext } from '../../Auth';
 import { db } from '../../firebase';
@@ -319,26 +318,9 @@ function NewTrip(props) {
                     </BackContainer>
                     <FormMainInputs>
                         <TripName onChange={(e) => setTripPlace(e.target.value)} value={tripPlace} placeholder="Trip place (country or city)" type='text'/>
-                        {/* <Popup
-                            trigger={open => (
-                                <CalendarContainer>
-                                    <FontAwesomeIcon icon={faCalendar} />
-                                </CalendarContainer>
-                            )}
-                            nested
-                            position="bottom center"
-                            contentStyle={contentStyleCalendar} 
-                            closeOnDocumentClick
-                        >
-                            <CalendarModal>
-                                <CalendarDatesPicker updateDate={updateDate} id={props.id} trip={trip} />
-                            </CalendarModal>
-                        </Popup> */}
-                        
                         <Popup
                             trigger={open => (
                                 <EmojiContainer><EmojiImg size="40px" emoji={emoji}/></EmojiContainer>
-                                // <button className="button">{emoji}</button>
                             )}
                             position="bottom center"
                             nested

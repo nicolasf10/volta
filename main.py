@@ -47,19 +47,31 @@ def draw_code_screenshot(filename):
     print(f"Screenshot saved to {screenshot_path}")
 
 
-if __name__ == '__main__':
-    path = input("Enter the path to the directory: ")
-    sub_dir = input("Enter the name of the sub-directory: ")
+# if __name__ == '__main__':
+#     path = input("Enter the path to the directory: ")
+#     sub_dir = input("Enter the name of the sub-directory: ")
 
-    # Get the files in the sub-directory
-    sub_dir_path = os.path.join(path, sub_dir)
-    files = get_files_in_dir(sub_dir_path)
+#     # Get the files in the sub-directory
+#     sub_dir_path = os.path.join(path, sub_dir)
+#     files = get_files_in_dir(sub_dir_path)
 
-    # Print the files and get the number of files to show
-    for i, file in enumerate(files):
-        print(f"{i+1}. {file}")
-    n = int(input(f"Enter the number of files to show (1-{len(files)}): "))
+#     # Print the files and get the number of files to show
+#     for i, file in enumerate(files):
+#         print(f"{i+1}. {file}")
+#     n = int(input(f"Enter the number of files to show (1-{len(files)}): "))
 
-    # Draw the screenshot for each file and save to the screenshots directory
-    for i in range(n):
-        draw_code_screenshot(files[i])
+#     # Draw the screenshot for each file and save to the screenshots directory
+#     for i in range(n):
+#         draw_code_screenshot(files[i])
+
+import os
+
+def find_js_files(directory):
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".js"):
+                print(file, end="\n")
+
+# Replace "directory_path" with the path to your target directory
+directory_path = "./frontend/src"
+find_js_files(directory_path)

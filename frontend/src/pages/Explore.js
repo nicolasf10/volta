@@ -198,7 +198,7 @@ function Explore() {
       setDestinations(newDestinations);
     }
 
-    console.log('trige')
+    console.log('trigger')
   }, [triggerState])
 
   useEffect(() => {

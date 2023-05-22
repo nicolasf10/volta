@@ -62,7 +62,7 @@ function BlocksArea(props) {
     }, [props.trip])
   
     // Function to update list on drop
-    async function handleDrop (droppedItem) {
+    async function handleDrop(droppedItem) {
       // Ignore drop outside droppable container
       if (!droppedItem.destination) return;
 

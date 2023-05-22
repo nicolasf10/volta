@@ -63,7 +63,7 @@ function Flights(props) {
             setAfterOffesetStart(tempAfterOffsetStart)
             setAfterOffesetEnd(tempAfterOffsetEnd)
 
-            setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${tempAfterOffsetStart.toISOString().split('T')[0]}_${tempAfterOffsetStart.toISOString().split('T')[0]}&destination=DE&lang=en&pageName=tilesPage&return=${tempAfterOffsetEnd.toISOString().split('T')[0]}_${tempAfterOffsetEnd.toISOString().split('T')[0]}`)
+            setKiwiLink(`https://www.kiwi.com/deep?affilid=nicolasfuchsvoltadeeplinks&currency=EUR&departure=${tempAfterOffsetStart.toISOString().split('T')[0]}_${tempAfterOffsetStart.toISOString().split('T')[0]}&destination=${props.trip.place_code}&lang=en&pageName=tilesPage&return=${tempAfterOffsetEnd.toISOString().split('T')[0]}_${tempAfterOffsetEnd.toISOString().split('T')[0]}`)
             const script = document.createElement('script');
             console.log(kiwiLink)
         

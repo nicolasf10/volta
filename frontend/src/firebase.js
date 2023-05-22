@@ -89,7 +89,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     }
   };
   const logout = () => {
-    signOut(auth);
+    signOut(auth)
   };
 
 const getTrips = async (uid) => {
