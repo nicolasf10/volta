@@ -18,7 +18,7 @@ function TripFlights(props) {
         console.log(props);
         setTrip(props.trip);
         
-    }, [props.trip])
+    }, [props.trip]);
 
     return (
         <PageContainer style={{display: props.display}}>

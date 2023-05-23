@@ -203,7 +203,7 @@ var emojis = [
 
 
 function NewTrip(props) {
-    const [ list, setTrip ] = useState(props.trip);
+    const [ trip, setTrip ] = useState(props.trip);
     const [ show, setShow ] = useState('none');
     const [ tripPlace, setTripPlace ] = useState('');
     const [ countryCode, setCountryCode ] = useState('')
