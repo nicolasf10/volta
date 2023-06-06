@@ -235,7 +235,7 @@ function Map(props) {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyAAqWy0DmJhNoklNmZgyVRiZY9daxfswrY"
+        googleMapsApiKey: "AIzaSyAX-1MQMA3zQ2nhHMWOEXDBbJlAdiHm2Hg"
       })
 
     return ( isLoaded ? (
