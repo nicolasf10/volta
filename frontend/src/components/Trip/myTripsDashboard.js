@@ -130,9 +130,12 @@ function MyTripsDashboard(props)
         <MyTripsDashboardContainer>
             <MyTripsHeading>My Trips <EmojiImg size="45px" emoji="✈️"/> <NewTrip updateTrips={updateTrips} /></MyTripsHeading>
             <div className="container">
-                <DividerHeader>Active Trips: </DividerHeader>
+                {
+                    trips.length > 0 ?
+                        <>
+                            <DividerHeader>Active Trips: </DividerHeader>
                 <div className="dashboard-row row">
-                        {trips.length > 0 ?
+                        {
                         trips.map((trip, index) => (
                             trip.data && trip.data.date && trip.data.date.start.toDate() >= new Date() ?
                             <div key={index} className="col-lg-4 col-md-6 col-sm-12">
@@ -140,21 +143,12 @@ function MyTripsDashboard(props)
                             </div>
                             :
                             <></>
-                        )) :
-                            <>
-                                { loading ?
-                                    <Loader>
-                                        <WorldLoader/>
-                                    </Loader>
-                                    :
-                                    <NoTrips><HeadingSpan>Oh no! You better start planning your next trip. <Link to="/explore" style={{textDecoration: 'none'}}><ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
-                                }
-                            </>
+                        ))
                         }
                 </div>
                 <DividerHeader style={{marginTop: '20px'}}>Past Trips: </DividerHeader>
                 <div className="dashboard-row row">
-                        {trips.length > 0 ?
+                        {
                         trips.map((trip, index) => (
                             trip.data && trip.data.date && trip.data.date.start.toDate() < new Date() ?
                             <div key={index} className="col-lg-4 col-md-6 col-sm-12">
@@ -162,19 +156,27 @@ function MyTripsDashboard(props)
                             </div>
                             :
                             <></>
-                        )) :
-                            <>
-                                { loading ?
-                                    <Loader>
-                                        <WorldLoader/>
-                                    </Loader>
-                                    :
-                                    <NoTrips><HeadingSpan>Oh no! You better start planning your next trip. <Link to="/explore" style={{textDecoration: 'none'}}><ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
-                                }
-                            </>
+                        ))
                         }
                 </div>
+                        </>
+                    :
+                    <></>
+                }
             </div>
+            { loading ?
+                    <Loader>
+                        <WorldLoader/>
+                    </Loader>
+                :
+                    <></>
+            }
+            {
+                !loading && trips.length == 0 ?
+                <NoTrips><HeadingSpan>Oh no! You better start planning your next trip. <Link to="/explore" style={{textDecoration: 'none'}}><ExploreLink>Explore<EmojiSpan> 🌎</EmojiSpan></ExploreLink></Link></HeadingSpan></NoTrips>
+                :
+                <></>
+            }
         </MyTripsDashboardContainer>
     );
 }
