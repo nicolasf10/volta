@@ -224,7 +224,7 @@ function NewTrip(props) {
         }
         else {
             setDisableClick(true);
-            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripPlace}&key=AIzaSyBwLSV_KJEYZpoIn6DxFWN5rAowGsCKC9U`;
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${tripPlace}&key=AIzaSyAX-1MQMA3zQ2nhHMWOEXDBbJlAdiHm2Hg`;
             fetch(url).then((response) => {
                 const data = response.json().then(
                     (data) => {
