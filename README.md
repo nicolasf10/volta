@@ -8,6 +8,7 @@
 
 <div style="text-align:center;">
   <h3 align="center">Collaborative trip planning platform for travel enthusiasts (<i><a href="https://docs.google.com/document/d/1N9cMD-N6iQuqFM5leTNAsd5EWFgogBfxbeYF1MfPfOQ/edit?usp=sharing">Complete project description</a></i>)</h3>
+    <h4 align="center"><a href="https://volta-one.vercel.app/">volta-one.vercel.app</a></h4>
   <br>
 </div>
 
