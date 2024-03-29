@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://volta-one.vercel.app/">
+    <a target="_blank" href="https://volta-one.vercel.app/">
     <img height="85" src="https://github.com/nicolasf10/volta/assets/54503503/8febd5e1-01fc-478c-814b-498db7dda31b">
     </a>
 </h1>
@@ -8,7 +8,7 @@
 
 <div style="text-align:center;">
   <h3 align="center">Collaborative trip planning platform for travel enthusiasts (<i><a href="https://docs.google.com/document/d/1N9cMD-N6iQuqFM5leTNAsd5EWFgogBfxbeYF1MfPfOQ/edit?usp=sharing">Complete project description</a></i>)</h3>
-    <h4 align="center"><a href="https://volta-one.vercel.app/">volta-one.vercel.app</a></h4>
+    <h4 align="center"><a target="_blank" href="https://volta-one.vercel.app/">volta-one.vercel.app</a></h4>
   <br>
 </div>
 
